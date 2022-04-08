@@ -6,7 +6,8 @@ buildDunePackage rec {
   inherit (tezos-stdlib) version useDune2;
   src = "${tezos-stdlib.base_src}/src/lib_test";
 
-  propagatedBuildInputs = [ qcheck-alcotest alcotest alcotest-lwt uri pure-splitmix ];
+  propagatedBuildInputs =
+    [ qcheck-alcotest alcotest alcotest-lwt uri pure-splitmix ];
 
   doCheck = true;
 

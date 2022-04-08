@@ -1,11 +1,10 @@
 { lib, buildDunePackage, tezos-stdlib, tezos-protocol-compiler
 , tezos-protocol-updater, tezos-protocol-environment, tezos-shell, protocol-name
-, tezos-protocol-environment-sigs, qcheck-alcotest, tezos-test-helpers
-}:
+, tezos-protocol-environment-sigs, qcheck-alcotest, tezos-test-helpers }:
 let
-  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
-  src = tezos-stdlib.base_src; in
-rec {
+  underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
+  src = tezos-stdlib.base_src;
+in rec {
   protocol = buildDunePackage {
     pname = "tezos-protocol-${protocol-name}";
     inherit (tezos-stdlib) version useDune2;
@@ -21,7 +20,8 @@ rec {
 
     nativeBuildInputs = [ tezos-protocol-compiler ];
 
-    buildInputs = [ tezos-protocol-environment-sigs tezos-protocol-environment ];
+    buildInputs =
+      [ tezos-protocol-environment-sigs tezos-protocol-environment ];
 
     doCheck = true;
 
@@ -75,7 +75,14 @@ rec {
 
     strictDeps = true;
 
-    buildInputs = [ embedded-protocol protocol tezos-shell protocol-parameters qcheck-alcotest tezos-test-helpers ];
+    buildInputs = [
+      embedded-protocol
+      protocol
+      tezos-shell
+      protocol-parameters
+      qcheck-alcotest
+      tezos-test-helpers
+    ];
 
     checkInputs = [ qcheck-alcotest tezos-test-helpers ];
 

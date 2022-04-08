@@ -1,5 +1,6 @@
-{ lib, src, version, buildDunePackage, hex, lwt, zarith, alcotest, alcotest-lwt, crowbar, zarith_stubs_js
-, bigstring, lwt_log, ppx_inline_test, qcheck-alcotest, tezos-test-helpers }:
+{ lib, src, version, buildDunePackage, hex, lwt, zarith, alcotest, alcotest-lwt
+, crowbar, zarith_stubs_js, bigstring, lwt_log, ppx_inline_test, qcheck-alcotest
+, tezos-test-helpers }:
 
 buildDunePackage rec {
   pname = "tezos-stdlib";

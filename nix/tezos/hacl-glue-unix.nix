@@ -1,4 +1,5 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-hacl-glue, ctypes, hacl-star, tezos-test-helpers, data-encoding, zarith_stubs_js, tezos-error-monad }:
+{ lib, buildDunePackage, tezos-stdlib, tezos-hacl-glue, ctypes, hacl-star
+, tezos-test-helpers, data-encoding, zarith_stubs_js, tezos-error-monad }:
 
 buildDunePackage {
   pname = "tezos-hacl-glue-unix";
@@ -7,12 +8,8 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}/src/lib_hacl_glue/unix";
 
   propagatedBuildInputs = [ ctypes hacl-star tezos-hacl-glue ];
-  checkInputs = [
-    tezos-test-helpers
-    data-encoding
-    zarith_stubs_js
-    tezos-error-monad
-  ];
+  checkInputs =
+    [ tezos-test-helpers data-encoding zarith_stubs_js tezos-error-monad ];
 
   doCheck = true;
 

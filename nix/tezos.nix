@@ -1,20 +1,21 @@
-{ src, version }: final: prev: {
+{ src, version }:
+final: prev: {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
       let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
       in {
 
-  pure-splitmix = oself.buildDunePackage rec {
-    pname = "pure-splitmix";
-    version = "0.3";
+        pure-splitmix = oself.buildDunePackage rec {
+          pname = "pure-splitmix";
+          version = "0.3";
 
-    src = final.fetchFromGitHub {
-      owner = "Lysxia";
-      repo = pname;
-      rev = version;
-      sha256 = "RUnsAB4hMV87ItCyGhc47bHGY1iOwVv9kco2HxnzqbU=";
-    };
-  };
+          src = final.fetchFromGitHub {
+            owner = "Lysxia";
+            repo = pname;
+            rev = version;
+            sha256 = "RUnsAB4hMV87ItCyGhc47bHGY1iOwVv9kco2HxnzqbU=";
+          };
+        };
 
         tezos-010-PtGRANAD-test-helpers =
           callPackage ./tezos/010-PtGRANAD-test-helpers.nix { };

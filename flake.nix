@@ -21,7 +21,7 @@
             overlays = [ tezos_overlay ];
           };
           inherit (pkgs) lib;
-          
+
           myPkgs = pkgs.recurseIntoAttrs (import ./nix {
             inherit pkgs;
             doCheck = true;
@@ -30,9 +30,7 @@
         in {
           devShell = (pkgs.mkShell {
             inputsFrom = lib.attrValues myDrvs;
-            buildInputs =              [
-                pkgs.nixfmt
-              ];
+            buildInputs = [ pkgs.nixfmt ];
           });
 
           packages = myPkgs;
