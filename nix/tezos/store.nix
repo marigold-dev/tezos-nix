@@ -16,7 +16,7 @@ buildDunePackage {
     lwt-watcher
     tezos-protocol-updater
     tezos-validation
-    tezos-legacy-store
+    # tezos-legacy-store
   ];
 
   nativeBuildInputs = [ tezos-protocol-compiler ];

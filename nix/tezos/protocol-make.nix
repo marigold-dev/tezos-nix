@@ -1,16 +1,27 @@
 { lib, buildDunePackage, tezos-stdlib, tezos-protocol-compiler
 , tezos-protocol-updater, tezos-protocol-environment, tezos-shell, protocol-name
+, tezos-protocol-environment-sigs, qcheck-alcotest, tezos-test-helpers
 }:
-
+let
+  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
+  src = tezos-stdlib.base_src; in
 rec {
   protocol = buildDunePackage {
     pname = "tezos-protocol-${protocol-name}";
     inherit (tezos-stdlib) version useDune2;
-    src = "${tezos-stdlib.base_src}/src";
+    inherit src;
+
+    postPatch = ''
+      substituteInPlace ./src/proto_${underscore_name}/lib_protocol/dune.inc \
+        --replace "-warn-error +a" "-warn-error -A" \
+        --replace "-warn-error \"+a\"" "-warn-error -A"
+    '';
 
     strictDeps = true;
 
     nativeBuildInputs = [ tezos-protocol-compiler ];
+
+    buildInputs = [ tezos-protocol-environment-sigs tezos-protocol-environment ];
 
     doCheck = true;
 
@@ -22,7 +33,8 @@ rec {
   protocol-parameters = buildDunePackage {
     pname = "tezos-protocol-${protocol-name}-parameters";
     inherit (tezos-stdlib) version useDune2;
-    src = "${tezos-stdlib.base_src}/src";
+    inherit (protocol) postPatch;
+    inherit src;
 
     strictDeps = true;
 
@@ -36,7 +48,8 @@ rec {
   embedded-protocol = buildDunePackage {
     pname = "tezos-embedded-protocol-${protocol-name}";
     inherit (tezos-stdlib) version useDune2;
-    src = "${tezos-stdlib.base_src}/src";
+    inherit (protocol) postPatch;
+    inherit src;
 
     strictDeps = true;
 
@@ -57,11 +70,14 @@ rec {
   protocol-plugin = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}";
     inherit (tezos-stdlib) version useDune2;
-    src = "${tezos-stdlib.base_src}/src";
+    inherit (protocol) postPatch;
+    inherit src;
 
     strictDeps = true;
 
-    buildInputs = [ embedded-protocol protocol tezos-shell ];
+    buildInputs = [ embedded-protocol protocol tezos-shell protocol-parameters qcheck-alcotest tezos-test-helpers ];
+
+    checkInputs = [ qcheck-alcotest tezos-test-helpers ];
 
     doCheck = true;
 
@@ -73,7 +89,8 @@ rec {
   protocol-plugin-registerer = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}-registerer";
     inherit (tezos-stdlib) version useDune2;
-    src = "${tezos-stdlib.base_src}/src";
+    inherit (protocol) postPatch;
+    inherit src;
 
     strictDeps = true;
 

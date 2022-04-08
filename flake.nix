@@ -23,18 +23,19 @@
           inherit (pkgs) lib;
           
           myPkgs = pkgs.recurseIntoAttrs (import ./nix {
-            inherit pkgs src version;
+            inherit pkgs;
             doCheck = true;
           }).native;
           myDrvs = lib.filterAttrs (_: value: lib.isDerivation value) myPkgs;
         in {
           devShell = (pkgs.mkShell {
             inputsFrom = lib.attrValues myDrvs;
-            buildInputs = with pkgs;
-              with ocamlPackages; [
-                nixfmt
+            buildInputs =              [
+                pkgs.nixfmt
               ];
           });
+
+          packages = myPkgs;
 
           defaultPackage = myPkgs.tezos-client;
 
