@@ -1,7 +1,6 @@
 { lib, ocaml, buildDunePackage, bls12-381, bls12-381-legacy, tezos-stdlib
-, tezos-base, tezos-sapling, tezos-context, tezos-protocol-environment-sigs
-, tezos-protocol-environment-structs, tezos-test-helpers, zarith, alcotest-lwt
-}:
+, tezos-base, tezos-sapling, tezos-context, tezos-test-helpers, zarith
+, alcotest-lwt, ringo-lwt }:
 
 buildDunePackage {
   pname = "tezos-protocol-environment";
@@ -14,9 +13,8 @@ buildDunePackage {
     tezos-sapling
     tezos-base
     tezos-context
-    tezos-protocol-environment-sigs
-    tezos-protocol-environment-structs
     zarith
+    ringo-lwt
   ];
 
   checkInputs = [ alcotest-lwt tezos-test-helpers ];

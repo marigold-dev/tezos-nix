@@ -1,18 +1,20 @@
-final: prev: 
-  let 
-      version = "12.3";
-      src = final.fetchFromGitLab {
-        owner = "tezos";
-        repo = "tezos";
-        rev = "v${version}";
-        sha256 = "sha256-j0phPzuj9FLfMyqwMuUeolYQLh2eF3CY9XHSScqgQnk=";
-      };
-    in
-    {
+final: prev:
+let
+  version = "12.3";
+  src = final.fetchFromGitLab {
+    owner = "tezos";
+    repo = "tezos";
+    rev = "v${version}";
+    sha256 = "sha256-j0phPzuj9FLfMyqwMuUeolYQLh2eF3CY9XHSScqgQnk=";
+  };
+in {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
       let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
       in {
+        hacl-star-raw = osuper.hacl-star-raw.overrideAttrs (_: {
+          hardeningDisable = ["strictoverflow"]; 
+        });
 
         pure-splitmix = oself.buildDunePackage rec {
           pname = "pure-splitmix";
@@ -24,6 +26,8 @@ final: prev:
             rev = version;
             sha256 = "RUnsAB4hMV87ItCyGhc47bHGY1iOwVv9kco2HxnzqbU=";
           };
+
+          doCheck = true;
         };
 
         tezos-010-PtGRANAD-test-helpers =
@@ -31,7 +35,6 @@ final: prev:
         tezos-011-PtHangz2-test-helpers =
           callPackage ./tezos/011-PtHangz2-test-helpers.nix { };
         tezos-base = callPackage ./tezos/base.nix { };
-        tezos-base-test-helpers = callPackage ./tezos/base-test-helpers.nix { };
         tezos-clic = callPackage ./tezos/clic.nix { };
         tezos-client-010-PtGRANAD =
           callPackage ./tezos/client-010-PtGRANAD.nix { };
