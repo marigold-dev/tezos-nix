@@ -12,6 +12,10 @@ in {
     curr_ocaml.overrideScope' (oself: osuper:
       let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
       in {
+        hacl-star-raw = osuper.hacl-star-raw.overrideAttrs (_: {
+          hardeningDisable = ["strictoverflow"]; 
+        });
+        
         repr = osuper.repr.overrideAttrs (o: rec {
           version = "0.6.0";
           src = final.fetchFromGitHub {

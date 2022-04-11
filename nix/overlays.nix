@@ -12,6 +12,10 @@ in {
     curr_ocaml.overrideScope' (oself: osuper:
       let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
       in {
+        hacl-star-raw = osuper.hacl-star-raw.overrideAttrs (_: {
+          hardeningDisable = ["strictoverflow"]; 
+        });
+
         pure-splitmix = oself.buildDunePackage rec {
           pname = "pure-splitmix";
           version = "0.3";
