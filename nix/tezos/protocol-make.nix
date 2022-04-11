@@ -21,7 +21,8 @@ in rec {
     nativeBuildInputs = [ tezos-protocol-compiler ];
 
     buildInputs =
-      [ tezos-protocol-environment-sigs tezos-protocol-environment ];
+      [ # tezos-protocol-environment-sigs
+      tezos-protocol-environment ];
 
     doCheck = true;
 

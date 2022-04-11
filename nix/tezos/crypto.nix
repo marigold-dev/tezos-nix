@@ -1,5 +1,5 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-rpc, tezos-clic, tezos-hacl-glue
-, tezos-hacl-glue-unix, secp256k1-internal, ringo, bls12-381, bls12-381-unix
+{ lib, buildDunePackage, tezos-stdlib, tezos-rpc, tezos-clic, tezos-hacl
+, secp256k1-internal, ringo, bls12-381
 , tezos-test-helpers, alcotest-lwt }:
 
 buildDunePackage {
@@ -10,12 +10,10 @@ buildDunePackage {
   propagatedBuildInputs = [
     tezos-rpc
     tezos-clic
-    tezos-hacl-glue
-    tezos-hacl-glue-unix
+    tezos-hacl
     secp256k1-internal
     ringo
     bls12-381
-    bls12-381-unix
   ];
 
   checkInputs = [ tezos-test-helpers alcotest-lwt ];

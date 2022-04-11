@@ -1,6 +1,6 @@
 { lib, ocaml, buildDunePackage, bls12-381, bls12-381-legacy, tezos-stdlib
 , tezos-base, tezos-sapling, tezos-context, tezos-protocol-environment-sigs
-, tezos-protocol-environment-structs, tezos-test-helpers, zarith, alcotest-lwt
+, tezos-test-helpers, zarith, alcotest-lwt
 }:
 
 buildDunePackage {
@@ -14,8 +14,8 @@ buildDunePackage {
     tezos-sapling
     tezos-base
     tezos-context
-    tezos-protocol-environment-sigs
-    tezos-protocol-environment-structs
+    # tezos-protocol-environment-sigs
+    # tezos-protocol-environment-structs
     zarith # this might break, since they actually want 1.11
   ];
 

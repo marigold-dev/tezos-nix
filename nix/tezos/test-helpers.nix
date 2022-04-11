@@ -1,5 +1,5 @@
 { lib, fetchFromGitLab, buildDunePackage, qcheck-alcotest, alcotest
-, alcotest-lwt, uri, tezos-stdlib, pure-splitmix }:
+, alcotest-lwt, uri, tezos-stdlib, pure-splitmix, data-encoding }:
 
 buildDunePackage rec {
   pname = "tezos-test-helpers";
@@ -7,7 +7,7 @@ buildDunePackage rec {
   src = "${tezos-stdlib.base_src}/src/lib_test";
 
   propagatedBuildInputs =
-    [ qcheck-alcotest alcotest alcotest-lwt uri pure-splitmix ];
+    [ qcheck-alcotest alcotest alcotest-lwt uri pure-splitmix data-encoding ];
 
   doCheck = true;
 

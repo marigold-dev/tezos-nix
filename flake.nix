@@ -13,6 +13,7 @@
         "x86_64-linux"
       ];
       overlay = import ./nix/overlays.nix;
+      overlay_trunk = import ./nix/overlays_trunk.nix;
       out = system:
         let
           pkgs = import nixpkgs {
@@ -21,20 +22,28 @@
           };
           inherit (pkgs) lib;
 
-          myPkgs = (import ./nix {
+          pkgs_trunk = import nixpkgs {
+            inherit system;
+            overlays = [ overlay_trunk ];
+          };
+
+          tezos_pkgs = (import ./nix {
             inherit pkgs;
             doCheck = true;
           }).native;
-          myDrvs = lib.filterAttrs (_: value: lib.isDerivation value) myPkgs;
+
+          tezos_pkgs_trunk = (import ./nix {
+            inherit pkgs;
+            doCheck = true;
+          }).native;
         in {
           devShell = (pkgs.mkShell {
-            inputsFrom = lib.attrValues myDrvs;
             buildInputs = [ pkgs.nixfmt ];
           });
 
-          packages = myPkgs;
+          packages = tezos_pkgs // tezos_pkgs_trunk;
 
-          defaultPackage = myPkgs.tezos-client;
+          defaultPackage = tezos_pkgs.tezos-client;
 
           defaultApp =
             flake-utils.lib.mkApp { drv = self.defaultPackage."${system}"; };

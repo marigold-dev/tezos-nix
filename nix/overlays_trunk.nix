@@ -1,55 +1,55 @@
 final: prev: 
   let 
-      version = "12.3";
-      src = final.fetchFromGitLab {
-        owner = "tezos";
-        repo = "tezos";
-        rev = "v${version}";
-        sha256 = "sha256-j0phPzuj9FLfMyqwMuUeolYQLh2eF3CY9XHSScqgQnk=";
-      };
+    version = "fdeb9636cb92b553aaf00cc9203d797134e65ec2";
+    src = final.fetchFromGitLab {
+      owner = "tezos";
+      repo = "tezos";
+      rev = version;
+      sha256 = "sha256-LaBokXvkueiavu4Z8QXuyfkaJ3tZEZXl9PbrerIpmps=";
+    };
     in
-    {
+{
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
       let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
       in {
-  asetmap = final.stdenv.mkDerivation rec {
-    version = "0.8.1";
-    pname = "asetmap";
-    src = final.fetchurl {
-      url =
-        "https://github.com/dbuenzli/asetmap/archive/refs/tags/v0.8.1.tar.gz";
-      sha256 = "051ky0k62xp4inwi6isif56hx5ggazv4jrl7s5lpvn9cj8329frj";
-    };
+        asetmap = final.stdenv.mkDerivation rec {
+          version = "0.8.1";
+          pname = "asetmap";
+          src = final.fetchurl {
+            url =
+              "https://github.com/dbuenzli/asetmap/archive/refs/tags/v0.8.1.tar.gz";
+            sha256 = "051ky0k62xp4inwi6isif56hx5ggazv4jrl7s5lpvn9cj8329frj";
+          };
 
-    strictDeps = true;
+          strictDeps = true;
 
-    nativeBuildInputs = with oself; [ topkg findlib ocamlbuild ocaml ];
-    buildInputs = with oself; [ topkg ];
+          nativeBuildInputs = with oself; [ topkg findlib ocamlbuild ocaml ];
+          buildInputs = with oself; [ topkg ];
 
-    inherit (oself.topkg) buildPhase installPhase;
-  };
+          inherit (oself.topkg) buildPhase installPhase;
+        };
 
-  prometheus = oself.buildDunePackage rec {
-    version = "1.1.0";
-    pname = "prometheus";
-    src = final.fetchurl {
-      url =
-        "https://github.com/mirage/prometheus/releases/download/v1.1/prometheus-v1.1.tbz";
-      sha256 = "1r4rylxmhggpwr1i7za15cpxdvgxf0mvr5143pvf9gq2ijr8pkzv";
-    };
+        prometheus = oself.buildDunePackage rec {
+          version = "1.1.0";
+          pname = "prometheus";
+          src = final.fetchurl {
+            url =
+              "https://github.com/mirage/prometheus/releases/download/v1.1/prometheus-v1.1.tbz";
+            sha256 = "1r4rylxmhggpwr1i7za15cpxdvgxf0mvr5143pvf9gq2ijr8pkzv";
+          };
 
-    strictDeps = true;
+          strictDeps = true;
 
-    propagatedBuildInputs = with oself; [
-      astring
-      asetmap
-      fmt
-      re
-      lwt
-      alcotest
-    ];
-  };
+          propagatedBuildInputs = with oself; [
+            astring
+            asetmap
+            fmt
+            re
+            lwt
+            alcotest
+          ];
+        };
         ptime = osuper.ptime.overrideAttrs (o: rec {
           version = "1.0.0";
           src = final.fetchurl {

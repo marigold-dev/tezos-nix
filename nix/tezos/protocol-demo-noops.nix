@@ -7,7 +7,9 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}/src/";
 
   propagatedBuildInputs =
-    [ tezos-protocol-compiler tezos-protocol-environment-sigs ];
+    [ tezos-protocol-compiler
+    # tezos-protocol-environment-sigs
+    ];
 
   doCheck = true;
 

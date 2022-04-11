@@ -1,5 +1,5 @@
 { lib, buildDunePackage, alcotest-lwt, astring, lwt, lwt-canceler, lwt-watcher
-, ringo, tezos-base-test-helpers, tezos-p2p-services, tezos-stdlib }:
+, ringo, tezos-base-test-helpers, tezos-p2p-services, tezos-stdlib, tezos-version, prometheus }:
 
 buildDunePackage {
   pname = "tezos-p2p";
@@ -7,7 +7,7 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}/src/lib_p2p";
 
   propagatedBuildInputs =
-    [ lwt lwt-canceler lwt-watcher ringo tezos-p2p-services ];
+    [ lwt lwt-canceler lwt-watcher ringo tezos-p2p-services prometheus tezos-version ];
 
   checkInputs = [ alcotest-lwt astring tezos-base-test-helpers ];
 

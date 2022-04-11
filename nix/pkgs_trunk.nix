@@ -1,11 +1,10 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages
-, zcash
-, static ? false, doCheck }:
+{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, cacert, static ? false
+, doCheck }:
 
 with ocamlPackages;
 
 rec {
-  tezos-client = buildDunePackage {
+  trunk-tezos-client = buildDunePackage {
     pname = "tezos-client";
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/bin_client";
@@ -20,7 +19,7 @@ rec {
     meta = { description = "Your service"; };
   };
 
-  tezos-baker-alpha = buildDunePackage {
+  trunk-tezos-baker-alpha = buildDunePackage {
     pname = "tezos-baker-alpha";
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_baker";
@@ -52,7 +51,44 @@ rec {
     meta = { description = "Your service"; };
   };
 
-  tezos-node = ocamlPackages.buildDunePackage rec {
+  trunk-tezos-tx-rollup-node-alpha = buildDunePackage {
+    pname = "tezos-tx-rollup-node-alpha";
+    inherit (ocamlPackages.tezos-stdlib) version;
+    
+    src = "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_tx_rollup_node";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      tezos-base
+      tezos-crypto
+      tezos-alpha.protocol
+      tezos-client-alpha
+      tezos-client-commands
+      tezos-context
+      tezos-baking-alpha.commands
+      tezos-baking-alpha.baking
+      tezos-stdlib-unix
+      tezos-rpc
+      tezos-rpc-http
+      tezos-rpc-http-client-unix
+      tezos-rpc-http-server
+      tezos-micheline
+      tezos-client-base
+      tezos-client-base-unix
+      tezos-store
+    ];
+
+    checkInputs = with ocamlPackages; [
+      # alcotest-lwt
+      # tezos-base-test-helpers
+      # cacert
+    ];
+
+    inherit doCheck;
+
+    meta = { description = "Your service"; };
+  };
+
+  trunk-tezos-node = ocamlPackages.buildDunePackage rec {
     pname = "tezos-node";
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/bin_node";

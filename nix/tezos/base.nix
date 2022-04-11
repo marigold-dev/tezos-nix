@@ -1,5 +1,7 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-crypto, tezos-hacl-glue-unix
-, tezos-micheline, tezos-test-helpers, ptime, ipaddr, bls12-381-unix }:
+{ lib, buildDunePackage, tezos-stdlib, tezos-crypto, tezos-hacl, data-encoding
+, tezos-micheline, tezos-error-monad, tezos-test-helpers, tezos-rpc
+, tezos-clic, tezos-event-logging, tezos-stdlib-unix
+, ezjsonm, ptime, ipaddr, lwt }:
 
 buildDunePackage {
   pname = "tezos-base";
@@ -7,12 +9,21 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}/src/lib_base";
 
   propagatedBuildInputs = [
+    tezos-stdlib
     tezos-crypto
+    data-encoding
+    tezos-error-monad
+    tezos-rpc
+    tezos-clic
     tezos-micheline
-    tezos-hacl-glue-unix
-    bls12-381-unix
+    tezos-event-logging
     ptime
+    ezjsonm
     ipaddr
+    lwt
+    ipaddr
+    tezos-hacl
+    tezos-stdlib-unix
   ];
 
   checkInputs = [
