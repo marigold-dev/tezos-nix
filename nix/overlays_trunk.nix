@@ -63,11 +63,13 @@ in {
             sha256 = "sha256-StO8g3Ama1P1cUXvXwfa1E+uC6051Fah7cU517KkyAk=";
           };
 
-          propagatedBuildInputs = o.propagatedBuildInputs ++ (with oself; [ logs ]);
+          propagatedBuildInputs = o.propagatedBuildInputs
+            ++ (with oself; [ logs ]);
         });
 
         irmin = osuper.irmin.overrideAttrs (o: rec {
-          propagatedBuildInputs = o.propagatedBuildInputs ++ (with oself; [ mtime ]);
+          propagatedBuildInputs = o.propagatedBuildInputs
+            ++ (with oself; [ mtime ]);
         });
 
         asetmap = final.stdenv.mkDerivation rec {
