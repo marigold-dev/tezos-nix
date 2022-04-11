@@ -1,6 +1,6 @@
 { lib, buildDunePackage, tezos-stdlib, tezos-protocol-compiler
 , tezos-protocol-updater, tezos-protocol-environment, tezos-shell, protocol-name
-, tezos-protocol-environment-sigs, qcheck-alcotest, tezos-test-helpers }:
+, qcheck-alcotest, tezos-test-helpers }:
 let
   underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
   src = tezos-stdlib.base_src;
@@ -20,8 +20,7 @@ in rec {
 
     nativeBuildInputs = [ tezos-protocol-compiler ];
 
-    buildInputs =
-      [ tezos-protocol-environment-sigs tezos-protocol-environment ];
+    buildInputs = [ tezos-protocol-environment ];
 
     doCheck = true;
 

@@ -1,179 +1,17 @@
-final: prev: 
-  let 
-      version = "12.3";
-      src = final.fetchFromGitLab {
-        owner = "tezos";
-        repo = "tezos";
-        rev = "v${version}";
-        sha256 = "sha256-j0phPzuj9FLfMyqwMuUeolYQLh2eF3CY9XHSScqgQnk=";
-      };
-    in
-    {
+final: prev:
+let
+  version = "12.3";
+  src = final.fetchFromGitLab {
+    owner = "tezos";
+    repo = "tezos";
+    rev = "v${version}";
+    sha256 = "sha256-j0phPzuj9FLfMyqwMuUeolYQLh2eF3CY9XHSScqgQnk=";
+  };
+in {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
       let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
       in {
-  asetmap = final.stdenv.mkDerivation rec {
-    version = "0.8.1";
-    pname = "asetmap";
-    src = final.fetchurl {
-      url =
-        "https://github.com/dbuenzli/asetmap/archive/refs/tags/v0.8.1.tar.gz";
-      sha256 = "051ky0k62xp4inwi6isif56hx5ggazv4jrl7s5lpvn9cj8329frj";
-    };
-
-    strictDeps = true;
-
-    nativeBuildInputs = with oself; [ topkg findlib ocamlbuild ocaml ];
-    buildInputs = with oself; [ topkg ];
-
-    inherit (oself.topkg) buildPhase installPhase;
-  };
-
-  prometheus = oself.buildDunePackage rec {
-    version = "1.1.0";
-    pname = "prometheus";
-    src = final.fetchurl {
-      url =
-        "https://github.com/mirage/prometheus/releases/download/v1.1/prometheus-v1.1.tbz";
-      sha256 = "1r4rylxmhggpwr1i7za15cpxdvgxf0mvr5143pvf9gq2ijr8pkzv";
-    };
-
-    strictDeps = true;
-
-    propagatedBuildInputs = with oself; [
-      astring
-      asetmap
-      fmt
-      re
-      lwt
-      alcotest
-    ];
-  };
-        ptime = osuper.ptime.overrideAttrs (o: rec {
-          version = "1.0.0";
-          src = final.fetchurl {
-            url = "https://erratique.ch/software/ptime/releases/ptime-1.0.0.tbz";
-            sha256 = "02qiwafysw5vpbxmkhgf6hfr5fv967rxzfkfy18kgj3206686724";
-          };
-
-          buildPhase = "${oself.topkg.run} build";
-        });
-
-        bls12-381 = osuper.bls12-381.overrideAttrs (o: rec {
-          version = "3.0.1";
-          src = final.fetchFromGitLab {
-            owner = "dannywillems";
-            repo = "ocaml-bls12-381";
-            rev = version;
-            sha256 = "sha256-ScKEkv+a83XJgcK9xiUqVQECoGT3PPx9stzz9QReu5I=";
-          };
-
-          propagatedBuildInputs = o.propagatedBuildInputs ++ (with oself; [ zarith_stubs_js integers_stubs_js integers hex ]);
-
-          checkInputs = (with oself; [ alcotest ff-pbt ]);
-        });
-
-        ringo = osuper.ringo.overrideAttrs (o: rec {
-          version = "0.8";
-          src = final.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = "ringo";
-            rev = "v${version}";
-            sha256 = "sha256-eRSlkIP6JJiOwcBracIiD2IeJYeZpHL5cOttCGKzgOI=";
-          };
-        });
-
-        json-data-encoding = osuper.json-data-encoding.overrideAttrs (o: rec {
-          version = "0.11";
-          src = final.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = o.pname;
-            rev = "${version}";
-            sha256 = "sha256-4FNUU82sq3ylgw0lxHlwi1OV58NRRh9zJqE47YyQZSc=";
-          };
-        });
-
-        json-data-encoding-bson = osuper.json-data-encoding-bson.overrideAttrs (o: rec {
-          version = "0.11";
-          src = oself.json-data-encoding.src;
-        });
-
-        data-encoding = osuper.data-encoding.overrideAttrs (o: rec {
-          version = "0.5.3";
-          src = final.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = o.pname;
-            rev = "v${version}";
-            sha256 = "sha256-HMNpjh5x7vU/kXQNRjJtOvShEENoNuxjNNPBJfm+Rhg=";
-          };
-
-          propagatedBuildInputs = o.propagatedBuildInputs ++ (with oself; [ either zarith_stubs_js ]);
-        });
-
-        integers_stubs_js = oself.buildDunePackage rec {
-          pname = "integers_stubs_js";
-          version = "1.0";
-          src = final.fetchFromGitHub {
-            owner = "o1-labs";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-lg5cX9/LQlVmR42XcI17b6KaatnFO2L9A9ZXfID8mTY=";
-          };
-
-          propagatedBuildInputs = with oself; [
-            zarith_stubs_js
-            js_of_ocaml
-          ];
-        };
-
-        ctypes_stubs_js = oself.buildDunePackage rec {
-          pname = "ctypes_stubs_js";
-          version = "0.1";
-          src = final.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-OJIzg2hnwkXkQHd4bRR051eLf4HNWa/XExxbj46SyUs=";
-          };
-
-          propagatedBuildInputs = with oself; [
-            integers_stubs_js
-          ];
-
-          checkInputs = with oself; [
-            ctypes
-            ppx_expect
-          ];
-        };
-
-        ometrics = oself.buildDunePackage rec {
-          pname = "ometrics";
-          version = "0.1.3";
-
-          src = final.fetchurl {
-            url = "https://github.com/vch9/ometrics/releases/download/0.1.3/ometrics-full.0.1.3.tar.gz";
-            sha256 = "sha256-CLeHpyqZQo2TRj1SEdb9aKjbfdHTOpsHZOvbDgh8gnw=";
-          };
-
-          buildInputs = with oself; [
-            yojson
-            menhirSdk
-            menhirLib
-            menhir
-            merlin
-            csexp
-            result
-            cmdliner
-            digestif
-            bisect_ppx
-          ];
-          
-          checkInputs = [ oself.qcheck-alcotest ];
-
-          doCheck = false;
-        };
-
         pure-splitmix = oself.buildDunePackage rec {
           pname = "pure-splitmix";
           version = "0.3";
@@ -193,20 +31,11 @@ final: prev:
         tezos-011-PtHangz2-test-helpers =
           callPackage ./tezos/011-PtHangz2-test-helpers.nix { };
         tezos-base = callPackage ./tezos/base.nix { };
-        tezos-base-test-helpers = callPackage ./tezos/base-test-helpers.nix { };        
-        tezos-baking-alpha = callPackage ./tezos/baking-make.nix {
-          protocol-name = "alpha";
-        };
-        tezos-baking-011-PtHangz2 = callPackage ./tezos/baking-make.nix {
-          protocol-name = "011-PtHangz2";
-        };
         tezos-clic = callPackage ./tezos/clic.nix { };
         tezos-client-010-PtGRANAD =
           callPackage ./tezos/client-010-PtGRANAD.nix { };
         tezos-client-011-PtHangz2 =
           callPackage ./tezos/client-011-PtHangz2.nix { };
-        tezos-client-alpha = 
-          callPackage ./tezos/client-alpha.nix { };
         tezos-client-base = callPackage ./tezos/client-base.nix { };
         tezos-client-base-unix = callPackage ./tezos/client-base-unix.nix { };
         tezos-client-commands = callPackage ./tezos/client-commands.nix { };
@@ -271,7 +100,8 @@ final: prev:
           callPackage ./tezos/event-logging-test-helpers.nix { };
         tezos-legacy-store = callPackage ./tezos/legacy-store.nix { };
         tezos-lmdb = callPackage ./tezos/lmdb.nix { };
-        tezos-hacl = callPackage ./tezos/hacl.nix { };
+        tezos-hacl-glue = callPackage ./tezos/hacl-glue.nix { };
+        tezos-hacl-glue-unix = callPackage ./tezos/hacl-glue-unix.nix { };
         tezos-lwt-result-stdlib = callPackage ./tezos/lwt-result-stdlib.nix { };
         tezos-micheline = callPackage ./tezos/micheline.nix { };
         tezos-mockup-commands = callPackage ./tezos/mockup-commands.nix { };
@@ -288,6 +118,8 @@ final: prev:
           callPackage ./tezos/protocol-environment-packer.nix { };
         tezos-protocol-environment-sigs =
           callPackage ./tezos/protocol-environment-sigs.nix { };
+        tezos-protocol-environment-structs =
+          callPackage ./tezos/protocol-environment-structs.nix { };
         tezos-protocol-environment =
           callPackage ./tezos/protocol-environment.nix { };
         tezos-protocol-updater = callPackage ./tezos/protocol-updater.nix { };
@@ -310,7 +142,6 @@ final: prev:
         tezos-stdlib-unix = callPackage ./tezos/stdlib-unix.nix { };
         tezos-stdlib = callPackage ./tezos/stdlib.nix { inherit src version; };
         tezos-test-helpers = callPackage ./tezos/test-helpers.nix { };
-        tezos-tooling = callPackage ./tezos/tooling.nix { };
         tezos-store = callPackage ./tezos/store.nix { };
         tezos-validation = callPackage ./tezos/validation.nix { };
         tezos-validator = callPackage ./tezos/validator.nix { };

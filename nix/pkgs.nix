@@ -1,6 +1,5 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages
-, zcash
-, static ? false, doCheck }:
+{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, static ? false
+, doCheck }:
 
 with ocamlPackages;
 
@@ -56,7 +55,6 @@ rec {
     pname = "tezos-node";
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/bin_node";
-
 
     buildInputs = with ocamlPackages; [
       tezos-base

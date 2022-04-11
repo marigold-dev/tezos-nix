@@ -1,5 +1,5 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, cacert, static ? false
-, doCheck }:
+{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, cacert
+, static ? false, doCheck }:
 
 with ocamlPackages;
 
@@ -54,8 +54,9 @@ rec {
   trunk-tezos-tx-rollup-node-alpha = buildDunePackage {
     pname = "tezos-tx-rollup-node-alpha";
     inherit (ocamlPackages.tezos-stdlib) version;
-    
-    src = "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_tx_rollup_node";
+
+    src =
+      "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_tx_rollup_node";
 
     propagatedBuildInputs = with ocamlPackages; [
       tezos-base
@@ -77,11 +78,12 @@ rec {
       tezos-store
     ];
 
-    checkInputs = with ocamlPackages; [
-      # alcotest-lwt
-      # tezos-base-test-helpers
-      # cacert
-    ];
+    checkInputs = with ocamlPackages;
+      [
+        # alcotest-lwt
+        # tezos-base-test-helpers
+        # cacert
+      ];
 
     inherit doCheck;
 
@@ -92,7 +94,6 @@ rec {
     pname = "tezos-node";
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/bin_node";
-
 
     buildInputs = with ocamlPackages; [
       tezos-base

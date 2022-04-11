@@ -7,10 +7,7 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}/src/lib_protocol_environment";
 
   propagatedBuildInputs =
-    [
-      tezos-crypto
-      # tezos-protocol-environment-packer
-      bls12-381-legacy ];
+    [ tezos-crypto tezos-protocol-environment-packer bls12-381-legacy ];
 
   doCheck = true;
 

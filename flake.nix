@@ -6,12 +6,8 @@
 
   outputs = { self, nixpkgs, flake-utils }:
     let
-      supportedSystems = [
-        "aarch64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-        "x86_64-linux"
-      ];
+      supportedSystems =
+        [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
       overlay = import ./nix/overlays.nix;
       overlay_trunk = import ./nix/overlays_trunk.nix;
       out = system:
@@ -27,19 +23,12 @@
             overlays = [ overlay_trunk ];
           };
 
-          tezos_pkgs = (import ./nix {
-            inherit pkgs;
-            doCheck = true;
-          }).native;
+          tezos_pkgs = pkgs.callPackage ./nix/pkgs.nix { doCheck = true; };
 
-          tezos_pkgs_trunk = (import ./nix {
-            inherit pkgs;
-            doCheck = true;
-          }).native;
+          tezos_pkgs_trunk =
+            pkgs_trunk.callPackage ./nix/pkgs_trunk.nix { doCheck = true; };
         in {
-          devShell = (pkgs.mkShell {
-            buildInputs = [ pkgs.nixfmt ];
-          });
+          devShell = (pkgs.mkShell { buildInputs = [ pkgs.nixfmt ]; });
 
           packages = tezos_pkgs // tezos_pkgs_trunk;
 
@@ -49,9 +38,8 @@
             flake-utils.lib.mkApp { drv = self.defaultPackage."${system}"; };
 
         };
-    in with flake-utils.lib; eachSystem supportedSystems out // {
-      overlays = {
-        default = overlay;
-      };
+    in with flake-utils.lib;
+    eachSystem supportedSystems out // {
+      overlays = { default = overlay; };
     };
 }

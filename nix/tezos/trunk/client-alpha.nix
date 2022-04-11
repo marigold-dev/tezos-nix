@@ -1,6 +1,6 @@
 { lib, buildDunePackage, tezos-stdlib, tezos-mockup-registration, tezos-proxy
 , tezos-signer-backends, tezos-alpha, alcotest-lwt, ppx_inline_test
-,  qcheck-alcotest, tezos-test-helpers, tezos-base-test-helpers, cacert }:
+, qcheck-alcotest, tezos-test-helpers, tezos-base-test-helpers, cacert }:
 
 buildDunePackage {
   pname = "tezos-client-alpha";
@@ -17,7 +17,13 @@ buildDunePackage {
     ppx_inline_test
   ];
 
-  checkInputs = [ alcotest-lwt qcheck-alcotest tezos-test-helpers tezos-base-test-helpers cacert ];
+  checkInputs = [
+    alcotest-lwt
+    qcheck-alcotest
+    tezos-test-helpers
+    tezos-base-test-helpers
+    cacert
+  ];
 
   doCheck = true;
 

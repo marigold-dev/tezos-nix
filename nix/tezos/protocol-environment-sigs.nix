@@ -8,7 +8,7 @@ buildDunePackage {
 
   minimalOCamlVersion = "4.12";
 
-  # propagatedBuildInputs = [ tezos-protocol-environment-packer ];
+  propagatedBuildInputs = [ tezos-protocol-environment-packer ];
 
   checkInputs = [ tezos-stdlib ];
 

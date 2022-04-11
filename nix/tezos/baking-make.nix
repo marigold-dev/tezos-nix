@@ -1,5 +1,4 @@
-{ lib, buildDunePackage, ocamlPackages, tezos-stdlib
-      , cacert, protocol-name }:
+{ lib, buildDunePackage, ocamlPackages, tezos-stdlib, cacert, protocol-name }:
 
 let
   underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
@@ -68,13 +67,13 @@ in rec {
       lwt-exit
     ];
 
-  checkInputs = [ 
-    # alcotest-lwt
-    # qcheck-alcotest
-    # tezos-test-helpers
-    # tezos-base-test-helpers
-    # cacert
-  ];
+    checkInputs = [
+      # alcotest-lwt
+      # qcheck-alcotest
+      # tezos-test-helpers
+      # tezos-base-test-helpers
+      # cacert
+    ];
 
     doCheck = true;
   };
