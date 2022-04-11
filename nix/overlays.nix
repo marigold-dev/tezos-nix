@@ -1,5 +1,14 @@
-{ src, version }:
-final: prev: {
+final: prev: 
+  let 
+      version = "12.3";
+      src = final.fetchFromGitLab {
+        owner = "tezos";
+        repo = "tezos";
+        rev = "v${version}";
+        sha256 = "sha256-j0phPzuj9FLfMyqwMuUeolYQLh2eF3CY9XHSScqgQnk=";
+      };
+    in
+    {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
       let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
