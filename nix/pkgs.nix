@@ -1,5 +1,5 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, static ? false
-, doCheck }:
+{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, cacert
+, static ? false, doCheck }:
 
 with ocamlPackages;
 
