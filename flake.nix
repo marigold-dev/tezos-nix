@@ -37,6 +37,7 @@
           defaultApp =
             flake-utils.lib.mkApp { drv = self.defaultPackage."${system}"; };
 
+          hydraJobs = self.packages;
         };
     in with flake-utils.lib;
     eachSystem supportedSystems out // {
