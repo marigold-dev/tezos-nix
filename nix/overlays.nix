@@ -40,6 +40,7 @@ in {
           protocol-name = "011-PtHangz2";
         };
         tezos-clic = callPackage ./tezos/clic.nix { };
+        tezos-client-alpha = callPackage ./tezos/client-alpha.nix { };
         tezos-client-010-PtGRANAD =
           callPackage ./tezos/client-010-PtGRANAD.nix { };
         tezos-client-011-PtHangz2 =
