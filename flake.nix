@@ -27,7 +27,7 @@
 
           tezos_pkgs_trunk =
             pkgs_trunk.callPackage ./nix/pkgs_trunk.nix { doCheck = true; };
-        in {
+        in rec {
           devShell = (pkgs.mkShell { buildInputs = [ pkgs.nixfmt ]; });
 
           packages = tezos_pkgs // tezos_pkgs_trunk;
@@ -37,7 +37,7 @@
           defaultApp =
             flake-utils.lib.mkApp { drv = self.defaultPackage."${system}"; };
 
-          hydraJobs = self.packages;
+          hydraJobs = self.packages."${system}";
         };
     in with flake-utils.lib;
     eachSystem supportedSystems out // {
