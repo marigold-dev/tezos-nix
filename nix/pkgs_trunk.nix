@@ -105,7 +105,6 @@ rec {
       tezos-protocol-updater
       tezos-validator
       tezos-genesis.embedded-protocol
-      tezos-genesis-carthagenet.embedded-protocol
       tezos-demo-counter.embedded-protocol
       tezos-alpha.embedded-protocol
       tezos-demo-noops.embedded-protocol
@@ -129,6 +128,9 @@ rec {
       tezos-alpha.protocol-plugin-registerer
       tezos-010-PtGRANAD.protocol-plugin
       tezos-011-PtHangz2.protocol-plugin
+      prometheus-app
+      logs
+      fmt
       cmdliner
       lwt-exit
       tls

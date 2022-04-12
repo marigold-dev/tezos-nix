@@ -112,6 +112,23 @@ in {
             alcotest
           ];
         };
+
+        prometheus-app = oself.buildDunePackage rec {
+          pname = "prometheus-app";
+          inherit (oself.prometheus) src version;
+
+          strictDeps = true;
+
+          propagatedBuildInputs = with oself; [
+            logs
+            fmt
+            cohttp
+            cohttp-lwt-unix
+            cmdliner
+            prometheus
+          ];
+        };
+
         ptime = osuper.ptime.overrideAttrs (o: rec {
           version = "1.0.0";
           src = final.fetchurl {
