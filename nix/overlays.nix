@@ -28,8 +28,21 @@ in {
 
           doCheck = true;
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
+
+        json-data-encoding = osuper.json-data-encoding.overrideAttrs (o: rec {
+          meta = { platforms = oself.ocaml.meta.platforms; };
+        });
+
+        json-data-encoding-bson = osuper.json-data-encoding-bson.overrideAttrs
+          (o: rec {
+            meta = { platforms = oself.ocaml.meta.platforms; };
+          });
+
+        data-encoding = osuper.data-encoding.overrideAttrs (o: rec {
+          meta = { platforms = oself.ocaml.meta.platforms; };
+        });
 
         tezos-010-PtGRANAD-test-helpers =
           callPackage ./tezos/010-PtGRANAD-test-helpers.nix { };

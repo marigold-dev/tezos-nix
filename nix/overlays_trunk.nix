@@ -91,7 +91,7 @@ in {
 
           inherit (oself.topkg) buildPhase installPhase;
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
         prometheus = oself.buildDunePackage rec {
@@ -114,7 +114,7 @@ in {
             alcotest
           ];
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
         prometheus-app = oself.buildDunePackage rec {
@@ -132,7 +132,7 @@ in {
             prometheus
           ];
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
         ptime = osuper.ptime.overrideAttrs (o: rec {
@@ -160,7 +160,7 @@ in {
 
           checkInputs = (with oself; [ alcotest ff-pbt ]);
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         });
 
         ringo = osuper.ringo.overrideAttrs (o: rec {
@@ -172,7 +172,7 @@ in {
             sha256 = "sha256-eRSlkIP6JJiOwcBracIiD2IeJYeZpHL5cOttCGKzgOI=";
           };
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         });
 
         json-data-encoding = osuper.json-data-encoding.overrideAttrs (o: rec {
@@ -184,7 +184,7 @@ in {
             sha256 = "sha256-4FNUU82sq3ylgw0lxHlwi1OV58NRRh9zJqE47YyQZSc=";
           };
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         });
 
         json-data-encoding-bson = osuper.json-data-encoding-bson.overrideAttrs
@@ -192,7 +192,7 @@ in {
             version = "0.11";
             src = oself.json-data-encoding.src;
 
-            meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+            meta = { platforms = oself.ocaml.meta.platforms; };
           });
 
         data-encoding = osuper.data-encoding.overrideAttrs (o: rec {
@@ -207,7 +207,7 @@ in {
           propagatedBuildInputs = o.propagatedBuildInputs
             ++ (with oself; [ either zarith_stubs_js ]);
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         });
 
         integers_stubs_js = oself.buildDunePackage rec {
@@ -222,7 +222,7 @@ in {
 
           propagatedBuildInputs = with oself; [ zarith_stubs_js js_of_ocaml ];
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
         ctypes_stubs_js = oself.buildDunePackage rec {
@@ -239,7 +239,7 @@ in {
 
           checkInputs = with oself; [ ctypes ppx_expect ];
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
         ometrics = oself.buildDunePackage rec {
@@ -269,7 +269,7 @@ in {
 
           doCheck = false;
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
         pure-splitmix = oself.buildDunePackage rec {
@@ -285,7 +285,7 @@ in {
 
           doCheck = true;
 
-          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
+          meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
         tezos-010-PtGRANAD-test-helpers =
@@ -295,8 +295,9 @@ in {
         tezos-base = callPackage ./tezos/trunk/base.nix { };
         tezos-base-test-helpers =
           callPackage ./tezos/trunk/base-test-helpers.nix { };
-        tezos-baking-alpha =
-          callPackage ./tezos/trunk/baking-make.nix { protocol-name = "alpha"; };
+        tezos-baking-alpha = callPackage ./tezos/trunk/baking-make.nix {
+          protocol-name = "alpha";
+        };
         tezos-baking-011-PtHangz2 = callPackage ./tezos/trunk/baking-make.nix {
           protocol-name = "011-PtHangz2";
         };
