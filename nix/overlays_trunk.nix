@@ -1,11 +1,11 @@
 final: prev:
 let
-  version = "fdeb9636cb92b553aaf00cc9203d797134e65ec2";
+  version = "314cd38a788da6fcdb94e9bd3c4e0e81ffcbb8ab";
   src = final.fetchFromGitLab {
     owner = "tezos";
     repo = "tezos";
     rev = version;
-    sha256 = "sha256-LaBokXvkueiavu4Z8QXuyfkaJ3tZEZXl9PbrerIpmps=";
+    sha256 = "sha256-pRHFenBVHvp/XhusDYQPuNj2iCeuSj5z0o8rHBiR49I=";
   };
 in {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
