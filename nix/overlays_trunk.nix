@@ -90,6 +90,8 @@ in {
           buildInputs = with oself; [ topkg ];
 
           inherit (oself.topkg) buildPhase installPhase;
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         prometheus = oself.buildDunePackage rec {
@@ -111,6 +113,8 @@ in {
             lwt
             alcotest
           ];
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         prometheus-app = oself.buildDunePackage rec {
@@ -127,6 +131,8 @@ in {
             cmdliner
             prometheus
           ];
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         ptime = osuper.ptime.overrideAttrs (o: rec {
@@ -153,6 +159,8 @@ in {
             ++ (with oself; [ zarith_stubs_js integers_stubs_js integers hex ]);
 
           checkInputs = (with oself; [ alcotest ff-pbt ]);
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         });
 
         ringo = osuper.ringo.overrideAttrs (o: rec {
@@ -163,6 +171,8 @@ in {
             rev = "v${version}";
             sha256 = "sha256-eRSlkIP6JJiOwcBracIiD2IeJYeZpHL5cOttCGKzgOI=";
           };
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         });
 
         json-data-encoding = osuper.json-data-encoding.overrideAttrs (o: rec {
@@ -173,12 +183,16 @@ in {
             rev = "${version}";
             sha256 = "sha256-4FNUU82sq3ylgw0lxHlwi1OV58NRRh9zJqE47YyQZSc=";
           };
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         });
 
         json-data-encoding-bson = osuper.json-data-encoding-bson.overrideAttrs
           (o: rec {
             version = "0.11";
             src = oself.json-data-encoding.src;
+
+            meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
           });
 
         data-encoding = osuper.data-encoding.overrideAttrs (o: rec {
@@ -192,6 +206,8 @@ in {
 
           propagatedBuildInputs = o.propagatedBuildInputs
             ++ (with oself; [ either zarith_stubs_js ]);
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         });
 
         integers_stubs_js = oself.buildDunePackage rec {
@@ -205,6 +221,8 @@ in {
           };
 
           propagatedBuildInputs = with oself; [ zarith_stubs_js js_of_ocaml ];
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         ctypes_stubs_js = oself.buildDunePackage rec {
@@ -220,6 +238,8 @@ in {
           propagatedBuildInputs = with oself; [ integers_stubs_js ];
 
           checkInputs = with oself; [ ctypes ppx_expect ];
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         ometrics = oself.buildDunePackage rec {
@@ -248,6 +268,8 @@ in {
           checkInputs = [ oself.qcheck-alcotest ];
 
           doCheck = false;
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         pure-splitmix = oself.buildDunePackage rec {
@@ -262,6 +284,8 @@ in {
           };
 
           doCheck = true;
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         tezos-010-PtGRANAD-test-helpers =

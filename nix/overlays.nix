@@ -27,6 +27,8 @@ in {
           };
 
           doCheck = true;
+
+          meta = { platforms = oself.ocaml.meta.platforms or [ ]; };
         };
 
         tezos-010-PtGRANAD-test-helpers =
