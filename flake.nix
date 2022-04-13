@@ -37,7 +37,7 @@
           defaultApp =
             flake-utils.lib.mkApp { drv = self.defaultPackage."${system}"; };
 
-          hydraJobs = self.packages."${system}";
+          hydraJobs = builtins.removeAttrs self.packages."${system}" [ "override" "overrideDerivation" ];
         };
     in with flake-utils.lib;
     eachSystem supportedSystems out // {
