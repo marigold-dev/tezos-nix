@@ -43,6 +43,8 @@ in {
         data-encoding = osuper.data-encoding.overrideAttrs (o: rec {
           meta = { platforms = oself.ocaml.meta.platforms; };
         });
+        tezos-genesis =
+          callPackage ./tezos/generic-protocol.nix { protocol-name = "genesis"; };
         tezos-genesis-carthagenet = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "genesis-carthagenet";
         };
@@ -97,9 +99,6 @@ in {
         tezos-client-commands = callPackage ./tezos/client-commands.nix { };
         tezos-context = callPackage ./tezos/context.nix { };
         tezos-crypto = callPackage ./tezos/crypto.nix { };
-
-        tezos-genesis =
-          callPackage ./tezos/generic-protocol.nix { protocol-name = "genesis"; };
         
         tezos-error-monad = callPackage ./tezos/error-monad.nix { };
         tezos-event-logging = callPackage ./tezos/event-logging.nix { };

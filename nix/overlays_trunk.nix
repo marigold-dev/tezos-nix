@@ -287,11 +287,7 @@ in {
 
           meta = { platforms = oself.ocaml.meta.platforms; };
         };
-
-        tezos-010-PtGRANAD-test-helpers =
-          callPackage ./tezos/010-PtGRANAD-test-helpers.nix { };
-        tezos-011-PtHangz2-test-helpers =
-          callPackage ./tezos/011-PtHangz2-test-helpers.nix { };
+      
         tezos-base = callPackage ./tezos/trunk/base.nix { };
         tezos-base-test-helpers =
           callPackage ./tezos/trunk/base-test-helpers.nix { };
@@ -302,6 +298,9 @@ in {
         tezos-context = callPackage ./tezos/trunk/context.nix { };
         tezos-crypto = callPackage ./tezos/trunk/crypto.nix { };
 
+
+        tezos-genesis =
+          callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "genesis"; };
         tezos-genesis-carthagenet = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "genesis-carthagenet";
         };
