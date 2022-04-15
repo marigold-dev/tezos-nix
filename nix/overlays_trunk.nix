@@ -302,72 +302,60 @@ in {
           protocol-name = "011-PtHangz2";
         };
         tezos-clic = callPackage ./tezos/clic.nix { };
-        tezos-client-010-PtGRANAD =
-          callPackage ./tezos/client-010-PtGRANAD.nix { };
-        tezos-client-011-PtHangz2 =
-          callPackage ./tezos/client-011-PtHangz2.nix { };
-        tezos-client-alpha = callPackage ./tezos/trunk/client-alpha.nix { };
         tezos-client-base = callPackage ./tezos/client-base.nix { };
         tezos-client-base-unix = callPackage ./tezos/client-base-unix.nix { };
         tezos-client-commands = callPackage ./tezos/client-commands.nix { };
         tezos-context = callPackage ./tezos/trunk/context.nix { };
         tezos-crypto = callPackage ./tezos/trunk/crypto.nix { };
 
-        tezos-genesis = callPackage ./tezos/trunk/protocol-make.nix {
-          protocol-name = "genesis";
+        tezos-genesis-carthagenet = callPackage ./tezos/trunk/generic-protocol.nix {
+          protocol-name = "genesis-carthagenet";
         };
-        tezos-genesis-carthagenet =
-          callPackage ./tezos/trunk/protocol-make.nix {
-            protocol-name = "genesis-carthagenet";
-          };
-        tezos-demo-counter = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-demo-counter = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "demo-counter";
         };
-        tezos-demo-noops = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-demo-noops = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "demo-noops";
         };
-        tezos-000-Ps9mPmXa = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-000-Ps9mPmXa = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "000-Ps9mPmXa";
         };
-        tezos-001-PtCJ7pwo = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-001-PtCJ7pwo = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "001-PtCJ7pwo";
         };
-        tezos-002-PsYLVpVv = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-002-PsYLVpVv = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "002-PsYLVpVv";
         };
-        tezos-003-PsddFKi3 = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-003-PsddFKi3 = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "003-PsddFKi3";
         };
-        tezos-004-Pt24m4xi = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-004-Pt24m4xi = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "004-Pt24m4xi";
         };
-        tezos-005-PsBABY5H = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-005-PsBABY5H = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "005-PsBABY5H";
         };
-        tezos-005-PsBabyM1 = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-005-PsBabyM1 = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "005-PsBabyM1";
         };
-        tezos-006-PsCARTHA = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-006-PsCARTHA = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "006-PsCARTHA";
         };
-        tezos-007-PsDELPH1 = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-007-PsDELPH1 = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "007-PsDELPH1";
         };
-        tezos-008-PtEdo2Zk = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-008-PtEdo2Zk = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "008-PtEdo2Zk";
         };
-        tezos-009-PsFLoren = callPackage ./tezos/trunk/protocol-make.nix {
+        tezos-009-PsFLoren = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "009-PsFLoren";
         };
-        tezos-010-PtGRANAD = callPackage ./tezos/trunk/protocol-make.nix {
-          protocol-name = "010-PtGRANAD";
-        };
-        tezos-011-PtHangz2 = callPackage ./tezos/trunk/protocol-make.nix {
-          protocol-name = "011-PtHangz2";
-        };
-        tezos-alpha = callPackage ./tezos/trunk/protocol-make.nix {
-          protocol-name = "alpha";
-        };
+        tezos-010-PtGRANAD = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "010-PtGRANAD"; };
+        tezos-011-PtHangz2 = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "011-PtHangz2"; };
+        tezos-012-Psithaca = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "012-Psithaca"; };
+        tezos-013-PtJakart = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "013-PtJakart"; };
+        tezos-alpha = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "alpha"; };
+
         tezos-error-monad = callPackage ./tezos/error-monad.nix { };
         tezos-event-logging = callPackage ./tezos/event-logging.nix { };
         tezos-event-logging-test-helpers =

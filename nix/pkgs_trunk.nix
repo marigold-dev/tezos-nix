@@ -12,6 +12,21 @@ rec {
     propagatedBuildInputs = with ocamlPackages; [
       tezos-signer-backends
       tezos-client-base-unix
+
+      tezos-alpha.client-commands-registration
+      tezos-alpha.protocol-plugin
+      tezos-alpha.baking-commands
+   
+      tezos-011-PtHangz2.client-commands-registration
+      tezos-011-PtHangz2.protocol-plugin
+
+      tezos-012-Psithaca.client-commands-registration
+      tezos-012-Psithaca.protocol-plugin
+      tezos-012-Psithaca.baking-commands
+
+      tezos-013-PtJakart.client-commands-registration
+      tezos-013-PtJakart.protocol-plugin
+      tezos-013-PtJakart.baking-commands
     ];
 
     inherit doCheck;
