@@ -1,5 +1,5 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, static ? false
-, doCheck }:
+{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, cacert
+, static ? false, doCheck }:
 
 with ocamlPackages;
 
@@ -12,6 +12,20 @@ rec {
     propagatedBuildInputs = with ocamlPackages; [
       tezos-signer-backends
       tezos-client-base-unix
+
+      tezos-alpha.client-commands-registration
+      tezos-alpha.protocol-plugin
+      tezos-alpha.baking-commands
+
+      tezos-010-PtGRANAD.client-commands-registration
+      tezos-010-PtGRANAD.protocol-plugin
+   
+      tezos-011-PtHangz2.client-commands-registration
+      tezos-011-PtHangz2.protocol-plugin
+   
+      tezos-012-Psithaca.client-commands-registration
+      tezos-012-Psithaca.protocol-plugin
+      tezos-012-Psithaca.baking-commands
     ];
 
     inherit doCheck;
@@ -25,17 +39,18 @@ rec {
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_baker";
 
     propagatedBuildInputs = with ocamlPackages; [
-      tezos-base
       tezos-alpha.protocol
-      tezos-baking-alpha.commands
-      tezos-baking-alpha.baking
+      tezos-alpha.baking-commands
+      tezos-alpha.baking
+      tezos-alpha.client
+
+      tezos-base
       tezos-stdlib-unix
       tezos-protocol-environment
       tezos-shell-services
       tezos-shell-context
       tezos-client-base
       tezos-client-base-unix
-      tezos-client-alpha
       tezos-mockup-commands
       tezos-rpc
     ];

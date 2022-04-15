@@ -12,6 +12,21 @@ rec {
     propagatedBuildInputs = with ocamlPackages; [
       tezos-signer-backends
       tezos-client-base-unix
+
+      tezos-alpha.client-commands-registration
+      tezos-alpha.protocol-plugin
+      tezos-alpha.baking-commands
+   
+      tezos-011-PtHangz2.client-commands-registration
+      tezos-011-PtHangz2.protocol-plugin
+
+      tezos-012-Psithaca.client-commands-registration
+      tezos-012-Psithaca.protocol-plugin
+      tezos-012-Psithaca.baking-commands
+
+      tezos-013-PtJakart.client-commands-registration
+      tezos-013-PtJakart.protocol-plugin
+      tezos-013-PtJakart.baking-commands
     ];
 
     inherit doCheck;
@@ -25,17 +40,18 @@ rec {
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_baker";
 
     propagatedBuildInputs = with ocamlPackages; [
-      tezos-base
       tezos-alpha.protocol
-      tezos-baking-alpha.commands
-      tezos-baking-alpha.baking
+      tezos-alpha.baking-commands
+      tezos-alpha.baking
+      tezos-alpha.client
+
+      tezos-base
       tezos-stdlib-unix
       tezos-protocol-environment
       tezos-shell-services
       tezos-shell-context
       tezos-client-base
       tezos-client-base-unix
-      tezos-client-alpha
       tezos-mockup-commands
       tezos-rpc
     ];
@@ -62,11 +78,11 @@ rec {
       tezos-base
       tezos-crypto
       tezos-alpha.protocol
-      tezos-client-alpha
+      tezos-alpha.client
       tezos-client-commands
       tezos-context
-      tezos-baking-alpha.commands
-      tezos-baking-alpha.baking
+      tezos-alpha.baking-commands
+      tezos-alpha.baking
       tezos-stdlib-unix
       tezos-rpc
       tezos-rpc-http
@@ -105,7 +121,6 @@ rec {
       tezos-protocol-updater
       tezos-validator
       tezos-genesis.embedded-protocol
-      tezos-genesis-carthagenet.embedded-protocol
       tezos-demo-counter.embedded-protocol
       tezos-alpha.embedded-protocol
       tezos-demo-noops.embedded-protocol
@@ -129,6 +144,9 @@ rec {
       tezos-alpha.protocol-plugin-registerer
       tezos-010-PtGRANAD.protocol-plugin
       tezos-011-PtHangz2.protocol-plugin
+      prometheus-app
+      logs
+      fmt
       cmdliner
       lwt-exit
       tls

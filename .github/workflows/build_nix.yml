@@ -15,5 +15,3 @@ jobs:
           name: anmonteiro
       - name: "Run nix flake check"
         run: nix flake check
-      - name: "Unit tests"
-        run: nix develop -c dune build @runtest --force --no-buffer
