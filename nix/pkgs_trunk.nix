@@ -78,11 +78,11 @@ rec {
       tezos-base
       tezos-crypto
       tezos-alpha.protocol
-      tezos-client-alpha
+      tezos-alpha.client
       tezos-client-commands
       tezos-context
-      tezos-baking-alpha.commands
-      tezos-baking-alpha.baking
+      tezos-alpha.baking-commands
+      tezos-alpha.baking
       tezos-stdlib-unix
       tezos-rpc
       tezos-rpc-http
