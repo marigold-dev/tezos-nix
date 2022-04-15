@@ -7,11 +7,18 @@ let
     rev = version;
     sha256 = "sha256-+lcezeNlosVuFSdO7Ppk2+K0m6nXqhMBx1VHYiWVSMw=";
   };
+
 in {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
-      let callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
+      let
+        callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
+        fix_platforms = package: package.overrideAttrs (_: {
+          meta = { platforms = oself.ocaml.meta.platforms; };
+        });
       in {
+        resto = fix_platforms osuper.resto;
+        lwt-canceler = fix_platforms osuper.lwt-canceler;
         hacl-star-raw = osuper.hacl-star-raw.overrideAttrs
           (_: { hardeningDisable = [ "strictoverflow" ]; });
 
