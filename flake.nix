@@ -30,14 +30,14 @@
         in rec {
           devShell = (pkgs.mkShell { buildInputs = [ pkgs.nixfmt ]; });
 
-          packages = tezos_pkgs // tezos_pkgs_trunk;
+          packages = builtins.removeAttrs (tezos_pkgs // tezos_pkgs_trunk) [ "override" "overrideDerivation" ];
 
           defaultPackage = tezos_pkgs.tezos-client;
 
           defaultApp =
             flake-utils.lib.mkApp { drv = self.defaultPackage."${system}"; };
 
-          hydraJobs = builtins.removeAttrs self.packages."${system}" [ "override" "overrideDerivation" ];
+          hydraJobs = self.packages."${system}";
         };
     in with flake-utils.lib;
     eachSystem supportedSystems out // {
