@@ -295,12 +295,6 @@ in {
         tezos-base = callPackage ./tezos/trunk/base.nix { };
         tezos-base-test-helpers =
           callPackage ./tezos/trunk/base-test-helpers.nix { };
-        tezos-baking-alpha = callPackage ./tezos/trunk/baking-make.nix {
-          protocol-name = "alpha";
-        };
-        tezos-baking-011-PtHangz2 = callPackage ./tezos/trunk/baking-make.nix {
-          protocol-name = "011-PtHangz2";
-        };
         tezos-clic = callPackage ./tezos/clic.nix { };
         tezos-client-base = callPackage ./tezos/client-base.nix { };
         tezos-client-base-unix = callPackage ./tezos/client-base-unix.nix { };

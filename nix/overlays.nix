@@ -91,11 +91,6 @@ in {
         tezos-alpha = callPackage ./tezos/generic-protocol.nix { protocol-name = "alpha"; };
 
         tezos-base = callPackage ./tezos/base.nix { };
-        tezos-baking-alpha =
-          callPackage ./tezos/baking-make.nix { protocol-name = "alpha"; };
-        tezos-baking-011-PtHangz2 = callPackage ./tezos/baking-make.nix {
-          protocol-name = "011-PtHangz2";
-        };
         tezos-clic = callPackage ./tezos/clic.nix { };
         tezos-client-base = callPackage ./tezos/client-base.nix { };
         tezos-client-base-unix = callPackage ./tezos/client-base-unix.nix { };

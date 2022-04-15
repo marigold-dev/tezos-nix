@@ -39,17 +39,18 @@ rec {
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_baker";
 
     propagatedBuildInputs = with ocamlPackages; [
-      tezos-base
       tezos-alpha.protocol
-      tezos-baking-alpha.commands
-      tezos-baking-alpha.baking
+      tezos-alpha.baking-commands
+      tezos-alpha.baking
+      tezos-alpha.client
+
+      tezos-base
       tezos-stdlib-unix
       tezos-protocol-environment
       tezos-shell-services
       tezos-shell-context
       tezos-client-base
       tezos-client-base-unix
-      tezos-client-alpha
       tezos-mockup-commands
       tezos-rpc
     ];
