@@ -5,7 +5,7 @@
     "enabled" = 1;
     "hidden" = false;
     "description" = "PR \${num}: \${info.title}";
-    "flake_uri" = " 	github:marigold-dev/tezos-nix";
+    "flake" = "github:marigold-dev/tezos-nix";
     "checkinterval" = 30;
     "schedulingshares" = 100;
     "enableemail" = false;

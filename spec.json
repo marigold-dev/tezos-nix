@@ -1,0 +1,1 @@
+{"checkinterval":30,"description":"PR ${num}: ${info.title}","emailoverride":"","enabled":1,"enableemail":false,"flake":"github:marigold-dev/tezos-nix","hidden":false,"inputs":{"pulls":{"emailresponsible":false,"type":"githubpulls","value":"marigold-dev tezos-nix"}},"keepnr":3,"schedulingshares":100}
