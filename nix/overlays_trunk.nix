@@ -13,9 +13,9 @@ in {
     curr_ocaml.overrideScope' (oself: osuper:
       let
         callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
-        fix_platforms = package: package.overrideAttrs (_: {
-          meta = { platforms = oself.ocaml.meta.platforms; };
-        });
+        fix_platforms = package:
+          package.overrideAttrs
+          (_: { meta = { platforms = oself.ocaml.meta.platforms; }; });
       in {
         resto = fix_platforms osuper.resto;
         lwt-canceler = fix_platforms osuper.lwt-canceler;
@@ -294,7 +294,7 @@ in {
 
           meta = { platforms = oself.ocaml.meta.platforms; };
         };
-      
+
         tezos-base = callPackage ./tezos/trunk/base.nix { };
         tezos-base-test-helpers =
           callPackage ./tezos/trunk/base-test-helpers.nix { };
@@ -305,12 +305,13 @@ in {
         tezos-context = callPackage ./tezos/trunk/context.nix { };
         tezos-crypto = callPackage ./tezos/trunk/crypto.nix { };
 
-
-        tezos-genesis =
-          callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "genesis"; };
-        tezos-genesis-carthagenet = callPackage ./tezos/trunk/generic-protocol.nix {
-          protocol-name = "genesis-carthagenet";
+        tezos-genesis = callPackage ./tezos/trunk/generic-protocol.nix {
+          protocol-name = "genesis";
         };
+        tezos-genesis-carthagenet =
+          callPackage ./tezos/trunk/generic-protocol.nix {
+            protocol-name = "genesis-carthagenet";
+          };
         tezos-demo-counter = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "demo-counter";
         };
@@ -350,11 +351,21 @@ in {
         tezos-009-PsFLoren = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "009-PsFLoren";
         };
-        tezos-010-PtGRANAD = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "010-PtGRANAD"; };
-        tezos-011-PtHangz2 = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "011-PtHangz2"; };
-        tezos-012-Psithaca = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "012-Psithaca"; };
-        tezos-013-PtJakart = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "013-PtJakart"; };
-        tezos-alpha = callPackage ./tezos/trunk/generic-protocol.nix { protocol-name = "alpha"; };
+        tezos-010-PtGRANAD = callPackage ./tezos/trunk/generic-protocol.nix {
+          protocol-name = "010-PtGRANAD";
+        };
+        tezos-011-PtHangz2 = callPackage ./tezos/trunk/generic-protocol.nix {
+          protocol-name = "011-PtHangz2";
+        };
+        tezos-012-Psithaca = callPackage ./tezos/trunk/generic-protocol.nix {
+          protocol-name = "012-Psithaca";
+        };
+        tezos-013-PtJakart = callPackage ./tezos/trunk/generic-protocol.nix {
+          protocol-name = "013-PtJakart";
+        };
+        tezos-alpha = callPackage ./tezos/trunk/generic-protocol.nix {
+          protocol-name = "alpha";
+        };
 
         tezos-error-monad = callPackage ./tezos/error-monad.nix { };
         tezos-event-logging = callPackage ./tezos/event-logging.nix { };
