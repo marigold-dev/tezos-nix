@@ -1,5 +1,7 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, cacert
+{ pkgs, stdenv, lib, fetchFromGitLab, zcash, cacert
 , static ? false, doCheck }:
+
+let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12; in
 
 with ocamlPackages;
 

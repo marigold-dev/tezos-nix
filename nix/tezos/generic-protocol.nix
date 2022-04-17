@@ -119,7 +119,7 @@ in rec {
 
     nativeBuildInputs = with ocamlPackages; [ tezos-protocol-compiler ];
 
-    buildInputs =
+    propagatedBuildInputs =
       with ocamlPackages; [ tezos-protocol-environment-sigs tezos-protocol-environment ];
 
     doCheck = true;
