@@ -30,7 +30,11 @@
         in rec {
           devShell = (pkgs.mkShell { buildInputs = [ pkgs.nixfmt ]; });
 
-          packages = builtins.removeAttrs (tezos_pkgs // tezos_pkgs_trunk) [ "override" "overrideDerivation" ];
+          packages = builtins.removeAttrs (tezos_pkgs // tezos_pkgs_trunk
+            // (pkgs.callPackage ./nix/hydra_spec.nix { })) [
+              "override"
+              "overrideDerivation"
+            ];
 
           defaultPackage = tezos_pkgs.tezos-client;
 
