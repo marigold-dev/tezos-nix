@@ -17,7 +17,7 @@
     },
     "generator": {
       "type": "git",
-      "value": "https://github.com/DeterminateSystems/hydra-github-jobsets-generator.git main",
+      "value": "https://github.com/DeterminateSystems/hydra-github-jobsets-generator.git make-flake-definition-fixup-flake-uri",
       "emailresponsible": false
     },
     "nixpkgs": {
