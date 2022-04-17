@@ -1,0 +1,11 @@
+{
+  "checkinterval": 300,
+  "description": "Build tezos bins",
+  "emailoverride": "",
+  "enabled": 1,
+  "enableemail": false,
+  "flake_uri": " \tgithub:marigold-dev/tezos-nix",
+  "hidden": false,
+  "keepnr": 3,
+  "schedulingshares": 100
+}
