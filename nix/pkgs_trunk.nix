@@ -16,7 +16,7 @@ rec {
       tezos-alpha.client-commands-registration
       tezos-alpha.protocol-plugin
       tezos-alpha.baking-commands
-   
+
       tezos-011-PtHangz2.client-commands-registration
       tezos-011-PtHangz2.protocol-plugin
 

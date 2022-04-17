@@ -19,10 +19,10 @@ rec {
 
       tezos-010-PtGRANAD.client-commands-registration
       tezos-010-PtGRANAD.protocol-plugin
-   
+
       tezos-011-PtHangz2.client-commands-registration
       tezos-011-PtHangz2.protocol-plugin
-   
+
       tezos-012-Psithaca.client-commands-registration
       tezos-012-Psithaca.protocol-plugin
       tezos-012-Psithaca.baking-commands
