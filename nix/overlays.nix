@@ -18,6 +18,7 @@ in {
       in {
         resto = fix_platforms osuper.resto;
         lwt-canceler = fix_platforms osuper.lwt-canceler;
+        bisect_ppx = fix_platforms osuper.bisect_ppx;
         hacl-star-raw = osuper.hacl-star-raw.overrideAttrs
           (_: { hardeningDisable = [ "strictoverflow" ]; });
 
