@@ -33,7 +33,10 @@ in rec {
     inherit (tezos-stdlib) version useDune2;
     inherit src;
 
-    propagatedBuildInputs = with ocamlPackages; [ client tezos-client-base-unix ];
+    propagatedBuildInputs = with ocamlPackages; [
+      client
+      tezos-client-base-unix
+    ];
 
     doCheck = true;
   };
@@ -53,7 +56,13 @@ in rec {
     inherit (tezos-stdlib) version useDune2;
     inherit src;
 
-    propagatedBuildInputs = with ocamlPackages; [ tezos-client-base-unix tezos-client-commands client client-commands protocol ];
+    propagatedBuildInputs = with ocamlPackages; [
+      tezos-client-base-unix
+      tezos-client-commands
+      client
+      client-commands
+      protocol
+    ];
 
     doCheck = true;
   };
@@ -119,8 +128,10 @@ in rec {
 
     nativeBuildInputs = with ocamlPackages; [ tezos-protocol-compiler ];
 
-    propagatedBuildInputs =
-      with ocamlPackages; [ tezos-protocol-environment-sigs tezos-protocol-environment ];
+    propagatedBuildInputs = with ocamlPackages; [
+      tezos-protocol-environment-sigs
+      tezos-protocol-environment
+    ];
 
     doCheck = true;
 
@@ -200,7 +211,11 @@ in rec {
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [ protocol embedded-protocol tezos-shell ];
+    buildInputs = with ocamlPackages; [
+      protocol
+      embedded-protocol
+      tezos-shell
+    ];
 
     propagatedBuildInputs = with ocamlPackages; [ protocol-plugin ];
 

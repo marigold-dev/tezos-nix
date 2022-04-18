@@ -1,9 +1,8 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, zcash, cacert
-, static ? false, doCheck }:
+{ pkgs, stdenv, lib, fetchFromGitLab, zcash, cacert, static ? false, doCheck }:
 
-let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12; in
+let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
 
-with ocamlPackages;
+in with ocamlPackages;
 
 rec {
   tezos-client = buildDunePackage {

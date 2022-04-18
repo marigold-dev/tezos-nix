@@ -12,7 +12,7 @@ in {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
       let
-        callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
+        callPackage = oself.callPackage;
         fix_platforms = package:
           package.overrideAttrs
           (_: { meta = { platforms = oself.ocaml.meta.platforms; }; });
@@ -308,64 +308,84 @@ in {
 
         tezos-genesis = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "genesis";
+          ocamlPackages = oself;
         };
         tezos-genesis-carthagenet =
           callPackage ./tezos/trunk/generic-protocol.nix {
             protocol-name = "genesis-carthagenet";
+            ocamlPackages = oself;
           };
         tezos-demo-counter = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "demo-counter";
+          ocamlPackages = oself;
         };
         tezos-demo-noops = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "demo-noops";
+          ocamlPackages = oself;
         };
         tezos-000-Ps9mPmXa = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "000-Ps9mPmXa";
+          ocamlPackages = oself;
         };
         tezos-001-PtCJ7pwo = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "001-PtCJ7pwo";
+          ocamlPackages = oself;
         };
         tezos-002-PsYLVpVv = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "002-PsYLVpVv";
+          ocamlPackages = oself;
         };
         tezos-003-PsddFKi3 = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "003-PsddFKi3";
+          ocamlPackages = oself;
         };
         tezos-004-Pt24m4xi = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "004-Pt24m4xi";
+          ocamlPackages = oself;
         };
         tezos-005-PsBABY5H = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "005-PsBABY5H";
+          ocamlPackages = oself;
         };
         tezos-005-PsBabyM1 = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "005-PsBabyM1";
+          ocamlPackages = oself;
         };
         tezos-006-PsCARTHA = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "006-PsCARTHA";
+          ocamlPackages = oself;
         };
         tezos-007-PsDELPH1 = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "007-PsDELPH1";
+          ocamlPackages = oself;
         };
         tezos-008-PtEdo2Zk = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "008-PtEdo2Zk";
+          ocamlPackages = oself;
         };
         tezos-009-PsFLoren = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "009-PsFLoren";
+          ocamlPackages = oself;
         };
         tezos-010-PtGRANAD = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "010-PtGRANAD";
+          ocamlPackages = oself;
         };
         tezos-011-PtHangz2 = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "011-PtHangz2";
+          ocamlPackages = oself;
         };
         tezos-012-Psithaca = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "012-Psithaca";
+          ocamlPackages = oself;
         };
         tezos-013-PtJakart = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "013-PtJakart";
+          ocamlPackages = oself;
         };
         tezos-alpha = callPackage ./tezos/trunk/generic-protocol.nix {
           protocol-name = "alpha";
+          ocamlPackages = oself;
         };
 
         tezos-error-monad = callPackage ./tezos/error-monad.nix { };

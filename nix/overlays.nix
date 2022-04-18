@@ -11,7 +11,7 @@ in {
   ocaml-ng = builtins.mapAttrs (ocamlVersion: curr_ocaml:
     curr_ocaml.overrideScope' (oself: osuper:
       let
-        callPackage = final.ocaml-ng.${ocamlVersion}.callPackage;
+        callPackage = oself.callPackage;
         fix_platforms = package:
           package.overrideAttrs
           (_: { meta = { platforms = oself.ocaml.meta.platforms; }; });
@@ -48,78 +48,80 @@ in {
           (o: rec { meta = { platforms = oself.ocaml.meta.platforms; }; });
         tezos-genesis = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "genesis";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-genesis-carthagenet = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "genesis-carthagenet";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-demo-counter = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "demo-counter";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-demo-noops = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "demo-noops";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-000-Ps9mPmXa = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "000-Ps9mPmXa";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-001-PtCJ7pwo = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "001-PtCJ7pwo";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-002-PsYLVpVv = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "002-PsYLVpVv";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-003-PsddFKi3 = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "003-PsddFKi3";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-004-Pt24m4xi = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "004-Pt24m4xi";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-005-PsBABY5H = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "005-PsBABY5H";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-005-PsBabyM1 = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "005-PsBabyM1";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-006-PsCARTHA = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "006-PsCARTHA";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-007-PsDELPH1 = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "007-PsDELPH1";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-008-PtEdo2Zk = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "008-PtEdo2Zk";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-009-PsFLoren = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "009-PsFLoren";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-010-PtGRANAD = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "010-PtGRANAD";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-011-PtHangz2 = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "011-PtHangz2";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
         tezos-012-Psithaca = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "012-Psithaca";
-          ocamlPackages = oself; 
+          ocamlPackages = oself;
         };
-        tezos-alpha =
-          callPackage ./tezos/generic-protocol.nix { protocol-name = "alpha"; ocamlPackages = oself; };
+        tezos-alpha = callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "alpha";
+          ocamlPackages = oself;
+        };
 
         tezos-base = callPackage ./tezos/base.nix { };
         tezos-clic = callPackage ./tezos/clic.nix { };
