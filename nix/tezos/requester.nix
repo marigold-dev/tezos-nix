@@ -11,7 +11,8 @@ buildDunePackage {
   checkInputs =
     [ alcotest-lwt qcheck-alcotest tezos-base-test-helpers tezos-test-helpers ];
 
-  doCheck = true;
+  # Broken on aarch64-darwin
+  doCheck = false;
 
   meta = tezos-stdlib.meta // {
     description = "Tezos: generic resource fetching service";
