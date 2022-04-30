@@ -19,6 +19,10 @@ in {
         resto = fix_platforms osuper.resto;
         lwt-canceler = fix_platforms osuper.lwt-canceler;
         bisect_ppx = fix_platforms osuper.bisect_ppx;
+        json-data-encoding = fix_platforms osuper.json-data-encoding;
+        json-data-encoding-bson = fix_platforms osuper.json-data-encoding-bson;
+        data-encoding = fix_platforms osuper.data-encoding;
+ 
         hacl-star-raw = osuper.hacl-star-raw.overrideAttrs
           (_: { hardeningDisable = [ "strictoverflow" ]; });
 
@@ -38,14 +42,6 @@ in {
           meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
-        json-data-encoding = osuper.json-data-encoding.overrideAttrs
-          (o: rec { meta = { platforms = oself.ocaml.meta.platforms; }; });
-
-        json-data-encoding-bson = osuper.json-data-encoding-bson.overrideAttrs
-          (o: rec { meta = { platforms = oself.ocaml.meta.platforms; }; });
-
-        data-encoding = osuper.data-encoding.overrideAttrs
-          (o: rec { meta = { platforms = oself.ocaml.meta.platforms; }; });
         tezos-genesis = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "genesis";
           ocamlPackages = oself;
