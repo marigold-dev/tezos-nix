@@ -22,25 +22,6 @@ in {
         json-data-encoding = fix_platforms osuper.json-data-encoding;
         json-data-encoding-bson = fix_platforms osuper.json-data-encoding-bson;
         data-encoding = fix_platforms osuper.data-encoding;
- 
-        hacl-star-raw = osuper.hacl-star-raw.overrideAttrs
-          (_: { hardeningDisable = [ "strictoverflow" ]; });
-
-        pure-splitmix = oself.buildDunePackage rec {
-          pname = "pure-splitmix";
-          version = "0.3";
-
-          src = final.fetchFromGitHub {
-            owner = "Lysxia";
-            repo = pname;
-            rev = version;
-            sha256 = "RUnsAB4hMV87ItCyGhc47bHGY1iOwVv9kco2HxnzqbU=";
-          };
-
-          doCheck = true;
-
-          meta = { platforms = oself.ocaml.meta.platforms; };
-        };
 
         tezos-genesis = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "genesis";
@@ -120,6 +101,8 @@ in {
         };
 
         tezos-base = callPackage ./tezos/base.nix { };
+        tezos-base-test-helpers =
+          callPackage ./tezos/trunk/base-test-helpers.nix { };
         tezos-clic = callPackage ./tezos/clic.nix { };
         tezos-client-base = callPackage ./tezos/client-base.nix { };
         tezos-client-base-unix = callPackage ./tezos/client-base-unix.nix { };

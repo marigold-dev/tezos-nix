@@ -280,22 +280,6 @@ in {
           meta = { platforms = oself.ocaml.meta.platforms; };
         };
 
-        pure-splitmix = oself.buildDunePackage rec {
-          pname = "pure-splitmix";
-          version = "0.3";
-
-          src = final.fetchFromGitHub {
-            owner = "Lysxia";
-            repo = pname;
-            rev = version;
-            sha256 = "RUnsAB4hMV87ItCyGhc47bHGY1iOwVv9kco2HxnzqbU=";
-          };
-
-          doCheck = true;
-
-          meta = { platforms = oself.ocaml.meta.platforms; };
-        };
-
         tezos-base = callPackage ./tezos/trunk/base.nix { };
         tezos-base-test-helpers =
           callPackage ./tezos/trunk/base-test-helpers.nix { };
