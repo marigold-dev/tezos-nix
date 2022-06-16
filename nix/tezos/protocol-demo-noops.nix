@@ -1,13 +1,11 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-protocol-compiler
-, tezos-protocol-environment-sigs }:
+{ lib, buildDunePackage, tezos-stdlib, tezos-protocol-compiler }:
 
 buildDunePackage {
   pname = "tezos-protocol-demo-noops";
   inherit (tezos-stdlib) version useDune2;
   src = "${tezos-stdlib.base_src}/src/";
 
-  propagatedBuildInputs =
-    [ tezos-protocol-compiler tezos-protocol-environment-sigs ];
+  propagatedBuildInputs = [ tezos-protocol-compiler ];
 
   doCheck = true;
 

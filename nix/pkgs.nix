@@ -2,7 +2,8 @@
 
 let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
 
-in with ocamlPackages;
+in
+with ocamlPackages;
 
 rec {
   tezos-client = buildDunePackage {
@@ -27,6 +28,10 @@ rec {
       tezos-012-Psithaca.client-commands-registration
       tezos-012-Psithaca.protocol-plugin
       tezos-012-Psithaca.baking-commands
+
+      tezos-013-PtJakart.client-commands-registration
+      tezos-013-PtJakart.protocol-plugin
+      tezos-013-PtJakart.baking-commands
     ];
 
     inherit doCheck;
@@ -61,6 +66,45 @@ rec {
       tezos-base-test-helpers
       cacert
     ];
+
+    inherit doCheck;
+
+    meta = { description = "Your service"; };
+  };
+
+  tezos-tx-rollup-node-alpha = buildDunePackage {
+    pname = "tezos-tx-rollup-node-alpha";
+    inherit (ocamlPackages.tezos-stdlib) version;
+
+    src =
+      "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_tx_rollup_node";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      tezos-base
+      tezos-crypto
+      tezos-alpha.protocol
+      tezos-alpha.client
+      tezos-client-commands
+      tezos-context
+      tezos-alpha.baking-commands
+      tezos-alpha.baking
+      tezos-stdlib-unix
+      tezos-rpc
+      tezos-rpc-http
+      tezos-rpc-http-client-unix
+      tezos-rpc-http-server
+      tezos-micheline
+      tezos-client-base
+      tezos-client-base-unix
+      tezos-store
+    ];
+
+    checkInputs = with ocamlPackages;
+      [
+        # alcotest-lwt
+        # tezos-base-test-helpers
+        # cacert
+      ];
 
     inherit doCheck;
 

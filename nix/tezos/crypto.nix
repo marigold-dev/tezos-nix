@@ -1,22 +1,13 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-rpc, tezos-clic, tezos-hacl-glue
-, tezos-hacl-glue-unix, secp256k1-internal, ringo, bls12-381, bls12-381-unix
-, tezos-test-helpers, alcotest-lwt }:
+{ lib, buildDunePackage, tezos-stdlib, tezos-rpc, tezos-clic, tezos-hacl
+, secp256k1-internal, ringo, bls12-381, tezos-test-helpers, alcotest-lwt }:
 
 buildDunePackage {
   pname = "tezos-crypto";
   inherit (tezos-stdlib) version useDune2;
   src = "${tezos-stdlib.base_src}/src/lib_crypto";
 
-  propagatedBuildInputs = [
-    tezos-rpc
-    tezos-clic
-    tezos-hacl-glue
-    tezos-hacl-glue-unix
-    secp256k1-internal
-    ringo
-    bls12-381
-    bls12-381-unix
-  ];
+  propagatedBuildInputs =
+    [ tezos-rpc tezos-clic tezos-hacl secp256k1-internal ringo bls12-381 ];
 
   checkInputs = [ tezos-test-helpers alcotest-lwt ];
 

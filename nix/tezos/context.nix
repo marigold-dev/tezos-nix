@@ -1,5 +1,15 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-base, tezos-shell-services, irmin
-, irmin-pack, digestif, alcotest-lwt }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-base
+, tezos-shell-services
+, irmin
+, irmin-pack
+, digestif
+, alcotest-lwt
+, tezos-test-helpers
+, tezos-test-helpers-extra
+}:
 
 buildDunePackage {
   pname = "tezos-context";
@@ -9,7 +19,7 @@ buildDunePackage {
   propagatedBuildInputs =
     [ tezos-base tezos-shell-services irmin irmin-pack digestif ];
 
-  checkInputs = [ alcotest-lwt ];
+  checkInputs = [ alcotest-lwt tezos-test-helpers tezos-test-helpers-extra ];
 
   doCheck = true;
 

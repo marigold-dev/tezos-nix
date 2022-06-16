@@ -10,12 +10,13 @@ in rec {
     inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [
-      tezos-mockup-registration
-      tezos-proxy
-      tezos-signer-backends
       protocol-parameters
       protocol-plugin
       protocol
+
+      tezos-mockup-registration
+      tezos-proxy
+      tezos-signer-backends
     ];
 
     checkInputs = with ocamlPackages; [
@@ -33,10 +34,7 @@ in rec {
     inherit (tezos-stdlib) version useDune2;
     inherit src;
 
-    propagatedBuildInputs = with ocamlPackages; [
-      client
-      tezos-client-base-unix
-    ];
+    buildInputs = with ocamlPackages; [ client tezos-client-base-unix ];
 
     doCheck = true;
   };
@@ -46,7 +44,7 @@ in rec {
     inherit (tezos-stdlib) version useDune2;
     inherit src;
 
-    propagatedBuildInputs = [ sapling-client ];
+    propagatedBuildInputs = with ocamlPackages; [ sapling-client ];
 
     doCheck = true;
   };
@@ -56,13 +54,7 @@ in rec {
     inherit (tezos-stdlib) version useDune2;
     inherit src;
 
-    propagatedBuildInputs = with ocamlPackages; [
-      tezos-client-base-unix
-      tezos-client-commands
-      client
-      client-commands
-      protocol
-    ];
+    propagatedBuildInputs = with ocamlPackages; [ tezos-client-base-unix tezos-client-commands client client-commands protocol ];
 
     doCheck = true;
   };
@@ -72,19 +64,38 @@ in rec {
     inherit (tezos-stdlib) version useDune2;
     inherit src;
 
-    propagatedBuildInputs = with ocamlPackages; [
-      tezos-shell-context
-      tezos-client-commands
+    buildInputs = with ocamlPackages; [
+      protocol
+      protocol-plugin
+      protocol-parameters
       client
+
+      tezos-base
+      tezos-version
+      tezos-protocol-environment
+      tezos-shell-services
+      tezos-client-base
+      tezos-client-commands
+      tezos-stdlib
+      tezos-stdlib-unix
+      tezos-shell-context
+      tezos-context
+      tezos-rpc-http-client-unix
+      tezos-rpc
+      tezos-rpc-http
+      lwt-canceler
       lwt-exit
+      tezos-tooling
+      data-encoding
       tezos-client-base-unix
+      tezos-mockup
+      tezos-mockup-proxy
+      tezos-mockup-commands
     ];
 
     checkInputs = with ocamlPackages; [
-      tezos-base-test-helpers
-      protocol-parameters
       alcotest-lwt
-      test-helpers
+      tezos-base-test-helpers
       cacert
     ];
 
@@ -97,18 +108,29 @@ in rec {
     inherit (tezos-stdlib) version useDune2;
     inherit src;
 
-    propagatedBuildInputs = with ocamlPackages; [ baking ];
+    propagatedBuildInputs = with ocamlPackages; [
+      baking
+      protocol
+      client
 
-    doCheck = true;
-  };
+      tezos-rpc
+      tezos-base
+      tezos-stdlib-unix
+      tezos-protocol-environment
+      tezos-shell-services
+      tezos-shell-context
+      tezos-client-base
+      tezos-client-commands
+      lwt-exit
+    ];
 
-  # Only available for ithaca and newer
-  baking-commands-registration = buildDunePackage {
-    pname = "tezos-baking-${protocol-name}-commands-registration";
-    inherit (tezos-stdlib) version useDune2;
-    inherit src;
-
-    buildInputs = with ocamlPackages; [ baking ];
+    checkInputs = [
+      # alcotest-lwt
+      # qcheck-alcotest
+      # tezos-test-helpers
+      # tezos-base-test-helpers
+      # cacert
+    ];
 
     doCheck = true;
   };
@@ -128,10 +150,8 @@ in rec {
 
     nativeBuildInputs = with ocamlPackages; [ tezos-protocol-compiler ];
 
-    propagatedBuildInputs = with ocamlPackages; [
-      tezos-protocol-environment-sigs
-      tezos-protocol-environment
-    ];
+    buildInputs =
+      with ocamlPackages; [ tezos-protocol-environment ];
 
     doCheck = true;
 
@@ -187,9 +207,10 @@ in rec {
 
     buildInputs = with ocamlPackages; [
       embedded-protocol
-      protocol
-      tezos-shell
       protocol-parameters
+      protocol
+
+      tezos-shell
       qcheck-alcotest
       tezos-test-helpers
     ];
@@ -211,11 +232,7 @@ in rec {
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [
-      protocol
-      embedded-protocol
-      tezos-shell
-    ];
+    buildInputs = with ocamlPackages; [ protocol embedded-protocol tezos-shell ];
 
     propagatedBuildInputs = with ocamlPackages; [ protocol-plugin ];
 
@@ -229,13 +246,14 @@ in rec {
   test-helpers = buildDunePackage {
     pname = "tezos-${protocol-name}-test-helpers";
     inherit (tezos-stdlib) version useDune2;
-    inherit src;
+    src = "${tezos-stdlib.base_src}/src";
 
     propagatedBuildInputs = with ocamlPackages; [
-      tezos-base
       client
       protocol
       protocol-parameters
+
+      tezos-base
       tezos-protocol-environment
       tezos-shell-services
       tezos-stdlib-unix

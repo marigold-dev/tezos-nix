@@ -20,14 +20,15 @@
 
           pkgs_trunk = import nixpkgs {
             inherit system;
-            overlays = [ overlay_trunk ];
+            overlays = [ overlay overlay_trunk ];
           };
 
           tezos_pkgs = pkgs.callPackage ./nix/pkgs.nix { doCheck = true; };
 
           tezos_pkgs_trunk =
             pkgs_trunk.callPackage ./nix/pkgs_trunk.nix { doCheck = true; };
-        in rec {
+        in
+        rec {
           devShell = (pkgs.mkShell { buildInputs = [ pkgs.nixfmt ]; });
 
           packages = builtins.removeAttrs (tezos_pkgs // tezos_pkgs_trunk) [
@@ -42,7 +43,8 @@
 
           hydraJobs = self.packages."${system}";
         };
-    in with flake-utils.lib;
+    in
+    with flake-utils.lib;
     eachSystem supportedSystems out // {
       overlays = { default = overlay; };
     };

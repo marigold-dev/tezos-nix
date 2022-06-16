@@ -1,6 +1,21 @@
-{ lib, src, version, buildDunePackage, hex, lwt, zarith, alcotest, alcotest-lwt
-, crowbar, zarith_stubs_js, bigstring, lwt_log, ppx_inline_test, qcheck-alcotest
-, tezos-test-helpers }:
+{ lib
+, src
+, alcotest
+, alcotest-lwt
+, bigstring
+, buildDunePackage
+, crowbar
+, hex
+, lwt
+, lwt_log
+, ppx_inline_test
+, qcheck-alcotest
+, ringo
+, tezos-test-helpers
+, version
+, zarith
+, zarith_stubs_js
+}:
 
 buildDunePackage rec {
   pname = "tezos-stdlib";
@@ -17,7 +32,7 @@ buildDunePackage rec {
     rm -rf vendors
   '';
 
-  propagatedBuildInputs = [ hex lwt zarith ppx_inline_test zarith_stubs_js ];
+  propagatedBuildInputs = [ hex lwt zarith ppx_inline_test zarith_stubs_js ringo ];
 
   checkInputs = [
     bigstring

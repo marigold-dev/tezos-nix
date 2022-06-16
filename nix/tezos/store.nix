@@ -1,6 +1,6 @@
 { lib, buildDunePackage, tezos-stdlib, tezos-protocol-updater, tezos-validation
-, tezos-legacy-store, tezos-protocol-compiler, index, camlzip, tar-unix
-, ringo-lwt, digestif, alcotest-lwt, lwt-watcher }:
+, tezos-protocol-compiler, index, camlzip, tar-unix, ringo-lwt, digestif
+, alcotest-lwt, lwt-watcher, prometheus }:
 
 buildDunePackage {
   pname = "tezos-store";
@@ -16,7 +16,7 @@ buildDunePackage {
     lwt-watcher
     tezos-protocol-updater
     tezos-validation
-    # tezos-legacy-store
+    prometheus
   ];
 
   nativeBuildInputs = [ tezos-protocol-compiler ];
