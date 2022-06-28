@@ -1,9 +1,18 @@
-{ pkgs, stdenv, lib, fetchFromGitLab, ocamlPackages, zcash, cacert
-, static ? false, doCheck }:
+{ pkgs
+, stdenv
+, lib
+, fetchFromGitLab
+, ocamlPackages
+, zcash
+, cacert
+, static ? false
+, doCheck
+}:
 
 let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
 
-in with ocamlPackages;
+in
+with ocamlPackages;
 
 rec {
   trunk-tezos-client = buildDunePackage {
@@ -122,30 +131,20 @@ rec {
       tezos-workers
       tezos-protocol-updater
       tezos-validator
-      tezos-genesis.embedded-protocol
-      tezos-demo-counter.embedded-protocol
       tezos-alpha.embedded-protocol
-      tezos-demo-noops.embedded-protocol
-      tezos-000-Ps9mPmXa.embedded-protocol
-      tezos-001-PtCJ7pwo.embedded-protocol
-      tezos-002-PsYLVpVv.embedded-protocol
-      tezos-003-PsddFKi3.embedded-protocol
-      tezos-004-Pt24m4xi.embedded-protocol
-      tezos-005-PsBABY5H.embedded-protocol
-      tezos-005-PsBabyM1.embedded-protocol
-      tezos-006-PsCARTHA.embedded-protocol
-      tezos-007-PsDELPH1.embedded-protocol
-      tezos-008-PtEdo2Zk.embedded-protocol
-      tezos-009-PsFLoren.embedded-protocol
       tezos-010-PtGRANAD.embedded-protocol
       tezos-011-PtHangz2.embedded-protocol
-      tezos-008-PtEdo2Zk.protocol-plugin-registerer
-      tezos-009-PsFLoren.protocol-plugin-registerer
+      tezos-012-Psithaca.embedded-protocol
+      tezos-013-PtJakart.embedded-protocol
       tezos-010-PtGRANAD.protocol-plugin-registerer
       tezos-011-PtHangz2.protocol-plugin-registerer
+      tezos-012-Psithaca.protocol-plugin-registerer
+      tezos-013-PtJakart.protocol-plugin-registerer
       tezos-alpha.protocol-plugin-registerer
       tezos-010-PtGRANAD.protocol-plugin
       tezos-011-PtHangz2.protocol-plugin
+      tezos-012-Psithaca.protocol-plugin
+      tezos-013-PtJakart.protocol-plugin
       prometheus-app
       logs
       fmt

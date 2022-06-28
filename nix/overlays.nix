@@ -1,13 +1,7 @@
+{ version, src }:
+
 final: prev:
-let
-  version = "13.0";
-  src = final.fetchFromGitLab {
-    owner = "tezos";
-    repo = "tezos";
-    rev = "v${version}";
-    sha256 = "sha256-AEY/m3c+6Yo/gqzO+4vzExQ20ICleIUsSFO1qWTO/OI=";
-  };
-in
+
 {
   ocaml-ng = builtins.mapAttrs
     (ocamlVersion: curr_ocaml:
@@ -17,9 +11,24 @@ in
           fix_platforms = package:
             package.overrideAttrs
               (_: { meta = { platforms = oself.ocaml.meta.platforms; }; });
+          disable_tests = package: package.overrideAttrs (_: {
+            doCheck = false;
+          });
         in
         {
-          resto = fix_platforms osuper.resto;
+          cmdliner = osuper.cmdliner_1_1;
+          resto = osuper.resto.overrideAttrs (_: rec {
+            version = "0.6.1";
+            src = prev.fetchFromGitLab {
+              owner = "nomadic-labs";
+              repo = "resto";
+              rev = "v${version}";
+              sha256 = "sha256-B9nMBZYJyjExraGw4fcen/W7vh4FB9X8elAKeNT7A44=";
+            };
+
+            meta = { platforms = oself.ocaml.meta.platforms; };
+          });
+          alcotest = disable_tests osuper.alcotest;
           lwt-canceler = fix_platforms osuper.lwt-canceler;
           bisect_ppx = fix_platforms osuper.bisect_ppx;
           hacl-star-raw = osuper.hacl-star-raw.overrideAttrs
@@ -27,7 +36,7 @@ in
 
           repr = osuper.repr.overrideAttrs (o: rec {
             version = "0.6.0";
-            src = final.fetchFromGitHub {
+            src = prev.fetchFromGitHub {
               owner = "mirage";
               repo = "repr";
               rev = version;
@@ -173,16 +182,35 @@ in
             meta = { platforms = oself.ocaml.meta.platforms; };
           });
 
-          ringo = osuper.ringo.overrideAttrs (o: rec {
-            version = "0.8";
+          ringo = osuper.ringo.overrideAttrs (o: {
+            version = "0.9";
             src = final.fetchFromGitLab {
               owner = "nomadic-labs";
               repo = "ringo";
               rev = "v${version}";
-              sha256 = "sha256-eRSlkIP6JJiOwcBracIiD2IeJYeZpHL5cOttCGKzgOI=";
+              sha256 = "sha256-lPb+WrRsmtOow9BX9FW4HoILlsTuuMrVlK0XPcXWZ9U=";
             };
 
             meta = { platforms = oself.ocaml.meta.platforms; };
+          });
+
+          index = osuper.index.overrideAttrs (_: {
+            # remove test that checks specific output of cmdliner
+            postPatch = ''
+              sed -i '23,30d' test/cli/dune
+            '';
+          });
+
+          crowbar = osuper.crowbar.overrideAttrs (o: {
+            version = "0.2.1";
+            src = final.fetchFromGitHub {
+              owner = "stedolan";
+              repo = o.pname;
+              rev = "v${version}";
+              sha256 = "sha256-0jjwiOZ9Ut+dv5Iw4xNvf396WTehT1VClxY9VHicw4U=";
+            };
+
+            patches = [ ];
           });
 
           json-data-encoding = osuper.json-data-encoding.overrideAttrs (o: rec {
@@ -424,6 +452,7 @@ in
           tezos-test-helpers = callPackage ./tezos/test-helpers.nix { };
           tezos-test-helpers-extra = callPackage ./tezos/test-helpers-extra.nix { };
           tezos-tooling = callPackage ./tezos/tooling.nix { };
+          tezos-tx-rollup-alpha = callPackage ./tezos/tx-rollup-alpha.nix { };
           tezos-store = callPackage ./tezos/store.nix { };
           tezos-validation = callPackage ./tezos/validation.nix { };
           tezos-validator = callPackage ./tezos/validator.nix { };

@@ -3,7 +3,8 @@
 let
   underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
   src = "${tezos-stdlib.base_src}/src";
-in rec {
+in
+rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
     inherit (tezos-stdlib) version useDune2;
@@ -103,6 +104,27 @@ in rec {
     doCheck = false;
   };
 
+  injector = buildDunePackage {
+    pname = "tezos-injector-${protocol-name}";
+    inherit (tezos-stdlib) version useDune2;
+    inherit src;
+
+    postPatch = ''
+      touch tezos-injector-alpha.opam
+    '';
+
+    propagatedBuildInputs = with ocamlPackages; [
+      client
+      protocol
+      tezos-base
+      tezos-client-base
+      tezos-crypto
+      tezos-micheline
+      tezos-shell
+      tezos-workers
+    ];
+  };
+
   baking-commands = buildDunePackage {
     pname = "tezos-baking-${protocol-name}-commands";
     inherit (tezos-stdlib) version useDune2;
@@ -143,7 +165,7 @@ in rec {
     postPatch = ''
       substituteInPlace ./proto_${underscore_name}/lib_protocol/dune.inc \
         --replace "-warn-error +a" "-warn-error -A" \
-        --replace "-warn-error \"+a\"" "-warn-error -A"
+        --replace "-warn-error \"+a\"" "-warn-error -A" || true
     '';
 
     strictDeps = true;

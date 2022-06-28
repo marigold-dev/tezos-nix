@@ -2,9 +2,15 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+
+    tezos_release.url = "gitlab:tezos/tezos/v13.0";
+    tezos_release.flake = false;
+
+    tezos_trunk.url = "gitlab:tezos/tezos";
+    tezos_trunk.flake = false;
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils, tezos_release, tezos_trunk }:
     let
       supportedSystems =
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
@@ -14,19 +20,29 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ overlay ];
+            overlays = [ (overlay { version = "13.0"; src = tezos_release; }) ];
           };
           inherit (pkgs) lib;
 
           pkgs_trunk = import nixpkgs {
             inherit system;
-            overlays = [ overlay overlay_trunk ];
+            overlays = [
+              (overlay {
+                version = tezos_trunk.rev;
+                src = tezos_trunk;
+              })
+              overlay_trunk
+            ];
           };
 
-          tezos_pkgs = pkgs.callPackage ./nix/pkgs.nix { doCheck = true; };
+          tezos_pkgs = pkgs.callPackage
+            ./nix/pkgs.nix
+            { doCheck = true; };
 
           tezos_pkgs_trunk =
-            pkgs_trunk.callPackage ./nix/pkgs_trunk.nix { doCheck = true; };
+            pkgs_trunk.callPackage
+              ./nix/pkgs_trunk.nix
+              { doCheck = true; };
         in
         rec {
           devShell = (pkgs.mkShell { buildInputs = [ pkgs.nixfmt ]; });
@@ -45,7 +61,9 @@
         };
     in
     with flake-utils.lib;
-    eachSystem supportedSystems out // {
+    eachSystem
+      supportedSystems
+      out // {
       overlays = { default = overlay; };
     };
 }

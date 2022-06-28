@@ -80,23 +80,24 @@ rec {
       "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_tx_rollup_node";
 
     propagatedBuildInputs = with ocamlPackages; [
-      tezos-base
-      tezos-crypto
-      tezos-alpha.protocol
+      tezos-alpha.baking
+      tezos-alpha.baking-commands
       tezos-alpha.client
+      tezos-alpha.protocol
+      tezos-base
+      tezos-client-base
+      tezos-client-base-unix
       tezos-client-commands
       tezos-context
-      tezos-alpha.baking-commands
-      tezos-alpha.baking
-      tezos-stdlib-unix
+      tezos-crypto
+      tezos-micheline
       tezos-rpc
       tezos-rpc-http
       tezos-rpc-http-client-unix
       tezos-rpc-http-server
-      tezos-micheline
-      tezos-client-base
-      tezos-client-base-unix
+      tezos-stdlib-unix
       tezos-store
+      tezos-tx-rollup-alpha
     ];
 
     checkInputs = with ocamlPackages;
@@ -125,11 +126,7 @@ rec {
       tezos-workers
       tezos-protocol-updater
       tezos-validator
-      tezos-genesis.embedded-protocol
-      tezos-genesis-carthagenet.embedded-protocol
-      tezos-demo-counter.embedded-protocol
       tezos-alpha.embedded-protocol
-      tezos-demo-noops.embedded-protocol
       tezos-000-Ps9mPmXa.embedded-protocol
       tezos-001-PtCJ7pwo.embedded-protocol
       tezos-002-PsYLVpVv.embedded-protocol
@@ -143,14 +140,18 @@ rec {
       tezos-009-PsFLoren.embedded-protocol
       tezos-010-PtGRANAD.embedded-protocol
       tezos-011-PtHangz2.embedded-protocol
-      tezos-008-PtEdo2Zk.protocol-plugin-registerer
-      tezos-009-PsFLoren.protocol-plugin-registerer
+      tezos-012-Psithaca.embedded-protocol
+      tezos-013-PtJakart.embedded-protocol
       tezos-010-PtGRANAD.protocol-plugin-registerer
       tezos-011-PtHangz2.protocol-plugin-registerer
+      tezos-012-Psithaca.protocol-plugin-registerer
+      tezos-013-PtJakart.protocol-plugin-registerer
       tezos-alpha.protocol-plugin-registerer
       tezos-010-PtGRANAD.protocol-plugin
       tezos-011-PtHangz2.protocol-plugin
-      cmdliner
+      tezos-012-Psithaca.protocol-plugin
+      tezos-013-PtJakart.protocol-plugin
+      prometheus-app
       lwt-exit
       tls
       cstruct
