@@ -186,7 +186,7 @@ final: prev:
             version = "0.9";
             src = final.fetchFromGitLab {
               owner = "nomadic-labs";
-              repo = "ringo";
+              repo = "0.9";
               rev = "v${version}";
               sha256 = "sha256-lPb+WrRsmtOow9BX9FW4HoILlsTuuMrVlK0XPcXWZ9U=";
             };
