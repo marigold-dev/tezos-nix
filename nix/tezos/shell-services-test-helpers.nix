@@ -1,10 +1,18 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-test-helpers, tezos-base
-, tezos-shell-services, qcheck-core, qcheck-alcotest }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-test-helpers
+, tezos-base
+, tezos-shell-services
+, qcheck-core
+, qcheck-alcotest
+}:
 
 buildDunePackage {
   pname = "tezos-shell-services-test-helpers";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_shell_services/test_helpers/";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
     [ tezos-base tezos-shell-services tezos-test-helpers qcheck-core ];

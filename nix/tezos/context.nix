@@ -13,8 +13,9 @@
 
 buildDunePackage {
   pname = "tezos-context";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_context";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
     [ tezos-base tezos-shell-services irmin irmin-pack digestif ];

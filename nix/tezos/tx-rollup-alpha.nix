@@ -23,8 +23,9 @@
 
 buildDunePackage {
   pname = "tezos-tx-rollup-alpha";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/proto_alpha/lib_tx_rollup";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   minimalOCamlVersion = "4.12";
 

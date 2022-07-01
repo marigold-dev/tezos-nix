@@ -1,11 +1,22 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-base, tezos-context
-, tezos-stdlib-unix, tezos-protocol-environment, tezos-protocol-updater
-, tezos-shell, tezos-shell-context, tezos-validation, lwt-exit }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-base
+, tezos-context
+, tezos-stdlib-unix
+, tezos-protocol-environment
+, tezos-protocol-updater
+, tezos-shell
+, tezos-shell-context
+, tezos-validation
+, lwt-exit
+}:
 
 buildDunePackage {
   pname = "tezos-validator";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/bin_validation";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-base

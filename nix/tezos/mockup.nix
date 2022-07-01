@@ -1,11 +1,21 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-mockup-registration
-, tezos-rpc-http-client, tezos-p2p, resto-cohttp-self-serving-client
-, tezos-mockup-proxy, alcotest-lwt, qcheck-alcotest, tezos-base-test-helpers }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-mockup-registration
+, tezos-rpc-http-client
+, tezos-p2p
+, resto-cohttp-self-serving-client
+, tezos-mockup-proxy
+, alcotest-lwt
+, qcheck-alcotest
+, tezos-base-test-helpers
+}:
 
 buildDunePackage {
   pname = "tezos-mockup";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_mockup";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-mockup-registration

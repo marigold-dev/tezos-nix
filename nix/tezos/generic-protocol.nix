@@ -2,12 +2,13 @@
 
 let
   underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
-  src = "${tezos-stdlib.base_src}/src";
+  src = "${tezos-stdlib.base_src}";
 in
 rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [
@@ -32,7 +33,8 @@ rec {
 
   client-commands = buildDunePackage {
     pname = "tezos-client-${protocol-name}-commands";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     buildInputs = with ocamlPackages; [ client tezos-client-base-unix ];
@@ -42,7 +44,8 @@ rec {
 
   client-commands-registration = buildDunePackage {
     pname = "tezos-client-${protocol-name}-commands-registration";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [ sapling-client ];
@@ -52,7 +55,8 @@ rec {
 
   sapling-client = buildDunePackage {
     pname = "tezos-client-sapling-${protocol-name}";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [ tezos-client-base-unix tezos-client-commands client client-commands protocol ];
@@ -62,7 +66,8 @@ rec {
 
   baking = buildDunePackage {
     pname = "tezos-baking-${protocol-name}";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     buildInputs = with ocamlPackages; [
@@ -106,7 +111,8 @@ rec {
 
   injector = buildDunePackage {
     pname = "tezos-injector-${protocol-name}";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     postPatch = ''
@@ -127,7 +133,8 @@ rec {
 
   baking-commands = buildDunePackage {
     pname = "tezos-baking-${protocol-name}-commands";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [
@@ -159,7 +166,8 @@ rec {
 
   protocol = buildDunePackage {
     pname = "tezos-protocol-${protocol-name}";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit src;
 
     postPatch = ''
@@ -184,7 +192,8 @@ rec {
 
   protocol-parameters = buildDunePackage {
     pname = "tezos-protocol-${protocol-name}-parameters";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit (protocol) postPatch;
     inherit src;
 
@@ -199,7 +208,8 @@ rec {
 
   embedded-protocol = buildDunePackage {
     pname = "tezos-embedded-protocol-${protocol-name}";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit (protocol) postPatch;
     inherit src;
 
@@ -221,7 +231,8 @@ rec {
 
   protocol-plugin = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit (protocol) postPatch;
     inherit src;
 
@@ -248,7 +259,8 @@ rec {
 
   protocol-plugin-registerer = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}-registerer";
-    inherit (tezos-stdlib) version useDune2;
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
     inherit (protocol) postPatch;
     inherit src;
 
@@ -267,8 +279,9 @@ rec {
 
   test-helpers = buildDunePackage {
     pname = "tezos-${protocol-name}-test-helpers";
-    inherit (tezos-stdlib) version useDune2;
-    src = "${tezos-stdlib.base_src}/src";
+    inherit (tezos-stdlib) version;
+    duneVersion = "3";
+    src = "${tezos-stdlib.base_src}";
 
     propagatedBuildInputs = with ocamlPackages; [
       client

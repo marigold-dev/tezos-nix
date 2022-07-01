@@ -1,10 +1,18 @@
-{ lib, buildDunePackage, ocaml, tezos-stdlib, tezos-version
-, tezos-protocol-environment, ocp-ocamlres, pprint }:
+{ lib
+, buildDunePackage
+, ocaml
+, tezos-stdlib
+, tezos-version
+, tezos-protocol-environment
+, ocp-ocamlres
+, pprint
+}:
 
 buildDunePackage {
   pname = "tezos-protocol-compiler";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_protocol_compiler";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   minimalOCamlVersion = "4.12";
 

@@ -1,10 +1,16 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-error-monad, resto, resto-directory
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-error-monad
+, resto
+, resto-directory
 }:
 
 buildDunePackage {
   pname = "tezos-rpc";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_rpc";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-error-monad resto resto-directory ];
 

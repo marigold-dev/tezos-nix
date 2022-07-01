@@ -1,11 +1,24 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-protocol-updater, tezos-validation
-, tezos-protocol-compiler, index, camlzip, tar-unix, ringo-lwt, digestif
-, alcotest-lwt, lwt-watcher, prometheus }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-protocol-updater
+, tezos-validation
+, tezos-protocol-compiler
+, index
+, camlzip
+, tar-unix
+, ringo-lwt
+, digestif
+, alcotest-lwt
+, lwt-watcher
+, prometheus
+}:
 
 buildDunePackage {
   pname = "tezos-store";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_store";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     index

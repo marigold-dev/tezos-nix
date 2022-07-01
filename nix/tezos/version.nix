@@ -1,10 +1,17 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-base, ppx_deriving
-, dune-configurator, alcotest }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-base
+, ppx_deriving
+, dune-configurator
+, alcotest
+}:
 
 buildDunePackage {
   pname = "tezos-version";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_version";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-base ppx_deriving dune-configurator ];
 

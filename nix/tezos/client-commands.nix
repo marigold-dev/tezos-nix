@@ -1,10 +1,16 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-signer-backends, data-encoding
-, alcotest-lwt }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-signer-backends
+, data-encoding
+, alcotest-lwt
+}:
 
 buildDunePackage {
   pname = "tezos-client-commands";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_client_commands";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-signer-backends data-encoding ];
 

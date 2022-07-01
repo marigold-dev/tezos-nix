@@ -1,11 +1,20 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-rpc-http, resto-cohttp-server
-, resto-acl, alcotest-lwt, tezos-test-helpers, tezos-base-test-helpers, cacert
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-rpc-http
+, resto-cohttp-server
+, resto-acl
+, alcotest-lwt
+, tezos-test-helpers
+, tezos-base-test-helpers
+, cacert
 }:
 
 buildDunePackage {
   pname = "tezos-rpc-http-server";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_rpc_http";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
     [ tezos-rpc-http resto-cohttp-server resto-acl cacert ];

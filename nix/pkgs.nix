@@ -11,6 +11,8 @@ rec {
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/bin_client";
 
+    duneVersion = "3";
+
     propagatedBuildInputs = with ocamlPackages; [
       tezos-signer-backends
       tezos-client-base-unix
@@ -44,6 +46,8 @@ rec {
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_baker";
 
+    duneVersion = "3";
+
     propagatedBuildInputs = with ocamlPackages; [
       tezos-alpha.protocol
       tezos-alpha.baking-commands
@@ -75,9 +79,10 @@ rec {
   tezos-tx-rollup-node-alpha = buildDunePackage {
     pname = "tezos-tx-rollup-node-alpha";
     inherit (ocamlPackages.tezos-stdlib) version;
-
     src =
       "${ocamlPackages.tezos-stdlib.base_src}/src/proto_alpha/bin_tx_rollup_node";
+
+    duneVersion = "3";
 
     propagatedBuildInputs = with ocamlPackages; [
       tezos-alpha.baking
@@ -116,6 +121,8 @@ rec {
     pname = "tezos-node";
     inherit (ocamlPackages.tezos-stdlib) version;
     src = "${ocamlPackages.tezos-stdlib.base_src}/src/bin_node";
+
+    duneVersion = "3";
 
     buildInputs = with ocamlPackages; [
       tezos-base

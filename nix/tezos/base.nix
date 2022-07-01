@@ -1,11 +1,27 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-crypto, tezos-hacl, data-encoding
-, tezos-micheline, tezos-error-monad, tezos-test-helpers, tezos-rpc, tezos-clic
-, tezos-event-logging, tezos-stdlib-unix, ezjsonm, ptime, ipaddr, lwt }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-crypto
+, tezos-hacl
+, data-encoding
+, tezos-micheline
+, tezos-error-monad
+, tezos-test-helpers
+, tezos-rpc
+, tezos-clic
+, tezos-event-logging
+, tezos-stdlib-unix
+, ezjsonm
+, ptime
+, ipaddr
+, lwt
+}:
 
 buildDunePackage {
   pname = "tezos-base";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_base";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-stdlib

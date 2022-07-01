@@ -1,11 +1,23 @@
-{ lib, ocaml, buildDunePackage, bls12-381, bls12-381-legacy, tezos-stdlib
-, tezos-base, tezos-sapling, tezos-context, tezos-test-helpers, zarith
-, alcotest-lwt, ringo-lwt }:
+{ lib
+, ocaml
+, buildDunePackage
+, bls12-381
+, bls12-381-legacy
+, tezos-stdlib
+, tezos-base
+, tezos-sapling
+, tezos-context
+, tezos-test-helpers
+, zarith
+, alcotest-lwt
+, ringo-lwt
+}:
 
 buildDunePackage {
   pname = "tezos-protocol-environment";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_protocol_environment";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     bls12-381

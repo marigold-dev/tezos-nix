@@ -2,8 +2,9 @@
 
 buildDunePackage {
   pname = "tezos-shell-context";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_protocol_environment";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-protocol-environment ];
 

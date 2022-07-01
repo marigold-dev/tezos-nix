@@ -1,10 +1,18 @@
-{ lib, buildDunePackage, ocaml, tezos-stdlib, tezos-crypto, tezos-rust-libs
-, tezos-base-test-helpers, alcotest-lwt }:
+{ lib
+, buildDunePackage
+, ocaml
+, tezos-stdlib
+, tezos-crypto
+, tezos-rust-libs
+, tezos-base-test-helpers
+, alcotest-lwt
+}:
 
 buildDunePackage {
   pname = "tezos-sapling";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_sapling";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-crypto tezos-rust-libs ];
 

@@ -3,8 +3,9 @@
 buildDunePackage {
   pname = "tezos-hacl-glue";
 
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_hacl_glue/virtual";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   doCheck = true;
 

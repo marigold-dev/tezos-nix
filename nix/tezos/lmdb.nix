@@ -1,5 +1,12 @@
-{ lib, fetchFromGitLab, pkg-config, buildDunePackage, lmdb, rresult, cstruct
-, alcotest }:
+{ lib
+, fetchFromGitLab
+, pkg-config
+, buildDunePackage
+, lmdb
+, rresult
+, cstruct
+, alcotest
+}:
 
 let
   version = "7.4";
@@ -10,12 +17,13 @@ let
     sha256 = "0sghc60xzr02pmmkr626pnhzrnczf7mki7qyxzzfn7rbbdbrf4wp";
   };
 
-in buildDunePackage {
+in
+buildDunePackage {
   pname = "tezos-lmdb";
   version = version;
   src = "${src}/vendors/ocaml-lmdb";
 
-  useDune2 = true;
+  duneVersion = true;
 
   nativeBuildInputs = [ pkg-config ];
 

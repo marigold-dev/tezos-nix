@@ -1,10 +1,18 @@
-{ lib, buildDunePackage, alcotest, alcotest-lwt, tezos-base
-, tezos-event-logging-test-helpers, tezos-stdlib, tezos-test-helpers }:
+{ lib
+, buildDunePackage
+, alcotest
+, alcotest-lwt
+, tezos-base
+, tezos-event-logging-test-helpers
+, tezos-stdlib
+, tezos-test-helpers
+}:
 
-buildDunePackage {
+buildDunePackage rec {
   pname = "tezos-base-test-helpers";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_base/test_helpers";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
     [ alcotest alcotest-lwt tezos-base tezos-event-logging-test-helpers ];

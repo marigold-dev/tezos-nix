@@ -9,7 +9,7 @@
 , doCheck
 }:
 
-let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
+let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_13;
 
 in
 with ocamlPackages;

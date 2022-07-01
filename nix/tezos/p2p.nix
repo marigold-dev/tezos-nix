@@ -1,11 +1,23 @@
-{ lib, buildDunePackage, alcotest-lwt, astring, lwt, lwt-canceler, lwt-watcher
-, ringo, tezos-base-test-helpers, tezos-p2p-services, tezos-stdlib
-, tezos-version, prometheus }:
+{ lib
+, buildDunePackage
+, alcotest-lwt
+, astring
+, lwt
+, lwt-canceler
+, lwt-watcher
+, ringo
+, tezos-base-test-helpers
+, tezos-p2p-services
+, tezos-stdlib
+, tezos-version
+, prometheus
+}:
 
 buildDunePackage {
   pname = "tezos-p2p";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_p2p";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     lwt

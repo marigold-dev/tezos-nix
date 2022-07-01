@@ -1,10 +1,21 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-rpc-http-client-unix
-, tezos-signer-services, alcotest, alcotest-lwt }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-rpc-http-client-unix
+, tezos-signer-services
+, alcotest
+, alcotest-lwt
+}:
 
-buildDunePackage {
+buildDunePackage rec {
   pname = "tezos-signer-backends";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_signer_backends";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}/src";
+
+  postPatch = ''
+    echo "(lang dune 3.2)" > dune-project
+  '';
 
   propagatedBuildInputs = [ tezos-rpc-http-client-unix tezos-signer-services ];
 

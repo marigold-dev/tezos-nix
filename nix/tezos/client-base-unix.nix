@@ -1,11 +1,21 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-client-base, lwt-exit
-, tezos-signer-backends, tezos-proxy, tezos-mockup-commands, alcotest-lwt
-, tezos-base-test-helpers, cacert }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-client-base
+, lwt-exit
+, tezos-signer-backends
+, tezos-proxy
+, tezos-mockup-commands
+, alcotest-lwt
+, tezos-base-test-helpers
+, cacert
+}:
 
 buildDunePackage {
   pname = "tezos-client-base-unix";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_client_base_unix";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-client-base

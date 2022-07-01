@@ -1,11 +1,20 @@
-{ lib, buildDunePackage, tezos-stdlib, hacl-star, hacl-star-raw, ctypes_stubs_js
-, integers_stubs_js, tezos-test-helpers, tezos-error-monad }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, hacl-star
+, hacl-star-raw
+, ctypes_stubs_js
+, integers_stubs_js
+, tezos-test-helpers
+, tezos-error-monad
+}:
 
 buildDunePackage {
   pname = "tezos-hacl";
 
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_hacl";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   doCheck = true;
 

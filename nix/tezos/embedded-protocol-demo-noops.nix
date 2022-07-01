@@ -1,10 +1,15 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-protocol-demo-noops
-, tezos-protocol-updater }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-protocol-demo-noops
+, tezos-protocol-updater
+}:
 
 buildDunePackage {
   pname = "tezos-embedded-protocol-demo-noops";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-protocol-demo-noops tezos-protocol-updater ];
 

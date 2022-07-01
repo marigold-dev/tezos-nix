@@ -1,10 +1,16 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-stdlib-unix, alcotest, alcotest-lwt
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-stdlib-unix
+, alcotest
+, alcotest-lwt
 }:
 
 buildDunePackage {
   pname = "tezos-clic";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_clic";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-stdlib-unix ];
 

@@ -2,8 +2,9 @@
 
 buildDunePackage {
   pname = "tezos-rpc-http-client-unix";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_rpc_http";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-rpc-http-client cohttp-lwt-unix ];
 

@@ -1,10 +1,17 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-workers, tezos-p2p-services
-, tezos-version, alcotest-lwt }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-workers
+, tezos-p2p-services
+, tezos-version
+, alcotest-lwt
+}:
 
 buildDunePackage {
   pname = "tezos-shell-services";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_shell_services";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-workers tezos-p2p-services tezos-version ];
 

@@ -1,11 +1,22 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-p2p, tezos-requester
-, tezos-validation, tezos-store, lwt-canceler, alcotest-lwt, qcheck-alcotest
-, tezos-base-test-helpers, tezos-test-helpers }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-p2p
+, tezos-requester
+, tezos-validation
+, tezos-store
+, lwt-canceler
+, alcotest-lwt
+, qcheck-alcotest
+, tezos-base-test-helpers
+, tezos-test-helpers
+}:
 
 buildDunePackage {
   pname = "tezos-shell";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_shell";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
     [ lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation ];

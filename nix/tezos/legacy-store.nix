@@ -1,11 +1,20 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-context, tezos-lmdb
-, tezos-validation, tezos-shell-services, tezos-protocol-compiler, lwt-watcher
-, alcotest-lwt }:
+{ lib
+, buildDunePackage
+, tezos-stdlib
+, tezos-context
+, tezos-lmdb
+, tezos-validation
+, tezos-shell-services
+, tezos-protocol-compiler
+, lwt-watcher
+, alcotest-lwt
+}:
 
 buildDunePackage {
   pname = "tezos-legacy-store";
-  inherit (tezos-stdlib) version useDune2;
-  src = "${tezos-stdlib.base_src}/src/lib_store/legacy_store";
+  inherit (tezos-stdlib) version;
+  duneVersion = "3";
+  src = "${tezos-stdlib.base_src}";
 
   postPatch = ''
     rm -rf vendors
