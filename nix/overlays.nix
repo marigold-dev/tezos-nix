@@ -1,4 +1,4 @@
-{ version, src }:
+{ octez_version, src }:
 
 final: prev:
 
@@ -182,12 +182,12 @@ final: prev:
             meta = { platforms = oself.ocaml.meta.platforms; };
           });
 
-          ringo = osuper.ringo.overrideAttrs (o: {
+          ringo = osuper.ringo.overrideAttrs (o: rec{
             version = "0.9";
             src = final.fetchFromGitLab {
               owner = "nomadic-labs";
               repo = "ringo";
-              rev = "v0.9";
+              rev = "v${version}";
               sha256 = "sha256-lPb+WrRsmtOow9BX9FW4HoILlsTuuMrVlK0XPcXWZ9U=";
             };
 
@@ -201,7 +201,7 @@ final: prev:
             '';
           });
 
-          crowbar = osuper.crowbar.overrideAttrs (o: {
+          crowbar = osuper.crowbar.overrideAttrs (o: rec {
             version = "0.2.1";
             src = final.fetchFromGitHub {
               owner = "stedolan";
@@ -448,7 +448,7 @@ final: prev:
           tezos-signer-backends = callPackage ./tezos/signer-backends.nix { };
           tezos-signer-services = callPackage ./tezos/signer-services.nix { };
           tezos-stdlib-unix = callPackage ./tezos/stdlib-unix.nix { };
-          tezos-stdlib = callPackage ./tezos/stdlib.nix { inherit src version; };
+          tezos-stdlib = callPackage ./tezos/stdlib.nix { inherit src; version = octez_version; };
           tezos-test-helpers = callPackage ./tezos/test-helpers.nix { };
           tezos-test-helpers-extra = callPackage ./tezos/test-helpers-extra.nix { };
           tezos-tooling = callPackage ./tezos/tooling.nix { };

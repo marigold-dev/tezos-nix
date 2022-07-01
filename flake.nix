@@ -20,7 +20,7 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ (overlay { version = "13.0"; src = tezos_release; }) ];
+            overlays = [ (overlay { octez_version = "13.0"; src = tezos_release; }) ];
           };
           inherit (pkgs) lib;
 
@@ -28,7 +28,7 @@
             inherit system;
             overlays = [
               (overlay {
-                version = tezos_trunk.rev;
+                octez_version = tezos_trunk.rev;
                 src = tezos_trunk;
               })
               overlay_trunk
