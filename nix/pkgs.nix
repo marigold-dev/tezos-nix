@@ -43,7 +43,10 @@ rec {
 
     inherit doCheck;
 
-    meta = { description = "Your service"; };
+    meta = {
+      description = "Your service";
+      mainProgram = "tezos-client";
+    };
   };
 
   tezos-baker-alpha = buildDunePackage {
@@ -78,7 +81,10 @@ rec {
 
     inherit doCheck;
 
-    meta = { description = "Your service"; };
+    meta = {
+      description = "Your service";
+      mainProgram = "tezos-baker-alpha";
+    };
   };
 
   tezos-tx-rollup-node-alpha = buildDunePackage {
@@ -119,7 +125,10 @@ rec {
 
     inherit doCheck;
 
-    meta = { description = "Your service"; };
+    meta = {
+      description = "Your service";
+      mainProgram = "tezos-tx-rollup-node-alpha";
+    };
   };
 
   tezos-node = ocamlPackages.buildDunePackage rec {
@@ -179,6 +188,10 @@ rec {
     '';
 
     doCheck = true;
-  };
 
+    meta = {
+      description = "Your service";
+      mainProgram = "tezos-node";
+    };
+  };
 }
