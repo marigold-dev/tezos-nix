@@ -2,27 +2,35 @@
 , fetchpatch
 , buildDunePackage
 , tezos-stdlib
-, tezos-rpc
-, tezos-clic
-, tezos-hacl
+, tezos-error-monad
+, data-encoding
+, tezos-crypto
 , tezos-bls12-381-polynomial
-, secp256k1-internal
-, ringo
-, bls12-381
-, tezos-test-helpers
-, alcotest-lwt
+, lwt
+, alcotest
+, qcheck-alcotest
 }:
 
 buildDunePackage {
-  pname = "tezos-crypto";
+  pname = "tezos-crypto-dal";
   inherit (tezos-stdlib) version;
   duneVersion = "3";
   src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
-    [ tezos-rpc tezos-clic tezos-hacl secp256k1-internal ringo bls12-381 tezos-bls12-381-polynomial ];
+    [
+      tezos-stdlib
+      tezos-error-monad
+      data-encoding
+      tezos-crypto
+      tezos-bls12-381-polynomial
+      lwt
+    ];
 
-  checkInputs = [ tezos-test-helpers alcotest-lwt ];
+  checkInputs = [
+    alcotest
+    qcheck-alcotest
+  ];
 
   doCheck = true;
 

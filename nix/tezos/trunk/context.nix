@@ -1,11 +1,13 @@
 { lib
 , buildDunePackage
 , tezos-stdlib
+, tezos-stdlib-unix
 , tezos-base
-, tezos-shell-services
 , irmin
 , irmin-pack
+, bigstringaf
 , digestif
+, fmt
 , alcotest-lwt
 , tezos-test-helpers
 , tezos-test-helpers-extra
@@ -19,14 +21,14 @@ buildDunePackage {
 
   propagatedBuildInputs =
     [
+      tezos-stdlib
+      tezos-stdlib-unix
       tezos-base
-      tezos-shell-services
       irmin
       irmin-pack
+      bigstringaf
       digestif
-      # Not sure why these have to be here...
-      tezos-test-helpers
-      tezos-test-helpers-extra
+      fmt
     ];
 
   checkInputs = [ alcotest-lwt tezos-test-helpers tezos-test-helpers-extra ];

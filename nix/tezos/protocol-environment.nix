@@ -8,9 +8,12 @@
 , tezos-sapling
 , tezos-context
 , tezos-test-helpers
+, tezos-plonk
+, tezos-scoru-wasm
 , zarith
 , alcotest-lwt
 , ringo-lwt
+, class_group_vdf
 }:
 
 buildDunePackage {
@@ -25,8 +28,11 @@ buildDunePackage {
     tezos-sapling
     tezos-base
     tezos-context
+    tezos-plonk
+    tezos-scoru-wasm
     zarith
     ringo-lwt
+    class_group_vdf
   ];
 
   checkInputs = [ alcotest-lwt tezos-test-helpers ];

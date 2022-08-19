@@ -3,6 +3,7 @@
 , tezos-stdlib
 , tezos-protocol-updater
 , tezos-protocol-compiler
+, tezos-context-ops
 }:
 
 buildDunePackage {
@@ -11,7 +12,7 @@ buildDunePackage {
   duneVersion = "3";
   src = "${tezos-stdlib.base_src}";
 
-  propagatedBuildInputs = [ tezos-protocol-updater ];
+  propagatedBuildInputs = [ tezos-protocol-updater tezos-context-ops ];
 
   nativeBuildInputs = [ tezos-protocol-compiler ];
 

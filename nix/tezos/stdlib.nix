@@ -8,7 +8,7 @@
 , hex
 , lwt
 , lwt_log
-, ppx_inline_test
+, ppx_expect
 , qcheck-alcotest
 , ringo
 , tezos-test-helpers
@@ -32,7 +32,7 @@ buildDunePackage rec {
     rm -rf vendors
   '';
 
-  propagatedBuildInputs = [ hex lwt zarith ppx_inline_test zarith_stubs_js ringo ];
+  propagatedBuildInputs = [ hex lwt zarith ppx_expect zarith_stubs_js ringo ];
 
   checkInputs = [
     bigstring

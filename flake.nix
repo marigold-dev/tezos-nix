@@ -3,7 +3,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
-    tezos_release.url = "gitlab:tezos/tezos/v13.0";
+    tezos_release.url = "gitlab:tezos/tezos/v14.0";
     tezos_release.flake = false;
 
     tezos_trunk.url = "gitlab:tezos/tezos";
@@ -16,11 +16,12 @@
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
       overlay = import ./nix/overlays.nix;
       overlay_trunk = import ./nix/overlays_trunk.nix;
+      current = { octez_version = "14.0"; src = tezos_release; };
       out = system:
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ (overlay { octez_version = "13.0"; src = tezos_release; }) ];
+            overlays = [ (overlay current) ];
           };
           inherit (pkgs) lib;
 
@@ -64,6 +65,6 @@
     eachSystem
       supportedSystems
       out // {
-      overlays = { default = overlay; };
+      overlays = { default = overlay current; };
     };
 }

@@ -12,13 +12,14 @@ rec {
     inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [
-      protocol-parameters
       protocol-plugin
       protocol
 
       tezos-mockup-registration
       tezos-proxy
       tezos-signer-backends
+      tezos-client-commands
+      tezos-client-base-unix
     ];
 
     checkInputs = with ocamlPackages; [
@@ -31,35 +32,18 @@ rec {
     doCheck = false;
   };
 
-  client-commands = buildDunePackage {
-    pname = "tezos-client-${protocol-name}-commands";
-    inherit (tezos-stdlib) version;
-    duneVersion = "3";
-    inherit src;
-
-    buildInputs = with ocamlPackages; [ client tezos-client-base-unix ];
-
-    doCheck = true;
-  };
-
-  client-commands-registration = buildDunePackage {
-    pname = "tezos-client-${protocol-name}-commands-registration";
-    inherit (tezos-stdlib) version;
-    duneVersion = "3";
-    inherit src;
-
-    propagatedBuildInputs = with ocamlPackages; [ sapling-client ];
-
-    doCheck = true;
-  };
-
   sapling-client = buildDunePackage {
     pname = "tezos-client-sapling-${protocol-name}";
     inherit (tezos-stdlib) version;
     duneVersion = "3";
     inherit src;
 
-    propagatedBuildInputs = with ocamlPackages; [ tezos-client-base-unix tezos-client-commands client client-commands protocol ];
+    propagatedBuildInputs = with ocamlPackages; [
+      tezos-client-base-unix
+      tezos-client-commands
+      client
+      protocol
+    ];
 
     doCheck = true;
   };
@@ -73,7 +57,6 @@ rec {
     buildInputs = with ocamlPackages; [
       protocol
       protocol-plugin
-      protocol-parameters
       client
 
       tezos-base
@@ -86,6 +69,7 @@ rec {
       tezos-stdlib-unix
       tezos-shell-context
       tezos-context
+      tezos-context-ops
       tezos-rpc-http-client-unix
       tezos-rpc
       tezos-rpc-http
@@ -144,6 +128,7 @@ rec {
 
       tezos-rpc
       tezos-base
+      tezos-context-ops
       tezos-stdlib-unix
       tezos-protocol-environment
       tezos-shell-services
@@ -171,9 +156,9 @@ rec {
     inherit src;
 
     postPatch = ''
-      substituteInPlace ./proto_${underscore_name}/lib_protocol/dune.inc \
-        --replace "-warn-error +a" "-warn-error -A" \
-        --replace "-warn-error \"+a\"" "-warn-error -A" || true
+      # substituteInPlace ./proto_${underscore_name}/lib_protocol/dune.inc \
+      #   --replace "-warn-error +a" "-warn-error -A" \
+      #   --replace "-warn-error \"+a\"" "-warn-error -A" || true
     '';
 
     strictDeps = true;
@@ -188,22 +173,6 @@ rec {
     meta = tezos-stdlib.meta // {
       description = "Tezos/Protocol: economic-protocol definition";
     };
-  };
-
-  protocol-parameters = buildDunePackage {
-    pname = "tezos-protocol-${protocol-name}-parameters";
-    inherit (tezos-stdlib) version;
-    duneVersion = "3";
-    inherit (protocol) postPatch;
-    inherit src;
-
-    strictDeps = true;
-
-    buildInputs = with ocamlPackages; [ protocol tezos-protocol-environment ];
-
-    doCheck = true;
-
-    meta = tezos-stdlib.meta // { description = "Tezos/Protocol: parameters"; };
   };
 
   embedded-protocol = buildDunePackage {
@@ -240,7 +209,6 @@ rec {
 
     buildInputs = with ocamlPackages; [
       embedded-protocol
-      protocol-parameters
       protocol
 
       tezos-shell
@@ -286,7 +254,6 @@ rec {
     propagatedBuildInputs = with ocamlPackages; [
       client
       protocol
-      protocol-parameters
 
       tezos-base
       tezos-protocol-environment

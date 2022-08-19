@@ -2,34 +2,32 @@
 , buildDunePackage
 , tezos-stdlib
 , tezos-base
-, tezos-stdlib-unix
-, tezos-version
+, tezos-error-monad
 , tezos-protocol-environment
-, ocp-ocamlres
-, pprint
+, tezos-context
+, tezos-shell-context
 }:
 
 buildDunePackage {
-  pname = "tezos-protocol-compiler";
+  pname = "tezos-context-ops";
   inherit (tezos-stdlib) version;
   duneVersion = "3";
   src = "${tezos-stdlib.base_src}";
 
-  minimalOCamlVersion = "4.12";
-
   propagatedBuildInputs =
     [
       tezos-base
-      tezos-stdlib-unix
-      tezos-version
+      tezos-error-monad
       tezos-protocol-environment
-      ocp-ocamlres
-      pprint
+      tezos-context
+      tezos-shell-context
     ];
+
 
   doCheck = true;
 
   meta = tezos-stdlib.meta // {
-    description = "Tezos: economic-protocol compiler";
+    description =
+      "Tezos: backend-agnostic operations on contexts";
   };
 }
