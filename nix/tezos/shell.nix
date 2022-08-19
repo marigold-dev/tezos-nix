@@ -10,6 +10,7 @@
 , qcheck-alcotest
 , tezos-base-test-helpers
 , tezos-test-helpers
+, prometheus
 }:
 
 buildDunePackage {
@@ -19,7 +20,7 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
-    [ lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation ];
+    [ lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation prometheus ];
 
   checkInputs = [
     alcotest-lwt

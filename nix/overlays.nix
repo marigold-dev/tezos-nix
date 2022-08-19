@@ -16,14 +16,105 @@ final: prev:
           });
         in
         {
+          class_group_vdf = with oself; buildDunePackage rec {
+            pname = "class_group_vdf";
+            version = "0.0.4";
+            duneVersion = "3";
+            src = prev.fetchFromGitLab {
+              owner = "rrtoledo";
+              repo = "ocaml-chia-vdf";
+              rev = "v${version}";
+              sha256 = "sha256-KvpnX2DTUyfKARNWHC2lLBGH2Ou2GfRKjw05lu4jbBs=";
+            };
+
+            nativeBuildInputs = with final; [
+              gmp
+              gcc
+              pkg-config
+              dune-configurator
+            ];
+
+            propagatedBuildInputs = [
+              zarith
+              integers
+            ];
+
+            checkInputs = [
+              alcotest
+              bisect_ppx
+            ];
+
+            doCheck = true;
+          };
+
+          ff-sig = osuper.ff-sig.overrideAttrs (_: rec {
+            version = "0.6.2";
+            src = prev.fetchFromGitLab {
+              owner = "dannywillems";
+              repo = "ocaml-ff";
+              rev = version;
+              sha256 = "sha256-IoUH4awMOa1pm/t8E5io87R0TZsAxJjGWaXhXjn/w+Y=";
+            };
+          });
+
+          ff = osuper.ff.overrideAttrs (o: {
+            inherit (oself.ff-sig) version src;
+
+            propagatedBuildInputs = o.propagatedBuildInputs ++ [ oself.ff-sig ];
+            checkInputs = o.checkInputs ++ [ oself.ff-pbt ];
+          });
+
+          ff-pbt = osuper.ff-pbt.overrideAttrs (_: {
+            inherit (oself.ff-sig) version src;
+          });
+
+          ff-bench = osuper.ff-bench.overrideAttrs (_: {
+            inherit (oself.ff-sig) version src;
+          });
+
+          mec = with oself; buildDunePackage rec {
+            pname = "mec";
+            version = "0.1.0";
+            src = prev.fetchFromGitLab {
+              owner = "dannywillems";
+              repo = "ocaml-ec";
+              rev = version;
+              sha256 = "sha256-uIcGj/exSfuuzsv6C/bnJXpYRu3OY3dcKMW/7+qwi2U=";
+            };
+
+            propagatedBuildInputs = [
+              zarith
+              eqaf
+              bigarray-compat
+              hex
+              ff-sig
+              ff
+              alcotest
+            ];
+
+            checkInputs = [
+              bisect_ppx
+            ];
+          };
+
+          secp256k1-internal = osuper.secp256k1-internal.overrideAttrs (_: rec {
+            version = "0.3";
+            src = final.fetchFromGitLab {
+              owner = "nomadic-labs";
+              repo = "ocaml-secp256k1-internal";
+              rev = version;
+              sha256 = "sha256-1wvQ4RW7avcGsIc0qgDzhGrwOBY0KHrtNVHCj2cgNzo=";
+            };
+          });
+
           cmdliner = osuper.cmdliner_1_1;
           resto = osuper.resto.overrideAttrs (_: rec {
-            version = "0.6.1";
+            version = "0.8";
             src = prev.fetchFromGitLab {
               owner = "nomadic-labs";
               repo = "resto";
               rev = "v${version}";
-              sha256 = "sha256-B9nMBZYJyjExraGw4fcen/W7vh4FB9X8elAKeNT7A44=";
+              sha256 = "sha256-LnEjqah6bH+29LM6H1yeIHAQFrhav/VQVHWXV5NuSbY=";
             };
 
             meta = { platforms = oself.ocaml.meta.platforms; };
@@ -77,12 +168,12 @@ final: prev:
           });
 
           ppx_irmin = osuper.ppx_irmin.overrideAttrs (o: rec {
-            version = "3.2.1";
+            version = "3.3.1";
             src = final.fetchFromGitHub {
               owner = "mirage";
               repo = "irmin";
               rev = version;
-              sha256 = "sha256-StO8g3Ama1P1cUXvXwfa1E+uC6051Fah7cU517KkyAk=";
+              sha256 = "sha256-XsSS2++V98OXisiMDztjZgW1xYmRhRVbrz3bLNFe8RM=";
             };
 
             propagatedBuildInputs = o.propagatedBuildInputs
@@ -114,12 +205,12 @@ final: prev:
           };
 
           prometheus = oself.buildDunePackage rec {
-            version = "1.1.0";
+            version = "1.2";
             pname = "prometheus";
             src = final.fetchurl {
               url =
-                "https://github.com/mirage/prometheus/releases/download/v1.1/prometheus-v1.1.tbz";
-              sha256 = "1r4rylxmhggpwr1i7za15cpxdvgxf0mvr5143pvf9gq2ijr8pkzv";
+                "https://github.com/mirage/prometheus/releases/download/v${version}/prometheus-${version}.tbz";
+              sha256 = "sha256-g2Q6ApprbecdFANO7i6U/v8dCHVcSkHVg9wVMKtVW8s=";
             };
 
             strictDeps = true;
@@ -166,12 +257,12 @@ final: prev:
           });
 
           bls12-381 = osuper.bls12-381.overrideAttrs (o: rec {
-            version = "3.0.1";
+            version = "4.0.0";
             src = final.fetchFromGitLab {
               owner = "dannywillems";
               repo = "ocaml-bls12-381";
               rev = version;
-              sha256 = "sha256-ScKEkv+a83XJgcK9xiUqVQECoGT3PPx9stzz9QReu5I=";
+              sha256 = "sha256-K9AsYUAUdk4XnspUalJKX5kycDFwO8PZx4bGaD3qZv8=";
             };
 
             propagatedBuildInputs = o.propagatedBuildInputs
@@ -181,6 +272,10 @@ final: prev:
 
             meta = { platforms = oself.ocaml.meta.platforms; };
           });
+
+          tezos-bls12-381-polynomial = callPackage ./tezos/bls12-381-polynomial.nix { };
+          tezos-plonk = callPackage ./tezos/plonk.nix { };
+          tezos-plompiler = callPackage ./tezos/plompiler.nix { };
 
           ringo = osuper.ringo.overrideAttrs (o: rec{
             version = "0.9";
@@ -282,25 +377,17 @@ final: prev:
 
           ometrics = oself.buildDunePackage rec {
             pname = "ometrics";
-            version = "0.1.3";
+            version = "0.2.1";
 
             src = final.fetchurl {
-              url =
-                "https://github.com/vch9/ometrics/releases/download/0.1.3/ometrics-full.0.1.3.tar.gz";
-              sha256 = "sha256-CLeHpyqZQo2TRj1SEdb9aKjbfdHTOpsHZOvbDgh8gnw=";
+              url = "https://github.com/vch9/ometrics/archive/${version}.tar.gz";
+              sha256 = "sha256-RFvlYiYXhJ0m3RCfWfFOYvwEN7vrM9hPCG6gRU0KlHw=";
             };
 
             buildInputs = with oself; [
-              yojson
-              menhirSdk
-              menhirLib
-              menhir
-              merlin
-              csexp
-              result
+              ppxlib
               cmdliner
               digestif
-              bisect_ppx
             ];
 
             checkInputs = [ oself.qcheck-alcotest ];
@@ -386,6 +473,10 @@ final: prev:
             protocol-name = "013-PtJakart";
             ocamlPackages = oself;
           };
+          tezos-014-PtKathma = callPackage ./tezos/generic-protocol.nix {
+            protocol-name = "014-PtKathma";
+            ocamlPackages = oself;
+          };
           tezos-alpha = callPackage ./tezos/generic-protocol.nix {
             protocol-name = "alpha";
             ocamlPackages = oself;
@@ -398,6 +489,7 @@ final: prev:
           tezos-client-base = callPackage ./tezos/client-base.nix { };
           tezos-client-base-unix = callPackage ./tezos/client-base-unix.nix { };
           tezos-client-commands = callPackage ./tezos/client-commands.nix { };
+          tezos-context-ops = callPackage ./tezos/context-ops.nix { };
           tezos-context = callPackage ./tezos/context.nix { };
           tezos-crypto = callPackage ./tezos/crypto.nix { };
 
@@ -440,6 +532,7 @@ final: prev:
           tezos-rpc-http = callPackage ./tezos/rpc-http.nix { };
           tezos-rpc = callPackage ./tezos/rpc.nix { };
           tezos-sapling = callPackage ./tezos/sapling.nix { };
+          tezos-scoru-wasm = callPackage ./tezos/scoru-wasm.nix { };
           tezos-shell-context = callPackage ./tezos/shell-context.nix { };
           tezos-shell-services = callPackage ./tezos/shell-services.nix { };
           tezos-shell-services-test-helpers =
@@ -457,6 +550,7 @@ final: prev:
           tezos-validation = callPackage ./tezos/validation.nix { };
           tezos-validator = callPackage ./tezos/validator.nix { };
           tezos-version = callPackage ./tezos/version.nix { };
+          tezos-webassembly-interpreter = callPackage ./tezos/webassembly-interpreter.nix { };
           tezos-workers = callPackage ./tezos/workers.nix { };
         }))
     prev.ocaml-ng;

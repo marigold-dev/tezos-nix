@@ -18,7 +18,16 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs =
-    [ tezos-base tezos-shell-services irmin irmin-pack digestif ];
+    [
+      tezos-base
+      tezos-shell-services
+      irmin
+      irmin-pack
+      digestif
+      # Not sure why these have to be here...
+      tezos-test-helpers
+      tezos-test-helpers-extra
+    ];
 
   checkInputs = [ alcotest-lwt tezos-test-helpers tezos-test-helpers-extra ];
 

@@ -1,4 +1,4 @@
-{ lib, buildDunePackage, tezos-stdlib, tezos-base }:
+{ lib, buildDunePackage, tezos-stdlib, tezos-base, tezos-base-test-helpers, alcotest-lwt }:
 
 buildDunePackage {
   pname = "tezos-workers";
@@ -7,6 +7,11 @@ buildDunePackage {
   src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [ tezos-base ];
+
+  checkInputs = [
+    tezos-base-test-helpers
+    alcotest-lwt
+  ];
 
   doCheck = true;
 
