@@ -9,4 +9,4 @@ export PATH=$PATH:/nix/var/nix/profiles/default/bin:/nix/var/nix/profiles/per-us
 
 echo "Signing and uploading paths: [$pathsToPush]"
 
-exec nix copy --verbose --to "$CACHE_ENDPOINT&compression=zstd&parallel-compression=true&secret-key=/etc/nix/nix-cache-key.sec" $pathsToPush
+exec nix copy --verbose --to "s3://tezos-nix?endpoint=$CACHE_ENDPOINT&compression=zstd&parallel-compression=true&secret-key=/etc/nix/nix-cache-key.sec" $pathsToPush
