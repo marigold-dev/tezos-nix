@@ -11,13 +11,13 @@ final: prev:
               (_: { meta = { platforms = oself.ocaml.meta.platforms; }; });
         in
         {
-          lazy-containers = oself.callPackage ./tezos/trunk/lazy-containers.nix { };
-          tree-encoding = oself.callPackage ./tezos/trunk/tree-encoding.nix { };
-          tezos-context = oself.callPackage ./tezos/trunk/context.nix { };
-          tezos-shell-services = oself.callPackage ./tezos/trunk/shell-services.nix { };
-          tezos-test-helpers-extra = oself.callPackage ./tezos/trunk/test-helpers-extra.nix { };
-          tezos-crypto-dal = oself.callPackage ./tezos/trunk/crypto-dal.nix { };
-          tezos-bls12-381-polynomial = oself.callPackage ./tezos/trunk/bls12-381-polynomial.nix { };
+          lazy-containers = oself.callPackage ./tezos/lazy-containers.nix { };
+          tree-encoding = oself.callPackage ./tezos/tree-encoding.nix { };
+          tezos-context = oself.callPackage ./tezos/context.nix { };
+          tezos-shell-services = oself.callPackage ./tezos/shell-services.nix { };
+          tezos-test-helpers-extra = oself.callPackage ./tezos/test-helpers-extra.nix { };
+          tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix { };
+          tezos-bls12-381-polynomial = oself.callPackage ./tezos/bls12-381-polynomial.nix { };
 
           tezos-webassembly-interpreter = osuper.tezos-webassembly-interpreter.overrideAttrs (o: {
             propagatedBuildInputs = o.propagatedBuildInputs ++ (with oself; [ lazy-containers ]);

@@ -14,7 +14,7 @@ let ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
 in
 with ocamlPackages;
 
-rec {
+{
   trunk-tezos-client = buildDunePackage {
     pname = "tezos-client";
     inherit (ocamlPackages.tezos-stdlib) version;
@@ -24,7 +24,7 @@ rec {
 
     duneVersion = "3";
 
-    propagatedBuildInputs = with ocamlPackages; [
+    buildInputs = with ocamlPackages; [
       tezos-signer-backends
       tezos-client-base-unix
 
@@ -67,7 +67,7 @@ rec {
 
     duneVersion = "3";
 
-    propagatedBuildInputs = with ocamlPackages; [
+    buildInputs = with ocamlPackages; [
       tezos-alpha.protocol
       tezos-alpha.baking-commands
       tezos-alpha.baking
@@ -109,7 +109,7 @@ rec {
 
     duneVersion = "3";
 
-    propagatedBuildInputs = with ocamlPackages; [
+    buildInputs = with ocamlPackages; [
       tezos-alpha.baking
       tezos-alpha.baking-commands
       tezos-alpha.client
