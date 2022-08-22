@@ -1,4 +1,11 @@
 {
+  description = "Tezos packaged for nix";
+
+  nixConfig = {
+    extra-substituters = ["https://tezos.nix-cache.workers.dev"];
+    extra-trusted-public-keys = ["tezos-nix-cache.marigold.dev-1:4nS7FPPQPKJIaNQcbwzN6m7kylv16UCWWgjeZZr2wXA="];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
