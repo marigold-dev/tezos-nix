@@ -1,17 +1,17 @@
-{ lib
-, buildDunePackage
-, tezos-stdlib
-, tezos-base
-, tezos-context
-, tezos-stdlib-unix
-, tezos-protocol-environment
-, tezos-protocol-updater
-, tezos-shell
-, tezos-shell-context
-, tezos-validation
-, lwt-exit
+{
+  lib,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-base,
+  tezos-context,
+  tezos-stdlib-unix,
+  tezos-protocol-environment,
+  tezos-protocol-updater,
+  tezos-shell,
+  tezos-shell-context,
+  tezos-validation,
+  lwt-exit,
 }:
-
 buildDunePackage {
   pname = "tezos-validator";
   inherit (tezos-stdlib) version;
@@ -32,7 +32,9 @@ buildDunePackage {
 
   doCheck = true;
 
-  meta = tezos-stdlib.meta // {
-    description = "Tezos: library for blocks validation";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: library for blocks validation";
+    };
 }

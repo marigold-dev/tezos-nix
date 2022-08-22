@@ -1,13 +1,13 @@
-{ lib
-, buildDunePackage
-, tezos-stdlib
-, tezos-base
-, tezos-p2p-services
-, tezos-version
-, tezos-context
-, alcotest-lwt
+{
+  lib,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-base,
+  tezos-p2p-services,
+  tezos-version,
+  tezos-context,
+  alcotest-lwt,
 }:
-
 buildDunePackage {
   pname = "tezos-shell-services";
   inherit (tezos-stdlib) version;
@@ -23,9 +23,11 @@ buildDunePackage {
 
   doCheck = true;
 
-  checkInputs = [ alcotest-lwt ];
+  checkInputs = [alcotest-lwt];
 
-  meta = tezos-stdlib.meta // {
-    description = "Tezos: descriptions of RPCs exported by `tezos-shell`";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: descriptions of RPCs exported by `tezos-shell`";
+    };
 }

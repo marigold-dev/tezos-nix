@@ -1,22 +1,22 @@
-{ lib
-, buildDunePackage
-, tezos-stdlib
-, tezos-crypto
-, tezos-hacl
-, data-encoding
-, tezos-micheline
-, tezos-error-monad
-, tezos-test-helpers
-, tezos-rpc
-, tezos-clic
-, tezos-event-logging
-, tezos-stdlib-unix
-, ezjsonm
-, ptime
-, ipaddr
-, lwt
+{
+  lib,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-crypto,
+  tezos-hacl,
+  data-encoding,
+  tezos-micheline,
+  tezos-error-monad,
+  tezos-test-helpers,
+  tezos-rpc,
+  tezos-clic,
+  tezos-event-logging,
+  tezos-stdlib-unix,
+  ezjsonm,
+  ptime,
+  ipaddr,
+  lwt,
 }:
-
 buildDunePackage {
   pname = "tezos-base";
   inherit (tezos-stdlib) version;
@@ -48,8 +48,9 @@ buildDunePackage {
   # circular dependency if we add this
   doCheck = false;
 
-  meta = tezos-stdlib.meta // {
-    description =
-      "Tezos: meta-package and pervasive type definitions for Tezos";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: meta-package and pervasive type definitions for Tezos";
+    };
 }

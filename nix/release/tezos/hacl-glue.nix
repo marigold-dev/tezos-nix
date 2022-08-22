@@ -1,5 +1,8 @@
-{ lib, buildDunePackage, tezos-stdlib }:
-
+{
+  lib,
+  buildDunePackage,
+  tezos-stdlib,
+}:
 buildDunePackage {
   pname = "tezos-hacl-glue";
 
@@ -9,8 +12,9 @@ buildDunePackage {
 
   doCheck = true;
 
-  meta = tezos-stdlib.meta // {
-    description =
-      "Tezos: thin layer of glue around hacl-star (virtual package)";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: thin layer of glue around hacl-star (virtual package)";
+    };
 }

@@ -1,21 +1,21 @@
-{ lib
-, ocaml
-, buildDunePackage
-, bls12-381
-, bls12-381-legacy
-, tezos-stdlib
-, tezos-base
-, tezos-sapling
-, tezos-context
-, tezos-test-helpers
-, tezos-plonk
-, tezos-scoru-wasm
-, zarith
-, alcotest-lwt
-, ringo-lwt
-, class_group_vdf
+{
+  lib,
+  ocaml,
+  buildDunePackage,
+  bls12-381,
+  bls12-381-legacy,
+  tezos-stdlib,
+  tezos-base,
+  tezos-sapling,
+  tezos-context,
+  tezos-test-helpers,
+  tezos-plonk,
+  tezos-scoru-wasm,
+  zarith,
+  alcotest-lwt,
+  ringo-lwt,
+  class_group_vdf,
 }:
-
 buildDunePackage {
   pname = "tezos-protocol-environment";
   inherit (tezos-stdlib) version;
@@ -35,12 +35,13 @@ buildDunePackage {
     class_group_vdf
   ];
 
-  checkInputs = [ alcotest-lwt tezos-test-helpers ];
+  checkInputs = [alcotest-lwt tezos-test-helpers];
 
   doCheck = true;
 
-  meta = tezos-stdlib.meta // {
-    description =
-      "Tezos: custom economic-protocols environment implementation for `tezos-client` and testing";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: custom economic-protocols environment implementation for `tezos-client` and testing";
+    };
 }

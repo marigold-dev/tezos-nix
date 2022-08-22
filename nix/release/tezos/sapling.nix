@@ -1,22 +1,22 @@
-{ lib
-, buildDunePackage
-, ocaml
-, tezos-stdlib
-, tezos-crypto
-, tezos-rust-libs
-, tezos-base-test-helpers
-, alcotest-lwt
+{
+  lib,
+  buildDunePackage,
+  ocaml,
+  tezos-stdlib,
+  tezos-crypto,
+  tezos-rust-libs,
+  tezos-base-test-helpers,
+  alcotest-lwt,
 }:
-
 buildDunePackage {
   pname = "tezos-sapling";
   inherit (tezos-stdlib) version;
   duneVersion = "3";
   src = "${tezos-stdlib.base_src}";
 
-  propagatedBuildInputs = [ tezos-crypto tezos-rust-libs ];
+  propagatedBuildInputs = [tezos-crypto tezos-rust-libs];
 
-  checkInputs = [ alcotest-lwt tezos-base-test-helpers ];
+  checkInputs = [alcotest-lwt tezos-base-test-helpers];
 
   # requires the "zcash-params" files
   doCheck = false;
@@ -24,7 +24,9 @@ buildDunePackage {
   # This is a hack to work around the hack used in the dune files
   OPAM_SWITCH_PREFIX = "${tezos-rust-libs}";
 
-  meta = tezos-stdlib.meta // {
-    description = "Tezos/Protocol: economic-protocol definition";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos/Protocol: economic-protocol definition";
+    };
 }

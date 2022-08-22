@@ -1,19 +1,19 @@
-{ lib
-, buildDunePackage
-, tezos-stdlib
-, tezos-protocol-updater
-, tezos-validation
-, tezos-protocol-compiler
-, index
-, camlzip
-, tar-unix
-, ringo-lwt
-, digestif
-, alcotest-lwt
-, lwt-watcher
-, prometheus
+{
+  lib,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-protocol-updater,
+  tezos-validation,
+  tezos-protocol-compiler,
+  index,
+  camlzip,
+  tar-unix,
+  ringo-lwt,
+  digestif,
+  alcotest-lwt,
+  lwt-watcher,
+  prometheus,
 }:
-
 buildDunePackage {
   pname = "tezos-store";
   inherit (tezos-stdlib) version;
@@ -32,17 +32,18 @@ buildDunePackage {
     prometheus
   ];
 
-  nativeBuildInputs = [ tezos-protocol-compiler ];
+  nativeBuildInputs = [tezos-protocol-compiler];
 
   strictDeps = true;
 
-  checkInputs = [ alcotest-lwt ];
+  checkInputs = [alcotest-lwt];
 
   # A lot of extra deps with wide dependency cones needed
   doCheck = false;
 
-  meta = tezos-stdlib.meta // {
-    description =
-      "Tezos: custom economic-protocols environment implementation for `tezos-client` and testing";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: custom economic-protocols environment implementation for `tezos-client` and testing";
+    };
 }
