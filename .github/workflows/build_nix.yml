@@ -40,92 +40,20 @@ jobs:
 
       - name: Build default
         run: nix --log-format raw -L build .#
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
       - name: "Build client"
         run: nix --log-format raw -L build .#tezos-client
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
       - name: "Build node"
         run: nix --log-format raw -L build .#tezos-node
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
       - name: "Build baker-alpha"
-        run: nix --log-format raw -L build .#tezos-baker-alpha    
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT                                                                           
+        run: nix --log-format raw -L build .#tezos-baker-alpha                                                                         
       - name: "Build rollup-node-alpha"
         run: nix --log-format raw -L build .#tezos-tx-rollup-node-alpha
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
       - name: "Build trunk-client"
         run: nix --log-format raw -L build .#trunk-tezos-client
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
       - name: "Build trunk-node"
         run: nix --log-format raw -L build .#trunk-tezos-node
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
       - name: "Build trunk-baker-alpha"
         run: nix --log-format raw -L build .#trunk-tezos-baker-alpha
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
       - name: "Build trunk-rollup-node-alpha"
         run: nix --log-format raw -L build .#trunk-tezos-tx-rollup-node-alpha
 
