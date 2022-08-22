@@ -1,10 +1,14 @@
-{ lib, buildDunePackage, ocamlPackages, tezos-stdlib, cacert, protocol-name }:
-
-let
-  underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
+{
+  lib,
+  buildDunePackage,
+  ocamlPackages,
+  tezos-stdlib,
+  cacert,
+  protocol-name,
+}: let
+  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
   src = "${tezos-stdlib.base_src}";
-in
-rec {
+in rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
     inherit (tezos-stdlib) version;
@@ -163,16 +167,17 @@ rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [ tezos-protocol-compiler ];
+    nativeBuildInputs = with ocamlPackages; [tezos-protocol-compiler];
 
-    buildInputs =
-      with ocamlPackages; [ tezos-protocol-environment ];
+    buildInputs = with ocamlPackages; [tezos-protocol-environment];
 
     doCheck = true;
 
-    meta = tezos-stdlib.meta // {
-      description = "Tezos/Protocol: economic-protocol definition";
-    };
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: economic-protocol definition";
+      };
   };
 
   embedded-protocol = buildDunePackage {
@@ -184,18 +189,19 @@ rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [ tezos-protocol-compiler ];
+    nativeBuildInputs = with ocamlPackages; [tezos-protocol-compiler];
 
-    buildInputs = with ocamlPackages; [ tezos-protocol-updater ];
+    buildInputs = with ocamlPackages; [tezos-protocol-updater];
 
-    propagatedBuildInputs = [ protocol ];
+    propagatedBuildInputs = [protocol];
 
     doCheck = true;
 
-    meta = tezos-stdlib.meta // {
-      description =
-        "Tezos/Protocol: economic-protocol definition, embedded in `tezos-node`";
-    };
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: economic-protocol definition, embedded in `tezos-node`";
+      };
   };
 
   protocol-plugin = buildDunePackage {
@@ -216,13 +222,15 @@ rec {
       tezos-test-helpers
     ];
 
-    checkInputs = with ocamlPackages; [ qcheck-alcotest tezos-test-helpers ];
+    checkInputs = with ocamlPackages; [qcheck-alcotest tezos-test-helpers];
 
     doCheck = true;
 
-    meta = tezos-stdlib.meta // {
-      description = "Tezos/Protocol: protocol plugin registerer";
-    };
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol plugin registerer";
+      };
   };
 
   protocol-plugin-registerer = buildDunePackage {
@@ -234,15 +242,17 @@ rec {
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [ protocol embedded-protocol tezos-shell ];
+    buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
 
-    propagatedBuildInputs = with ocamlPackages; [ protocol-plugin ];
+    propagatedBuildInputs = with ocamlPackages; [protocol-plugin];
 
     doCheck = true;
 
-    meta = tezos-stdlib.meta // {
-      description = "Tezos/Protocol: protocol plugin registerer";
-    };
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol plugin registerer";
+      };
   };
 
   test-helpers = buildDunePackage {
@@ -264,8 +274,10 @@ rec {
 
     doCheck = true;
 
-    meta = tezos-stdlib.meta // {
-      description = "Tezos/Protocol: protocol testing framework";
-    };
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol testing framework";
+      };
   };
 }

@@ -1,13 +1,13 @@
-{ lib
-, buildDunePackage
-, ocaml
-, tezos-stdlib
-, lwt
-, alcotest-lwt
-, tezos-test-helpers
-, ppx_inline_test
+{
+  lib,
+  buildDunePackage,
+  ocaml,
+  tezos-stdlib,
+  lwt,
+  alcotest-lwt,
+  tezos-test-helpers,
+  ppx_inline_test,
 }:
-
 buildDunePackage {
   pname = "tezos-lwt-result-stdlib";
   inherit (tezos-stdlib) version;
@@ -16,15 +16,17 @@ buildDunePackage {
 
   minimalOCamlVersion = "4.12";
 
-  propagatedBuildInputs = [ lwt ];
+  propagatedBuildInputs = [lwt];
 
-  buildInputs = [ ppx_inline_test ];
+  buildInputs = [ppx_inline_test];
 
-  checkInputs = [ alcotest-lwt tezos-test-helpers ];
+  checkInputs = [alcotest-lwt tezos-test-helpers];
 
   doCheck = true;
 
-  meta = tezos-stdlib.meta // {
-    description = "Tezos: error-aware stdlib replacement";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: error-aware stdlib replacement";
+    };
 }

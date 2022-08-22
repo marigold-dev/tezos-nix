@@ -1,26 +1,25 @@
-{ lib
-, buildDunePackage
-, tezos-stdlib
-, tezos-p2p
-, tezos-requester
-, tezos-validation
-, tezos-store
-, lwt-canceler
-, alcotest-lwt
-, qcheck-alcotest
-, tezos-base-test-helpers
-, tezos-test-helpers
-, prometheus
+{
+  lib,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-p2p,
+  tezos-requester,
+  tezos-validation,
+  tezos-store,
+  lwt-canceler,
+  alcotest-lwt,
+  qcheck-alcotest,
+  tezos-base-test-helpers,
+  tezos-test-helpers,
+  prometheus,
 }:
-
 buildDunePackage {
   pname = "tezos-shell";
   inherit (tezos-stdlib) version;
   duneVersion = "3";
   src = "${tezos-stdlib.base_src}";
 
-  propagatedBuildInputs =
-    [ lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation prometheus ];
+  propagatedBuildInputs = [lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation prometheus];
 
   checkInputs = [
     alcotest-lwt
@@ -35,7 +34,9 @@ buildDunePackage {
   # If we want to enable this we need to split that function again, but it seems worth it to skip this test
   doCheck = false;
 
-  meta = tezos-stdlib.meta // {
-    description = "Tezos: descriptions of RPCs exported by `tezos-shell`";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: descriptions of RPCs exported by `tezos-shell`";
+    };
 }

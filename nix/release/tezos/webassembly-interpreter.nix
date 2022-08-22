@@ -1,14 +1,14 @@
-{ lib
-, fetchpatch
-, buildDunePackage
-, tezos-stdlib
-, tezos-lwt-result-stdlib
-, zarith
-, qcheck-core
-, qcheck-alcotest
-, alcotest
+{
+  lib,
+  fetchpatch,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-lwt-result-stdlib,
+  zarith,
+  qcheck-core,
+  qcheck-alcotest,
+  alcotest,
 }:
-
 buildDunePackage {
   pname = "tezos-webassembly-interpreter";
   inherit (tezos-stdlib) version;
@@ -28,8 +28,9 @@ buildDunePackage {
 
   doCheck = true;
 
-  meta = tezos-stdlib.meta // {
-    description =
-      "Tezos: WebAssembly reference interpreter with tweaks for Tezos";
-  };
+  meta =
+    tezos-stdlib.meta
+    // {
+      description = "Tezos: WebAssembly reference interpreter with tweaks for Tezos";
+    };
 }
