@@ -19,7 +19,7 @@ jobs:
 
       - uses: ulrikstrid/nix-s3-action@fork
         with:
-          endpoint: ${{ secrets.CACHE_ENDPOINT }}
+          endpoint: "s3://tezos-nix?endpoint=https://7a53c28e9b7a91239f9ed42da04276bc.r2.cloudflarestorage.com/tezos-nix"
           signingKey: ${{ secrets.CACHE_PRIV_KEY }}
           awsAccessKeyId: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
           awsSecretAccessKey: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
