@@ -16,22 +16,13 @@ jobs:
             system-features = nixos-test benchmark big-parallel kvm
             extra-substituters = https://tezos.nix-cache.workers.dev
             extra-trusted-public-keys = tezos-nix-cache.marigold.dev-1:4nS7FPPQPKJIaNQcbwzN6m7kylv16UCWWgjeZZr2wXA=
-      - name: Set up signing key
-        shell: bash
-        run: |
-          echo $CACHE_PRIV_KEY > ./nix-cache-key.sec
-          sudo mv ./nix-cache-key.sec /etc/nix/nix-cache-key.sec
-          ./.github/workflows/list-nix-store.sh > ~/.nix-store-paths
-          mkdir -p ~/.aws && touch ~/.aws/credentials
-          cat <<EOF >> ~/.aws/credentials
-            [default]
-            aws_access_key_id = $AWS_ACCESS_KEY_ID
-            aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
-          EOF
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
+
+      - uses: ulrikstrid/nix-s3-action@fork
+        with:
+          endpoint: ${{ secrets.CACHE_ENDPOINT }}
+          signingKey: ${{ secrets.CACHE_PRIV_KEY }}
+          awsAccessKeyId: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
 
       - name: "Run nix flake check"
         run: nix flake check
@@ -56,12 +47,3 @@ jobs:
         run: nix --log-format raw -L build .#trunk-tezos-baker-alpha
       - name: "Build trunk-rollup-node-alpha"
         run: nix --log-format raw -L build .#trunk-tezos-tx-rollup-node-alpha
-
-      - name: Upload to cache
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
-          CACHE_PRIV_KEY: ${{ secrets.CACHE_PRIV_KEY }}
-          CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
-        run: ./.github/workflows/upload-to-cache.sh $CACHE_ENDPOINT
