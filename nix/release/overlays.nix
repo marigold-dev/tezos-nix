@@ -21,7 +21,7 @@
             version = "0.0.4";
             duneVersion = "3";
             src = prev.fetchFromGitLab {
-              owner = "rrtoledo";
+              owner = "nomadic-labs/cryptography";
               repo = "ocaml-chia-vdf";
               rev = "v${version}";
               sha256 = "sha256-KvpnX2DTUyfKARNWHC2lLBGH2Ou2GfRKjw05lu4jbBs=";
