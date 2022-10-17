@@ -142,16 +142,16 @@
     "tezos_release": {
       "flake": false,
       "locked": {
-        "lastModified": 1659347743,
-        "narHash": "sha256-kc0Q+2crcj0P4iWJBpOzD6ww3kDExmujyIUSJj+iEH8=",
+        "lastModified": 1664977956,
+        "narHash": "sha256-H/ZQRIukMlGxF1cCe4A2tYB3nteBpjcqRI+aDmsmGgg=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "4ca331940db0b62ab98ad14d7c032db292879805",
+        "rev": "073ae295ea293693f35cfe6613f2b1bb1fefb3aa",
         "type": "gitlab"
       },
       "original": {
         "owner": "tezos",
-        "ref": "v14.0",
+        "ref": "v14.1",
         "repo": "tezos",
         "type": "gitlab"
       }
