@@ -291,46 +291,6 @@
           meta = {platforms = oself.ocaml.meta.platforms;};
         });
 
-        index = osuper.index.overrideAttrs (_: {
-          # remove test that checks specific output of cmdliner
-          postPatch = ''
-            sed -i '23,30d' test/cli/dune
-          '';
-        });
-
-        crowbar = osuper.crowbar.overrideAttrs (o: rec {
-          version = "0.2.1";
-          src = final.fetchFromGitHub {
-            owner = "stedolan";
-            repo = o.pname;
-            rev = "v${version}";
-            sha256 = "sha256-0jjwiOZ9Ut+dv5Iw4xNvf396WTehT1VClxY9VHicw4U=";
-          };
-
-          patches = [];
-        });
-
-        json-data-encoding = osuper.json-data-encoding.overrideAttrs (o: rec {
-          version = "0.11";
-          src = final.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = o.pname;
-            rev = "${version}";
-            sha256 = "sha256-4FNUU82sq3ylgw0lxHlwi1OV58NRRh9zJqE47YyQZSc=";
-          };
-
-          meta = {platforms = oself.ocaml.meta.platforms;};
-        });
-
-        json-data-encoding-bson =
-          osuper.json-data-encoding-bson.overrideAttrs
-          (o: rec {
-            version = "0.11";
-            src = oself.json-data-encoding.src;
-
-            meta = {platforms = oself.ocaml.meta.platforms;};
-          });
-
         data-encoding = osuper.data-encoding.overrideAttrs (o: rec {
           version = "0.5.3";
           src = final.fetchFromGitLab {
