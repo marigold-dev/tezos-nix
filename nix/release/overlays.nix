@@ -77,7 +77,7 @@
             pname = "mec";
             version = "0.1.0";
             src = prev.fetchFromGitLab {
-              owner = "dannywillems";
+              owner = "nomadic-labs/cryptography";
               repo = "ocaml-ec";
               rev = version;
               sha256 = "sha256-uIcGj/exSfuuzsv6C/bnJXpYRu3OY3dcKMW/7+qwi2U=";
