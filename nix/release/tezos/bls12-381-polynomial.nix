@@ -16,7 +16,7 @@ buildDunePackage rec {
   duneVersion = "3";
   src = fetchFromGitLab {
     owner = "nomadic-labs";
-    repo = "privacy-team";
+    repo = "cryptography/privacy-team";
     rev = "v${version}";
     sha256 = "sha256-HVeKZCPBRJWQXkcI2J7Fl4qGviYLD5x+4W4pAY/W4jA=";
   };
