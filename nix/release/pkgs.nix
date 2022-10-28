@@ -48,6 +48,8 @@ in
 
       inherit doCheck;
 
+      isLibrary = false;
+
       meta = {
         description = "Your service";
         mainProgram = "tezos-client";
