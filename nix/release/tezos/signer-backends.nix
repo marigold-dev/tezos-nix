@@ -15,14 +15,14 @@
 }:
 buildDunePackage rec {
   pname = "tezos-signer-backends";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   postPatch = ''
-    cp ./opam/* ./
-    rm -rf vendors
-    echo "(lang dune 3.2)" > dune-project
+        cp ./opam/* ./
+        rm -rf vendors
+        echo "(lang dune 3.2)
+    (using ctypes 0.1)" > dune-project
   '';
 
   propagatedBuildInputs = [
@@ -43,6 +43,6 @@ buildDunePackage rec {
   meta =
     tezos-stdlib.meta
     // {
-      description = "Tezos: remote-signature backends for `tezos-client`";
+      description = "Tezos: remote-signature backends for `octez-client`";
     };
 }

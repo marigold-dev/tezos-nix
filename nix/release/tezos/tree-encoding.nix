@@ -3,19 +3,18 @@
   buildDunePackage,
   tezos-stdlib,
   tezos-base,
-  lazy-containers,
+  tezos-lazy-containers,
   tezos-lwt-result-stdlib,
   data-encoding,
 }:
 buildDunePackage {
-  pname = "tree-encoding";
-  inherit (tezos-stdlib) version;
+  pname = "tezos-tree-encoding";
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-base
-    lazy-containers
+    tezos-lazy-containers
     tezos-lwt-result-stdlib
     data-encoding
   ];

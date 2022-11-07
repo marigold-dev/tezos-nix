@@ -10,9 +10,8 @@
 }:
 buildDunePackage {
   pname = "tezos-shell-services-test-helpers";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [tezos-base tezos-shell-services tezos-test-helpers qcheck-core];
 

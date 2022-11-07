@@ -4,7 +4,7 @@
   tezos-stdlib,
   tezos-protocol-updater,
   tezos-validation,
-  tezos-protocol-compiler,
+  octez-protocol-compiler,
   index,
   camlzip,
   tar-unix,
@@ -16,9 +16,8 @@
 }:
 buildDunePackage {
   pname = "tezos-store";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     index
@@ -32,7 +31,7 @@ buildDunePackage {
     prometheus
   ];
 
-  nativeBuildInputs = [tezos-protocol-compiler];
+  nativeBuildInputs = [octez-protocol-compiler];
 
   strictDeps = true;
 
@@ -44,6 +43,6 @@ buildDunePackage {
   meta =
     tezos-stdlib.meta
     // {
-      description = "Tezos: custom economic-protocols environment implementation for `tezos-client` and testing";
+      description = "Tezos: custom economic-protocols environment implementation for `octez-client` and testing";
     };
 }

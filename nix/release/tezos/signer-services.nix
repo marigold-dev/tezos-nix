@@ -6,9 +6,8 @@
 }:
 buildDunePackage {
   pname = "tezos-signer-services";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [tezos-client-base];
 

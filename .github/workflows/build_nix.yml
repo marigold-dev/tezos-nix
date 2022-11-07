@@ -32,15 +32,15 @@ jobs:
       - name: Build default
         run: nix --log-format raw -L build .#
       - name: "Build client"
-        run: nix --log-format raw -L build .#tezos-client
+        run: nix --log-format raw -L build .#octez-client
       - name: "Build node"
         run: nix --log-format raw -L build .#tezos-node
       - name: "Build baker-alpha"
-        run: nix --log-format raw -L build .#tezos-baker-alpha                                                                         
+        run: nix --log-format raw -L build .#tezos-baker-alpha
       - name: "Build rollup-node-alpha"
         run: nix --log-format raw -L build .#tezos-tx-rollup-node-alpha
       - name: "Build trunk-client"
-        run: nix --log-format raw -L build .#trunk-tezos-client
+        run: nix --log-format raw -L build .#trunk-octez-client
       - name: "Build trunk-node"
         run: nix --log-format raw -L build .#trunk-tezos-node
       - name: "Build trunk-baker-alpha"

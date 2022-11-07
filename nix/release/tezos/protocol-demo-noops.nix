@@ -2,15 +2,14 @@
   lib,
   buildDunePackage,
   tezos-stdlib,
-  tezos-protocol-compiler,
+  octez-protocol-compiler,
 }:
 buildDunePackage {
   pname = "tezos-protocol-demo-noops";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
-  propagatedBuildInputs = [tezos-protocol-compiler];
+  propagatedBuildInputs = [octez-protocol-compiler];
 
   doCheck = true;
 

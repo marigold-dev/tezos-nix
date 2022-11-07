@@ -12,9 +12,8 @@
 }:
 buildDunePackage {
   pname = "tezos-stdlib-unix";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [tezos-event-logging re ptime mtime ipaddr ezjsonm fmt];
 

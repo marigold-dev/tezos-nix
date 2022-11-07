@@ -13,10 +13,9 @@
   lwt-exit,
 }:
 buildDunePackage {
-  pname = "tezos-validator";
-  inherit (tezos-stdlib) version;
+  pname = "octez-validator";
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-base

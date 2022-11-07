@@ -12,7 +12,13 @@
             doCheck = false;
           });
       in {
-        alcotest = disable_tests osuper.alcotest;
+        ppx_irmin = osuper.ppx_irmin.overrideAttrs (_: rec {
+          version = "3.4.3";
+          src = prev.fetchurl {
+            url = "https://github.com/mirage/irmin/releases/download/${version}/irmin-${version}.tbz";
+            sha256 = "sha256-bkMM9EruX/3JT2v62NvEAePqA27R+88qhpcZjsv21BI=";
+          };
+        });
 
         asetmap = final.stdenv.mkDerivation rec {
           version = "0.8.1";
@@ -104,6 +110,10 @@
           meta = {platforms = oself.ocaml.meta.platforms;};
         };
 
+        tezos-lazy-containers = oself.callPackage ./tezos/lazy-containers.nix {};
+        tezos-tree-encoding = oself.callPackage ./tezos/tree-encoding.nix {};
+        tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix {};
+
         tezos-genesis = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "genesis";
           ocamlPackages = oself;
@@ -184,6 +194,10 @@
           protocol-name = "014-PtKathma";
           ocamlPackages = oself;
         };
+        tezos-015-PtLimaPt = callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "015-PtLimaPt";
+          ocamlPackages = oself;
+        };
         tezos-alpha = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "alpha";
           ocamlPackages = oself;
@@ -218,15 +232,9 @@
         tezos-mockup = callPackage ./tezos/mockup.nix {};
         tezos-p2p-services = callPackage ./tezos/p2p-services.nix {};
         tezos-p2p = callPackage ./tezos/p2p.nix {};
-        tezos-protocol-compiler = callPackage ./tezos/protocol-compiler.nix {};
+        octez-protocol-compiler = callPackage ./tezos/protocol-compiler.nix {};
         tezos-protocol-demo-noops =
           callPackage ./tezos/protocol-demo-noops.nix {};
-        tezos-protocol-environment-packer =
-          callPackage ./tezos/protocol-environment-packer.nix {};
-        tezos-protocol-environment-sigs =
-          callPackage ./tezos/protocol-environment-sigs.nix {};
-        tezos-protocol-environment-structs =
-          callPackage ./tezos/protocol-environment-structs.nix {};
         tezos-protocol-environment =
           callPackage ./tezos/protocol-environment.nix {};
         tezos-protocol-updater = callPackage ./tezos/protocol-updater.nix {};
@@ -258,7 +266,7 @@
         tezos-tx-rollup-alpha = callPackage ./tezos/tx-rollup-alpha.nix {};
         tezos-store = callPackage ./tezos/store.nix {};
         tezos-validation = callPackage ./tezos/validation.nix {};
-        tezos-validator = callPackage ./tezos/validator.nix {};
+        octez-validator = callPackage ./tezos/validator.nix {};
         tezos-version = callPackage ./tezos/version.nix {};
         tezos-webassembly-interpreter = callPackage ./tezos/webassembly-interpreter.nix {};
         tezos-workers = callPackage ./tezos/workers.nix {};

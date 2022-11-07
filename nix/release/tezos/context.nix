@@ -2,30 +2,31 @@
   lib,
   buildDunePackage,
   tezos-stdlib,
+  tezos-stdlib-unix,
   tezos-base,
-  tezos-shell-services,
   irmin,
   irmin-pack,
+  bigstringaf,
   digestif,
+  fmt,
   alcotest-lwt,
   tezos-test-helpers,
   tezos-test-helpers-extra,
 }:
 buildDunePackage {
   pname = "tezos-context";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
+    tezos-stdlib
+    tezos-stdlib-unix
     tezos-base
-    tezos-shell-services
     irmin
     irmin-pack
+    bigstringaf
     digestif
-    # Not sure why these have to be here...
-    tezos-test-helpers
-    tezos-test-helpers-extra
+    fmt
   ];
 
   checkInputs = [alcotest-lwt tezos-test-helpers tezos-test-helpers-extra];

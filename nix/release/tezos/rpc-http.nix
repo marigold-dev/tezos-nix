@@ -8,9 +8,8 @@
 }:
 buildDunePackage {
   pname = "tezos-rpc-http";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [tezos-base resto-directory resto-cohttp];
 

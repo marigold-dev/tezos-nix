@@ -7,6 +7,7 @@
   tezos-clic,
   tezos-hacl,
   tezos-bls12-381-polynomial,
+  bls12-381-signature,
   secp256k1-internal,
   ringo,
   bls12-381,
@@ -15,11 +16,10 @@
 }:
 buildDunePackage {
   pname = "tezos-crypto";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
-  propagatedBuildInputs = [tezos-rpc tezos-clic tezos-hacl secp256k1-internal ringo bls12-381 tezos-bls12-381-polynomial];
+  propagatedBuildInputs = [tezos-rpc tezos-clic tezos-hacl secp256k1-internal ringo bls12-381 tezos-bls12-381-polynomial bls12-381-signature];
 
   checkInputs = [tezos-test-helpers alcotest-lwt];
 

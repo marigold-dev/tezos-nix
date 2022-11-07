@@ -4,7 +4,7 @@ nix flakes for tezos.
 
 ## packages
 
-### tezos-client
+### octez-client
 
 ### tezos-node
 

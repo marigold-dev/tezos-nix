@@ -3,17 +3,36 @@
   ocaml,
   buildDunePackage,
   tezos-stdlib,
-  tezos-protocol-compiler,
+  tezos-base,
+  tezos-stdlib-unix,
+  tezos-micheline,
+  tezos-shell-services,
+  tezos-protocol-environment,
   tezos-shell-context,
+  octez-protocol-compiler,
+  tezos-context,
   lwt-exit,
 }:
 buildDunePackage {
   pname = "tezos-protocol-updater";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
-  propagatedBuildInputs = [tezos-shell-context lwt-exit tezos-protocol-compiler];
+  nativeBuildInputs = [
+    octez-protocol-compiler
+  ];
+
+  propagatedBuildInputs = [
+    tezos-base
+    tezos-stdlib-unix
+    tezos-micheline
+    tezos-shell-services
+    tezos-protocol-environment
+    tezos-shell-context
+    tezos-context
+    lwt-exit
+    octez-protocol-compiler
+  ];
 
   doCheck = true;
 
