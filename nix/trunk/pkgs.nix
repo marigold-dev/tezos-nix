@@ -24,9 +24,16 @@ in
         tezos-signer-backends
         tezos-client-base-unix
 
+        tezos-alpha.protocol-plugin
+        tezos-alpha.baking-commands
+
         tezos-014-PtKathma.protocol
         tezos-014-PtKathma.protocol-plugin
         tezos-014-PtKathma.baking-commands
+
+        tezos-015-PtLimaPt.protocol
+        tezos-015-PtLimaPt.protocol-plugin
+        tezos-015-PtLimaPt.baking-commands
       ];
 
       inherit doCheck;
@@ -137,10 +144,28 @@ in
         tezos-protocol-updater
         octez-validator
         tezos-alpha.embedded-protocol
+        tezos-000-Ps9mPmXa.embedded-protocol
+        tezos-001-PtCJ7pwo.embedded-protocol
+        tezos-002-PsYLVpVv.embedded-protocol
+        tezos-003-PsddFKi3.embedded-protocol
+        tezos-004-Pt24m4xi.embedded-protocol
+        tezos-005-PsBABY5H.embedded-protocol
+        tezos-005-PsBabyM1.embedded-protocol
+        tezos-006-PsCARTHA.embedded-protocol
+        tezos-007-PsDELPH1.embedded-protocol
+        tezos-008-PtEdo2Zk.embedded-protocol
+        tezos-009-PsFLoren.embedded-protocol
+        tezos-010-PtGRANAD.embedded-protocol
+        tezos-011-PtHangz2.embedded-protocol
+        tezos-012-Psithaca.embedded-protocol
+        tezos-013-PtJakart.embedded-protocol
         tezos-014-PtKathma.embedded-protocol
         tezos-014-PtKathma.protocol-plugin-registerer
+        tezos-015-PtLimaPt.embedded-protocol
+        tezos-015-PtLimaPt.protocol-plugin-registerer
         tezos-alpha.protocol-plugin-registerer
         tezos-014-PtKathma.protocol-plugin
+        tezos-015-PtLimaPt.protocol-plugin
         prometheus-app
         lwt-exit
         tls

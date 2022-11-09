@@ -41,9 +41,13 @@ jobs:
         run: nix --log-format raw -L build .#octez-tx-rollup-node-alpha
       - name: "Build trunk-client"
         run: nix --log-format raw -L build .#trunk-octez-client
+        continue-on-error: true
       - name: "Build trunk-node"
         run: nix --log-format raw -L build .#trunk-octez-node
+        continue-on-error: true
       - name: "Build trunk-baker-alpha"
         run: nix --log-format raw -L build .#trunk-octez-baker-alpha
+        continue-on-error: true
       - name: "Build trunk-rollup-node-alpha"
         run: nix --log-format raw -L build .#trunk-octez-tx-rollup-node-alpha
+        continue-on-error: true
