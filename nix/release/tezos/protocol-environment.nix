@@ -2,46 +2,64 @@
   lib,
   ocaml,
   buildDunePackage,
-  bls12-381,
-  bls12-381-legacy,
   tezos-stdlib,
+  tezos-crypto,
+  tezos-crypto-dal,
+  tezos-lwt-result-stdlib,
+  tezos-scoru-wasm,
+  data-encoding,
+  bls12-381,
+  tezos-plonk,
+  zarith,
+  zarith_stubs_js,
+  class_group_vdf,
+  ringo,
+  ringo-lwt,
   tezos-base,
   tezos-sapling,
+  tezos-micheline,
   tezos-context,
-  tezos-test-helpers,
-  tezos-plonk,
-  tezos-scoru-wasm,
-  zarith,
+  tezos-event-logging,
   alcotest-lwt,
-  ringo-lwt,
-  class_group_vdf,
+  tezos-test-helpers,
 }:
 buildDunePackage {
   pname = "tezos-protocol-environment";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
-    bls12-381
-    bls12-381-legacy
-    tezos-sapling
-    tezos-base
-    tezos-context
-    tezos-plonk
+    tezos-stdlib
+    tezos-crypto
+    tezos-crypto-dal
+    tezos-lwt-result-stdlib
     tezos-scoru-wasm
+
+    data-encoding
+    bls12-381
+    tezos-plonk
     zarith
-    ringo-lwt
+    zarith_stubs_js
     class_group_vdf
+    ringo
+    ringo-lwt
+
+    tezos-base
+    tezos-sapling
+    tezos-micheline
+    tezos-context
+    tezos-event-logging
   ];
 
   checkInputs = [alcotest-lwt tezos-test-helpers];
+
+  forceShare = "man info";
 
   doCheck = true;
 
   meta =
     tezos-stdlib.meta
     // {
-      description = "Tezos: custom economic-protocols environment implementation for `tezos-client` and testing";
+      description = "Tezos: custom economic-protocols environment implementation for `octez-client` and testing";
     };
 }

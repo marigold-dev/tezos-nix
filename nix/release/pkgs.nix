@@ -11,10 +11,9 @@
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
 in
   with ocamlPackages; {
-    tezos-client = buildDunePackage {
-      pname = "tezos-client";
-      inherit (ocamlPackages.tezos-stdlib) version;
-      src = "${ocamlPackages.tezos-stdlib.base_src}";
+    octez-client = buildDunePackage {
+      pname = "octez-client";
+      inherit (ocamlPackages.tezos-stdlib) version src;
 
       minimalOCamlVersion = "4.14";
 
@@ -27,23 +26,13 @@ in
         tezos-alpha.protocol-plugin
         tezos-alpha.baking-commands
 
-        tezos-010-PtGRANAD.protocol
-        tezos-010-PtGRANAD.protocol-plugin
-
-        tezos-011-PtHangz2.protocol
-        tezos-011-PtHangz2.protocol-plugin
-
-        tezos-012-Psithaca.protocol
-        tezos-012-Psithaca.protocol-plugin
-        tezos-012-Psithaca.baking-commands
-
-        tezos-013-PtJakart.protocol
-        tezos-013-PtJakart.protocol-plugin
-        tezos-013-PtJakart.baking-commands
-
         tezos-014-PtKathma.protocol
         tezos-014-PtKathma.protocol-plugin
         tezos-014-PtKathma.baking-commands
+
+        tezos-015-PtLimaPt.protocol
+        tezos-015-PtLimaPt.protocol-plugin
+        tezos-015-PtLimaPt.baking-commands
       ];
 
       inherit doCheck;
@@ -52,14 +41,13 @@ in
 
       meta = {
         description = "Your service";
-        mainProgram = "tezos-client";
+        mainProgram = "octez-client";
       };
     };
 
-    tezos-baker-alpha = buildDunePackage {
-      pname = "tezos-baker-alpha";
-      inherit (ocamlPackages.tezos-stdlib) version;
-      src = "${ocamlPackages.tezos-stdlib.base_src}";
+    octez-baker-alpha = buildDunePackage {
+      pname = "octez-baker-alpha";
+      inherit (ocamlPackages.tezos-stdlib) version src;
 
       duneVersion = "3";
 
@@ -94,10 +82,9 @@ in
       };
     };
 
-    tezos-tx-rollup-node-alpha = buildDunePackage {
-      pname = "tezos-tx-rollup-node-alpha";
-      inherit (ocamlPackages.tezos-stdlib) version;
-      src = "${ocamlPackages.tezos-stdlib.base_src}";
+    octez-tx-rollup-node-alpha = buildDunePackage {
+      pname = "octez-tx-rollup-node-alpha";
+      inherit (ocamlPackages.tezos-stdlib) version src;
 
       duneVersion = "3";
 
@@ -136,10 +123,9 @@ in
       };
     };
 
-    tezos-node = ocamlPackages.buildDunePackage rec {
-      pname = "tezos-node";
-      inherit (ocamlPackages.tezos-stdlib) version;
-      src = "${ocamlPackages.tezos-stdlib.base_src}";
+    octez-node = ocamlPackages.buildDunePackage rec {
+      pname = "octez-node";
+      inherit (ocamlPackages.tezos-stdlib) version src;
 
       duneVersion = "3";
 
@@ -151,7 +137,7 @@ in
         tezos-shell
         tezos-workers
         tezos-protocol-updater
-        tezos-validator
+        octez-validator
         tezos-alpha.embedded-protocol
         tezos-000-Ps9mPmXa.embedded-protocol
         tezos-001-PtCJ7pwo.embedded-protocol
@@ -169,17 +155,12 @@ in
         tezos-012-Psithaca.embedded-protocol
         tezos-013-PtJakart.embedded-protocol
         tezos-014-PtKathma.embedded-protocol
-        tezos-010-PtGRANAD.protocol-plugin-registerer
-        tezos-011-PtHangz2.protocol-plugin-registerer
-        tezos-012-Psithaca.protocol-plugin-registerer
-        tezos-013-PtJakart.protocol-plugin-registerer
         tezos-014-PtKathma.protocol-plugin-registerer
+        tezos-015-PtLimaPt.embedded-protocol
+        tezos-015-PtLimaPt.protocol-plugin-registerer
         tezos-alpha.protocol-plugin-registerer
-        tezos-010-PtGRANAD.protocol-plugin
-        tezos-011-PtHangz2.protocol-plugin
-        tezos-012-Psithaca.protocol-plugin
-        tezos-013-PtJakart.protocol-plugin
         tezos-014-PtKathma.protocol-plugin
+        tezos-015-PtLimaPt.protocol-plugin
         prometheus-app
         lwt-exit
         tls

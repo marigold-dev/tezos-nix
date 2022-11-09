@@ -10,9 +10,8 @@
 }:
 buildDunePackage {
   pname = "tezos-micheline";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [tezos-error-monad uutf ppx_inline_test];
 

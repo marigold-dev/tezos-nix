@@ -6,10 +6,9 @@
   zarith,
 }:
 buildDunePackage {
-  pname = "lazy-containers";
-  inherit (tezos-stdlib) version;
+  pname = "tezos-lazy-containers";
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-lwt-result-stdlib

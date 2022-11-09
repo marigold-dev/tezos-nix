@@ -7,13 +7,11 @@
   protocol-name,
 }: let
   underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
-  src = "${tezos-stdlib.base_src}";
 in rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [
       protocol-plugin
@@ -38,9 +36,8 @@ in rec {
 
   sapling-client = buildDunePackage {
     pname = "tezos-client-sapling-${protocol-name}";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [
       tezos-client-base-unix
@@ -54,9 +51,8 @@ in rec {
 
   baking = buildDunePackage {
     pname = "tezos-baking-${protocol-name}";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit src;
 
     buildInputs = with ocamlPackages; [
       protocol
@@ -99,13 +95,8 @@ in rec {
 
   injector = buildDunePackage {
     pname = "tezos-injector-${protocol-name}";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit src;
-
-    postPatch = ''
-      touch tezos-injector-alpha.opam
-    '';
 
     propagatedBuildInputs = with ocamlPackages; [
       client
@@ -121,9 +112,8 @@ in rec {
 
   baking-commands = buildDunePackage {
     pname = "tezos-baking-${protocol-name}-commands";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit src;
 
     propagatedBuildInputs = with ocamlPackages; [
       baking
@@ -155,19 +145,12 @@ in rec {
 
   protocol = buildDunePackage {
     pname = "tezos-protocol-${protocol-name}";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src;
     duneVersion = "3";
-    inherit src;
-
-    postPatch = ''
-      # substituteInPlace ./proto_${underscore_name}/lib_protocol/dune.inc \
-      #   --replace "-warn-error +a" "-warn-error -A" \
-      #   --replace "-warn-error \"+a\"" "-warn-error -A" || true
-    '';
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [tezos-protocol-compiler];
+    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
 
     buildInputs = with ocamlPackages; [tezos-protocol-environment];
 
@@ -182,16 +165,14 @@ in rec {
 
   embedded-protocol = buildDunePackage {
     pname = "tezos-embedded-protocol-${protocol-name}";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit (protocol) postPatch;
-    inherit src;
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [tezos-protocol-compiler];
+    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
 
-    buildInputs = with ocamlPackages; [tezos-protocol-updater];
+    buildInputs = with ocamlPackages; [tezos-protocol-updater octez-protocol-compiler];
 
     propagatedBuildInputs = [protocol];
 
@@ -206,10 +187,8 @@ in rec {
 
   protocol-plugin = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit (protocol) postPatch;
-    inherit src;
 
     strictDeps = true;
 
@@ -235,10 +214,8 @@ in rec {
 
   protocol-plugin-registerer = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}-registerer";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    inherit (protocol) postPatch;
-    inherit src;
 
     strictDeps = true;
 
@@ -257,9 +234,8 @@ in rec {
 
   test-helpers = buildDunePackage {
     pname = "tezos-${protocol-name}-test-helpers";
-    inherit (tezos-stdlib) version;
+    inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
-    src = "${tezos-stdlib.base_src}";
 
     propagatedBuildInputs = with ocamlPackages; [
       client

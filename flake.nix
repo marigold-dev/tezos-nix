@@ -14,7 +14,7 @@
     alejandra.url = "github:kamadorueda/alejandra/3.0.0";
     alejandra.inputs.nixpkgs.follows = "nixpkgs";
 
-    tezos_release.url = "gitlab:tezos/tezos/v14.1";
+    tezos_release.url = "gitlab:tezos/tezos/v15.0";
     tezos_release.flake = false;
 
     tezos_trunk.url = "gitlab:tezos/tezos";
@@ -46,7 +46,7 @@
         system,
         ...
       }: {
-        packages = {default = self'.packages.tezos-client;};
+        packages = {default = self'.packages.octez-client;};
       };
     };
 }

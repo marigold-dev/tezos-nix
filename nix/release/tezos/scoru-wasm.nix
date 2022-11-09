@@ -6,19 +6,20 @@
   tezos-webassembly-interpreter,
   tezos-context,
   tezos-lwt-result-stdlib,
+  tezos-tree-encoding,
   data-encoding,
 }:
 buildDunePackage {
   pname = "tezos-scoru-wasm";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-base
     tezos-webassembly-interpreter
     tezos-context
     tezos-lwt-result-stdlib
+    tezos-tree-encoding
     data-encoding
   ];
 

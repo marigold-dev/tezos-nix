@@ -11,15 +11,15 @@
   qcheck-alcotest,
   tezos-base-test-helpers,
   tezos-test-helpers,
+  tezos-workers,
   prometheus,
 }:
 buildDunePackage {
   pname = "tezos-shell";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
-  propagatedBuildInputs = [lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation prometheus];
+  propagatedBuildInputs = [lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation prometheus tezos-workers];
 
   checkInputs = [
     alcotest-lwt

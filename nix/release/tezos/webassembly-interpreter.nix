@@ -4,20 +4,25 @@
   buildDunePackage,
   tezos-stdlib,
   tezos-lwt-result-stdlib,
+  tezos-lazy-containers,
   zarith,
+  ppxlib,
+  ppx_deriving,
   qcheck-core,
   qcheck-alcotest,
   alcotest,
 }:
 buildDunePackage {
   pname = "tezos-webassembly-interpreter";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [
     tezos-lwt-result-stdlib
     zarith
+    tezos-lazy-containers
+    ppx_deriving
+    ppxlib
   ];
 
   checkInputs = [

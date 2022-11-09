@@ -32,18 +32,22 @@ jobs:
       - name: Build default
         run: nix --log-format raw -L build .#
       - name: "Build client"
-        run: nix --log-format raw -L build .#tezos-client
+        run: nix --log-format raw -L build .#octez-client
       - name: "Build node"
-        run: nix --log-format raw -L build .#tezos-node
+        run: nix --log-format raw -L build .#octez-node
       - name: "Build baker-alpha"
-        run: nix --log-format raw -L build .#tezos-baker-alpha                                                                         
+        run: nix --log-format raw -L build .#octez-baker-alpha
       - name: "Build rollup-node-alpha"
-        run: nix --log-format raw -L build .#tezos-tx-rollup-node-alpha
+        run: nix --log-format raw -L build .#octez-tx-rollup-node-alpha
       - name: "Build trunk-client"
-        run: nix --log-format raw -L build .#trunk-tezos-client
+        run: nix --log-format raw -L build .#trunk-octez-client
+        continue-on-error: true
       - name: "Build trunk-node"
-        run: nix --log-format raw -L build .#trunk-tezos-node
+        run: nix --log-format raw -L build .#trunk-octez-node
+        continue-on-error: true
       - name: "Build trunk-baker-alpha"
-        run: nix --log-format raw -L build .#trunk-tezos-baker-alpha
+        run: nix --log-format raw -L build .#trunk-octez-baker-alpha
+        continue-on-error: true
       - name: "Build trunk-rollup-node-alpha"
-        run: nix --log-format raw -L build .#trunk-tezos-tx-rollup-node-alpha
+        run: nix --log-format raw -L build .#trunk-octez-tx-rollup-node-alpha
+        continue-on-error: true

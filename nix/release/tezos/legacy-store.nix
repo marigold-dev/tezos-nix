@@ -6,15 +6,14 @@
   tezos-lmdb,
   tezos-validation,
   tezos-shell-services,
-  tezos-protocol-compiler,
+  octez-protocol-compiler,
   lwt-watcher,
   alcotest-lwt,
 }:
 buildDunePackage {
   pname = "tezos-legacy-store";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   postPatch = ''
     rm -rf vendors
@@ -28,7 +27,7 @@ buildDunePackage {
     lwt-watcher
   ];
 
-  nativeBuildInputs = [tezos-protocol-compiler];
+  nativeBuildInputs = [octez-protocol-compiler];
 
   strictDeps = true;
 
@@ -40,6 +39,6 @@ buildDunePackage {
   meta =
     tezos-stdlib.meta
     // {
-      description = "Tezos: custom economic-protocols environment implementation for `tezos-client` and testing";
+      description = "Tezos: custom economic-protocols environment implementation for `octez-client` and testing";
     };
 }

@@ -10,9 +10,8 @@
 }:
 buildDunePackage rec {
   pname = "tezos-base-test-helpers";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [alcotest alcotest-lwt tezos-base tezos-event-logging-test-helpers];
 

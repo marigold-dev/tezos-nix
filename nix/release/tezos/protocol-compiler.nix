@@ -10,10 +10,9 @@
   pprint,
 }:
 buildDunePackage {
-  pname = "tezos-protocol-compiler";
-  inherit (tezos-stdlib) version;
+  pname = "octez-protocol-compiler";
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   minimalOCamlVersion = "4.12";
 
@@ -25,6 +24,10 @@ buildDunePackage {
     ocp-ocamlres
     pprint
   ];
+
+  preBuild = ''
+    echo ${tezos-protocol-environment}/
+  '';
 
   doCheck = true;
 

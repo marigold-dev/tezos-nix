@@ -8,9 +8,8 @@
 }:
 buildDunePackage {
   pname = "tezos-mockup-commands";
-  inherit (tezos-stdlib) version;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-  src = "${tezos-stdlib.base_src}";
 
   propagatedBuildInputs = [tezos-mockup-registration tezos-mockup tezos-client-commands];
 
