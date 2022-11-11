@@ -143,6 +143,7 @@ in
         tezos-workers
         tezos-protocol-updater
         octez-validator
+        octez-node-config
         tezos-alpha.embedded-protocol
         tezos-000-Ps9mPmXa.embedded-protocol
         tezos-001-PtCJ7pwo.embedded-protocol

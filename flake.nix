@@ -37,7 +37,6 @@
       ];
       flake = {
         hydraJobs = self.packages;
-        formatter = alejandra.defaultPackage;
       };
       systems = ["aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
       perSystem = {
@@ -47,6 +46,7 @@
         ...
       }: {
         packages = {default = self'.packages.octez-client;};
+        formatter = alejandra.packages.${system}.default;
       };
     };
 }

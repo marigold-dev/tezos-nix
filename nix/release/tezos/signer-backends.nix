@@ -15,15 +15,8 @@
 }:
 buildDunePackage rec {
   pname = "tezos-signer-backends";
-  inherit (tezos-stdlib) version src;
+  inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
-
-  postPatch = ''
-        cp ./opam/* ./
-        rm -rf vendors
-        echo "(lang dune 3.2)
-    (using ctypes 0.1)" > dune-project
-  '';
 
   propagatedBuildInputs = [
     tezos-base
