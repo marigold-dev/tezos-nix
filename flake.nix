@@ -10,26 +10,24 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
-    alejandra.url = "github:kamadorueda/alejandra/3.0.0";
-    alejandra.inputs.nixpkgs.follows = "nixpkgs";
-
-    tezos_release.url = "gitlab:tezos/tezos/v15.0";
+    tezos_release.url = "gitlab:tezos/tezos/v15.1";
     tezos_release.flake = false;
 
     tezos_trunk.url = "gitlab:tezos/tezos";
     tezos_trunk.flake = false;
   };
 
-  outputs = {
+  outputs = inputs @ {
     self,
     nixpkgs,
     flake-parts,
-    alejandra,
+    pre-commit-hooks,
     tezos_release,
     tezos_trunk,
   }:
-    flake-parts.lib.mkFlake {inherit self;}
+    flake-parts.lib.mkFlake {inherit inputs;}
     {
       imports = [
         ./nix/release
@@ -41,12 +39,20 @@
       systems = ["aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
       perSystem = {
         self',
-        pkgs',
+        pkgs,
         system,
         ...
       }: {
         packages = {default = self'.packages.octez-client;};
-        formatter = alejandra.packages.${system}.default;
+        formatter = pkgs.alejandra;
+        checks = {
+          pre-commit-check = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              alejandra.enable = true;
+            };
+          };
+        };
       };
     };
 }

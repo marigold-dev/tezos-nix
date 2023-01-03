@@ -262,7 +262,6 @@
         };
         tezos-test-helpers = callPackage ./tezos/test-helpers.nix {};
         tezos-test-helpers-extra = callPackage ./tezos/test-helpers-extra.nix {};
-        tezos-tooling = callPackage ./tezos/tooling.nix {};
         tezos-tx-rollup-alpha = callPackage ./tezos/tx-rollup-alpha.nix {};
         tezos-store = callPackage ./tezos/store.nix {};
         tezos-validation = callPackage ./tezos/validation.nix {};
