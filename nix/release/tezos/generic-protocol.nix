@@ -75,7 +75,6 @@ in rec {
       tezos-rpc-http
       lwt-canceler
       lwt-exit
-      tezos-tooling
       data-encoding
       tezos-client-base-unix
       tezos-mockup
