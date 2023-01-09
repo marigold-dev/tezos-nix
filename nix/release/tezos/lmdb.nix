@@ -18,7 +18,7 @@
 in
   buildDunePackage {
     pname = "tezos-lmdb";
-    version = version;
+    inherit version;
     src = "${src}/vendors/ocaml-lmdb";
 
     duneVersion = true;

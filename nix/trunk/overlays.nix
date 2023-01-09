@@ -3,7 +3,7 @@ final: prev: {
     builtins.mapAttrs
     (ocamlVersion: curr_ocaml:
       curr_ocaml.overrideScope' (oself: osuper: let
-        callPackage = oself.callPackage;
+        inherit (oself) callPackage;
       in {
         octez-node-config = callPackage ./tezos/node-config.nix {};
         tezos-layer2-utils-alpha = callPackage ./tezos/layer2-utils-alpha.nix {};

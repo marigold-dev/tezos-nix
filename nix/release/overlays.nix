@@ -6,7 +6,7 @@
     builtins.mapAttrs
     (ocamlVersion: curr_ocaml:
       curr_ocaml.overrideScope' (oself: osuper: let
-        callPackage = oself.callPackage;
+        inherit (oself) callPackage;
         disable_tests = package:
           package.overrideAttrs (_: {
             doCheck = false;
@@ -35,7 +35,7 @@
 
           inherit (oself.topkg) buildPhase installPhase;
 
-          meta = {platforms = oself.ocaml.meta.platforms;};
+          meta = {inherit (oself.ocaml.meta) platforms;};
         };
 
         prometheus = oself.buildDunePackage rec {
@@ -57,7 +57,7 @@
             alcotest
           ];
 
-          meta = {platforms = oself.ocaml.meta.platforms;};
+          meta = {inherit (oself.ocaml.meta) platforms;};
         };
 
         prometheus-app = oself.buildDunePackage rec {
@@ -75,39 +75,7 @@
             prometheus
           ];
 
-          meta = {platforms = oself.ocaml.meta.platforms;};
-        };
-
-        ptime = osuper.ptime.overrideAttrs (o: rec {
-          version = "1.0.0";
-          src = final.fetchurl {
-            url = "https://erratique.ch/software/ptime/releases/ptime-1.0.0.tbz";
-            sha256 = "02qiwafysw5vpbxmkhgf6hfr5fv967rxzfkfy18kgj3206686724";
-          };
-
-          buildPhase = "${oself.topkg.run} build";
-        });
-
-        ometrics = oself.buildDunePackage rec {
-          pname = "ometrics";
-          version = "0.2.1";
-
-          src = final.fetchurl {
-            url = "https://github.com/vch9/ometrics/archive/${version}.tar.gz";
-            sha256 = "sha256-RFvlYiYXhJ0m3RCfWfFOYvwEN7vrM9hPCG6gRU0KlHw=";
-          };
-
-          buildInputs = with oself; [
-            ppxlib
-            cmdliner
-            digestif
-          ];
-
-          checkInputs = [oself.qcheck-alcotest];
-
-          doCheck = false;
-
-          meta = {platforms = oself.ocaml.meta.platforms;};
+          meta = {inherit (oself.ocaml.meta) platforms;};
         };
 
         tezos-lazy-containers = oself.callPackage ./tezos/lazy-containers.nix {};

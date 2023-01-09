@@ -28,6 +28,8 @@ jobs:
         run: nix flake check
       - name: "Check formatting"
         run: nix fmt -- --check flake.nix ./nix/*
+      - name: "Lint"
+        run: nix run nixpkgs#statix -- check
 
       - name: Build default
         run: nix --log-format raw -L build .#
