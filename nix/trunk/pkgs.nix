@@ -34,6 +34,7 @@ in
         tezos-015-PtLimaPt.protocol
         tezos-015-PtLimaPt.protocol-plugin
         tezos-015-PtLimaPt.baking-commands
+        tezos-016-PtMumbai.baking-commands
       ];
 
       inherit doCheck;
@@ -109,7 +110,6 @@ in
         tezos-rpc-http-server
         tezos-stdlib-unix
         tezos-store
-        tezos-tx-rollup-alpha
       ];
 
       checkInputs = with ocamlPackages; [
@@ -142,7 +142,7 @@ in
         tezos-shell
         tezos-workers
         tezos-protocol-updater
-        octez-validator
+        tezos-validation
         octez-node-config
         tezos-alpha.embedded-protocol
         tezos-000-Ps9mPmXa.embedded-protocol
@@ -164,9 +164,12 @@ in
         tezos-014-PtKathma.protocol-plugin-registerer
         tezos-015-PtLimaPt.embedded-protocol
         tezos-015-PtLimaPt.protocol-plugin-registerer
+        tezos-016-PtMumbai.embedded-protocol
+        tezos-016-PtMumbai.protocol-plugin-registerer
         tezos-alpha.protocol-plugin-registerer
         tezos-014-PtKathma.protocol-plugin
         tezos-015-PtLimaPt.protocol-plugin
+        tezos-016-PtMumbai.protocol-plugin
         prometheus-app
         lwt-exit
         tls

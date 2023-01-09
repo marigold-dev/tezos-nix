@@ -9,6 +9,7 @@
   tezos-rpc-http-server,
   tezos-context,
   tezos-validation,
+  tezos-store,
 }:
 buildDunePackage {
   pname = "octez-node-config";
@@ -23,6 +24,7 @@ buildDunePackage {
     tezos-rpc-http-server
     tezos-context
     tezos-validation
+    tezos-store
   ];
 
   doCheck = true;

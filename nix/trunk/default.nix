@@ -5,7 +5,7 @@
 }: let
   overlay = import ./overlays.nix;
   version = {
-    octez_version = inputs.tezos_trunk.rev;
+    octez_version = "20230109";
     src = inputs.tezos_trunk;
   };
 in {

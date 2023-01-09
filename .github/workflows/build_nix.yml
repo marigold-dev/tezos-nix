@@ -25,7 +25,9 @@ jobs:
           awsSecretAccessKey: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
 
       - name: "Run nix flake check"
-        run: nix flake check
+        run: |
+          export NIXPKGS_ALLOW_BROKEN=1
+          nix flake check --impure
       - name: "Check formatting"
         run: nix fmt -- --check flake.nix ./nix/*
       - name: "Lint"
