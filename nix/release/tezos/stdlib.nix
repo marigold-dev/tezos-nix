@@ -1,6 +1,8 @@
 {
   lib,
   src,
+  aches,
+  aches-lwt,
   alcotest,
   alcotest-lwt,
   bigstring,
@@ -30,7 +32,7 @@ buildDunePackage rec {
     rm -rf vendors
   '';
 
-  propagatedBuildInputs = [hex lwt zarith ppx_expect zarith_stubs_js ringo];
+  propagatedBuildInputs = [hex lwt zarith ppx_expect zarith_stubs_js ringo aches aches-lwt];
 
   checkInputs = [
     bigstring

@@ -145,11 +145,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1676513100,
-        "narHash": "sha256-MK39nQV86L2ag4TmcK5/+r1ULpzRLPbbfvWbPvIoYJE=",
+        "lastModified": 1676879534,
+        "narHash": "sha256-HU4RXcwsAX1u7AUbGOBDxkYQkeODcn+HZjXqKa1y/hk=",
         "owner": "cachix",
         "repo": "pre-commit-hooks.nix",
-        "rev": "5f0cba88ac4d6dd8cad5c6f6f1540b3d6a21a798",
+        "rev": "c9495f017f67a11e9c9909b032dc7762dfc853cf",
         "type": "github"
       },
       "original": {
@@ -170,16 +170,16 @@
     "tezos_release": {
       "flake": false,
       "locked": {
-        "lastModified": 1669890058,
-        "narHash": "sha256-d7RjWP30CpxmuRJW3zxEB8CcUqohj10t4Z4K6zq9oPs=",
+        "lastModified": 1674040153,
+        "narHash": "sha256-tTwyDyRCkQ3ieOuyNaAtGsj65FtGUNH/AchyzYMKSnc=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "763259c5131a5cc8054151596f0f59ffb505f0fc",
+        "rev": "a8a325a16ed54f8a7a243ec68483fc97d9b58f94",
         "type": "gitlab"
       },
       "original": {
         "owner": "tezos",
-        "ref": "v15.1",
+        "ref": "v16.0-rc1",
         "repo": "tezos",
         "type": "gitlab"
       }
@@ -187,11 +187,11 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1676842815,
-        "narHash": "sha256-LuB2oib0B8MrooYNsbCq3ZYlRc3nd3KaAwia9fcpNik=",
+        "lastModified": 1676886892,
+        "narHash": "sha256-+fMRQcpJEnCaL0o2VpxhTmVmekynHKMz954fpvEiU7E=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "7f2b112463a4c5de2a96aada8d07c0f9e142d4f1",
+        "rev": "7897d8e0920e04f1f2b9df70389aefc264d9be9d",
         "type": "gitlab"
       },
       "original": {

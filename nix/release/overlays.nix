@@ -12,13 +12,94 @@
             doCheck = false;
           });
       in {
-        ppx_irmin = osuper.ppx_irmin.overrideAttrs (_: rec {
-          version = "3.4.3";
-          src = prev.fetchurl {
-            url = "https://github.com/mirage/irmin/releases/download/${version}/irmin-${version}.tbz";
-            sha256 = "sha256-bkMM9EruX/3JT2v62NvEAePqA27R+88qhpcZjsv21BI=";
+        data-encoding = osuper.data-encoding.overrideAttrs (_: rec {
+          version = "0.7.1";
+          src = prev.fetchFromGitLab {
+            owner = "nomadic-labs";
+            repo = "data-encoding";
+            rev = "v${version}";
+            sha256 = "sha256-V3XiCCtoU+srOI+KVSJshtaSJLBJ4m4o10GpBfdYKCU=";
           };
         });
+
+        bls12-381-hash = oself.buildDunePackage rec {
+          pname = "bls12-381-hash";
+          version = "1.0.0";
+          src = prev.fetchFromGitLab {
+            owner = "nomadic-labs";
+            repo = "cryptography/ocaml-bls12-381-hash";
+            rev = "${version}";
+            sha256 = "sha256-cfsSVmN4rbKcLcPcy6NduZktJhPXiVdK75LypmaSe9I=";
+          };
+
+          propagatedBuildInputs = [oself.bls12-381];
+        };
+
+        tezos-bls12-381-polynomial = osuper.tezos-bls12-381-polynomial.overrideAttrs (o: rec {
+          version = "1.0.1";
+          src = prev.fetchFromGitLab {
+            owner = "nomadic-labs";
+            repo = "cryptography/privacy-team";
+            rev = "v${version}";
+            sha256 = "sha256-5qDa/fQoTypjaceQ0MBzt0rM+0hSJcpGlXMGAZKRboo=";
+          };
+
+          propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.ppx_repr];
+        });
+
+        polynomial = oself.buildDunePackage rec {
+          pname = "polynomial";
+          version = "0.4.0";
+          src = prev.fetchFromGitLab {
+            owner = "nomadic-labs";
+            repo = "cryptography/ocaml-polynomial";
+            rev = version;
+            sha256 = "sha256-is/PrYLCwStHiQsNq5OVRCwHdXjO2K2Z7FrXgytRfAU=";
+          };
+
+          propagatedBuildInputs = with oself; [zarith ff-sig];
+        };
+
+        tezos-plompiler = osuper.tezos-plompiler.overrideAttrs (o: rec {
+          propagatedBuildInputs = o.propagatedBuildInputs ++ (with oself; [polynomial bls12-381-hash]);
+        });
+
+        hacl-star-raw = callPackage ./hacl-star-raw.nix {};
+
+        hacl-star = osuper.hacl-star.overrideAttrs (_: {
+          buildInputs = [oself.alcotest];
+        });
+
+        ringo = osuper.ringo.overrideAttrs (_: rec {
+          version = "1.0.0";
+          src = final.fetchFromGitLab {
+            owner = "nomadic-labs";
+            repo = "ringo";
+            rev = "v${version}";
+            sha256 = "sha256-9HW3M27BxrEPbF8cMHwzP8FmJduUInpQQAE2672LOuU=";
+          };
+
+          checkPhase = "dune build @test/ringo/runtest";
+        });
+
+        aches = oself.buildDunePackage {
+          pname = "aches";
+          inherit (oself.ringo) src version;
+
+          propagatedBuildInputs = [
+            oself.ringo
+          ];
+        };
+
+        aches-lwt = oself.buildDunePackage {
+          pname = "aches-lwt";
+          inherit (oself.ringo) src version;
+
+          propagatedBuildInputs = [
+            oself.aches
+            oself.lwt
+          ];
+        };
 
         asetmap = final.stdenv.mkDerivation rec {
           version = "0.8.1";
@@ -46,7 +127,7 @@
             sha256 = "sha256-g2Q6ApprbecdFANO7i6U/v8dCHVcSkHVg9wVMKtVW8s=";
           };
 
-          strictDeps = true;
+          duneVersion = "3";
 
           propagatedBuildInputs = with oself; [
             astring
@@ -64,7 +145,7 @@
           pname = "prometheus-app";
           inherit (oself.prometheus) src version;
 
-          strictDeps = true;
+          duneVersion = "3";
 
           propagatedBuildInputs = with oself; [
             logs
@@ -78,6 +159,7 @@
           meta = {inherit (oself.ocaml.meta) platforms;};
         };
 
+        tezos-layer2-utils-alpha = callPackage ./tezos/layer2-utils-alpha.nix {};
         tezos-lazy-containers = oself.callPackage ./tezos/lazy-containers.nix {};
         tezos-tree-encoding = oself.callPackage ./tezos/tree-encoding.nix {};
         tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix {};
@@ -166,6 +248,10 @@
           protocol-name = "015-PtLimaPt";
           ocamlPackages = oself;
         };
+        tezos-016-PtMumbai = callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "016-PtMumbai";
+          ocamlPackages = oself;
+        };
         tezos-alpha = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "alpha";
           ocamlPackages = oself;
@@ -198,6 +284,7 @@
         tezos-mockup-registration =
           callPackage ./tezos/mockup-registration.nix {};
         tezos-mockup = callPackage ./tezos/mockup.nix {};
+        octez-node-config = callPackage ./tezos/node-config.nix {};
         tezos-p2p-services = callPackage ./tezos/p2p-services.nix {};
         tezos-p2p = callPackage ./tezos/p2p.nix {};
         octez-protocol-compiler = callPackage ./tezos/protocol-compiler.nix {};
@@ -230,10 +317,8 @@
         };
         tezos-test-helpers = callPackage ./tezos/test-helpers.nix {};
         tezos-test-helpers-extra = callPackage ./tezos/test-helpers-extra.nix {};
-        tezos-tx-rollup-alpha = callPackage ./tezos/tx-rollup-alpha.nix {};
         tezos-store = callPackage ./tezos/store.nix {};
         tezos-validation = callPackage ./tezos/validation.nix {};
-        octez-validator = callPackage ./tezos/validator.nix {};
         tezos-version = callPackage ./tezos/version.nix {};
         tezos-webassembly-interpreter = callPackage ./tezos/webassembly-interpreter.nix {};
         tezos-workers = callPackage ./tezos/workers.nix {};

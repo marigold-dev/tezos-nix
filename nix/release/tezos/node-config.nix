@@ -3,30 +3,28 @@
   buildDunePackage,
   tezos-stdlib,
   tezos-base,
-  tezos-context,
   tezos-stdlib-unix,
-  tezos-protocol-environment,
-  tezos-protocol-updater,
-  tezos-shell,
-  tezos-shell-context,
+  tezos-shell-services,
+  tezos-rpc-http,
+  tezos-rpc-http-server,
+  tezos-context,
   tezos-validation,
-  lwt-exit,
+  tezos-store,
 }:
 buildDunePackage {
-  pname = "octez-validator";
+  pname = "octez-node-config";
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
   propagatedBuildInputs = [
     tezos-base
-    tezos-context
     tezos-stdlib-unix
-    tezos-protocol-environment
-    tezos-protocol-updater
-    tezos-shell
-    tezos-shell-context
+    tezos-shell-services
+    tezos-rpc-http
+    tezos-rpc-http-server
+    tezos-context
     tezos-validation
-    lwt-exit
+    tezos-store
   ];
 
   doCheck = true;
@@ -34,6 +32,6 @@ buildDunePackage {
   meta =
     tezos-stdlib.meta
     // {
-      description = "Tezos: library for blocks validation";
+      description = "Octez: `octez-node-config` library";
     };
 }

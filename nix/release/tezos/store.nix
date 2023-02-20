@@ -8,7 +8,6 @@
   index,
   camlzip,
   tar-unix,
-  ringo-lwt,
   digestif,
   alcotest-lwt,
   lwt-watcher,
@@ -23,7 +22,6 @@ buildDunePackage {
     index
     camlzip
     tar-unix
-    ringo-lwt
     digestif
     lwt-watcher
     tezos-protocol-updater

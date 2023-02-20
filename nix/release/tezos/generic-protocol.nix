@@ -106,6 +106,7 @@ in rec {
       tezos-micheline
       tezos-shell
       tezos-workers
+      tezos-layer2-utils-alpha
     ];
   };
 

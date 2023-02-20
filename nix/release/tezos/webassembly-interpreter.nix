@@ -5,6 +5,7 @@
   tezos-stdlib,
   tezos-lwt-result-stdlib,
   tezos-lazy-containers,
+  tezos-error-monad,
   zarith,
   ppxlib,
   ppx_deriving,
@@ -21,6 +22,7 @@ buildDunePackage {
     tezos-lwt-result-stdlib
     zarith
     tezos-lazy-containers
+    tezos-error-monad
     ppx_deriving
     ppxlib
   ];

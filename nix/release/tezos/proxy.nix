@@ -4,7 +4,6 @@
   tezos-stdlib,
   tezos-mockup-proxy,
   tezos-context,
-  ringo-lwt,
   alcotest-lwt,
   qcheck-alcotest,
   tezos-base-test-helpers,
@@ -15,7 +14,7 @@ buildDunePackage {
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
-  propagatedBuildInputs = [ringo-lwt tezos-mockup-proxy tezos-context];
+  propagatedBuildInputs = [tezos-mockup-proxy tezos-context];
 
   checkInputs = [
     alcotest-lwt
