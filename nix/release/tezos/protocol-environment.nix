@@ -13,8 +13,6 @@
   zarith,
   zarith_stubs_js,
   class_group_vdf,
-  ringo,
-  ringo-lwt,
   tezos-base,
   tezos-sapling,
   tezos-micheline,
@@ -41,8 +39,6 @@ buildDunePackage {
     zarith
     zarith_stubs_js
     class_group_vdf
-    ringo
-    ringo-lwt
 
     tezos-base
     tezos-sapling

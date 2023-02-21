@@ -80,6 +80,7 @@ in rec {
       tezos-mockup
       tezos-mockup-proxy
       tezos-mockup-commands
+      tezos-dal-node-services
     ];
 
     checkInputs = with ocamlPackages; [
@@ -130,6 +131,7 @@ in rec {
       tezos-client-base
       tezos-client-commands
       lwt-exit
+      tezos-dal-node-services
     ];
 
     checkInputs = [

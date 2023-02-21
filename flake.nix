@@ -9,10 +9,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
-    tezos_release.url = "gitlab:tezos/tezos/v15.1";
+    tezos_release.url = "gitlab:tezos/tezos/v16.0-rc2";
     tezos_release.flake = false;
 
     tezos_trunk.url = "gitlab:tezos/tezos";
@@ -26,10 +28,12 @@
     pre-commit-hooks,
     tezos_release,
     tezos_trunk,
+    ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;}
     {
       imports = [
+        inputs.treefmt-nix.flakeModule
         ./nix/release
         ./nix/trunk
       ];
@@ -43,8 +47,13 @@
         system,
         ...
       }: {
+        treefmt = {
+          projectRootFile = "flake.nix";
+          programs = {
+            alejandra.enable = true;
+          };
+        };
         packages = {default = self'.packages.octez-client;};
-        formatter = pkgs.alejandra;
         checks = {
           pre-commit-check = pre-commit-hooks.lib.${system}.run {
             src = ./.;

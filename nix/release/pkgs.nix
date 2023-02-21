@@ -26,13 +26,13 @@ in
         tezos-alpha.protocol-plugin
         tezos-alpha.baking-commands
 
-        tezos-014-PtKathma.protocol
-        tezos-014-PtKathma.protocol-plugin
-        tezos-014-PtKathma.baking-commands
-
         tezos-015-PtLimaPt.protocol
         tezos-015-PtLimaPt.protocol-plugin
         tezos-015-PtLimaPt.baking-commands
+
+        tezos-016-PtMumbai.protocol
+        tezos-016-PtMumbai.protocol-plugin
+        tezos-016-PtMumbai.baking-commands
       ];
 
       inherit doCheck;
@@ -82,47 +82,6 @@ in
       };
     };
 
-    octez-tx-rollup-node-alpha = buildDunePackage {
-      pname = "octez-tx-rollup-node-alpha";
-      inherit (ocamlPackages.tezos-stdlib) version src;
-
-      duneVersion = "3";
-
-      buildInputs = with ocamlPackages; [
-        tezos-alpha.baking
-        tezos-alpha.baking-commands
-        tezos-alpha.client
-        tezos-alpha.protocol
-        tezos-base
-        tezos-client-base
-        tezos-client-base-unix
-        tezos-client-commands
-        tezos-context
-        tezos-crypto
-        tezos-micheline
-        tezos-rpc
-        tezos-rpc-http
-        tezos-rpc-http-client-unix
-        tezos-rpc-http-server
-        tezos-stdlib-unix
-        tezos-store
-        tezos-tx-rollup-alpha
-      ];
-
-      checkInputs = with ocamlPackages; [
-        # alcotest-lwt
-        # tezos-base-test-helpers
-        # cacert
-      ];
-
-      inherit doCheck;
-
-      meta = {
-        description = "Your service";
-        mainProgram = "tezos-tx-rollup-node-alpha";
-      };
-    };
-
     octez-node = ocamlPackages.buildDunePackage rec {
       pname = "octez-node";
       inherit (ocamlPackages.tezos-stdlib) version src;
@@ -137,7 +96,7 @@ in
         tezos-shell
         tezos-workers
         tezos-protocol-updater
-        octez-validator
+        octez-node-config
         tezos-alpha.embedded-protocol
         tezos-000-Ps9mPmXa.embedded-protocol
         tezos-001-PtCJ7pwo.embedded-protocol
@@ -155,12 +114,13 @@ in
         tezos-012-Psithaca.embedded-protocol
         tezos-013-PtJakart.embedded-protocol
         tezos-014-PtKathma.embedded-protocol
-        tezos-014-PtKathma.protocol-plugin-registerer
         tezos-015-PtLimaPt.embedded-protocol
         tezos-015-PtLimaPt.protocol-plugin-registerer
+        tezos-016-PtMumbai.embedded-protocol
+        tezos-016-PtMumbai.protocol-plugin-registerer
         tezos-alpha.protocol-plugin-registerer
-        tezos-014-PtKathma.protocol-plugin
         tezos-015-PtLimaPt.protocol-plugin
+        tezos-016-PtMumbai.protocol-plugin
         prometheus-app
         lwt-exit
         tls

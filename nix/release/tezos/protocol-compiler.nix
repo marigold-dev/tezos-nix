@@ -16,6 +16,10 @@ buildDunePackage {
 
   minimalOCamlVersion = "4.12";
 
+  nativeBuildInputs = [
+    ocp-ocamlres
+  ];
+
   propagatedBuildInputs = [
     tezos-base
     tezos-stdlib-unix

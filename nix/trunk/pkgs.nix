@@ -27,10 +27,6 @@ in
         tezos-alpha.protocol-plugin
         tezos-alpha.baking-commands
 
-        tezos-014-PtKathma.protocol
-        tezos-014-PtKathma.protocol-plugin
-        tezos-014-PtKathma.baking-commands
-
         tezos-015-PtLimaPt.protocol
         tezos-015-PtLimaPt.protocol-plugin
         tezos-015-PtLimaPt.baking-commands
@@ -81,48 +77,6 @@ in
       meta = {
         description = "Your service";
         mainProgram = "tezos-baker-alpha";
-      };
-    };
-
-    trunk-octez-tx-rollup-node-alpha = buildDunePackage {
-      pname = "octez-tx-rollup-node-alpha";
-      inherit (ocamlPackages.tezos-stdlib) version src;
-
-      minimalOCamlVersion = "4.14";
-
-      duneVersion = "3";
-
-      buildInputs = with ocamlPackages; [
-        tezos-alpha.baking
-        tezos-alpha.baking-commands
-        tezos-alpha.client
-        tezos-alpha.protocol
-        tezos-base
-        tezos-client-base
-        tezos-client-base-unix
-        tezos-client-commands
-        tezos-context
-        tezos-crypto
-        tezos-micheline
-        tezos-rpc
-        tezos-rpc-http
-        tezos-rpc-http-client-unix
-        tezos-rpc-http-server
-        tezos-stdlib-unix
-        tezos-store
-      ];
-
-      checkInputs = with ocamlPackages; [
-        # alcotest-lwt
-        # tezos-base-test-helpers
-        # cacert
-      ];
-
-      inherit doCheck;
-
-      meta = {
-        description = "Your service";
-        mainProgram = "tezos-tx-rollup-node-alpha";
       };
     };
 
@@ -181,6 +135,45 @@ in
       postInstall = ''
         patchShebangs tezos-sandboxed-node.sh
       '';
+
+      doCheck = true;
+
+      meta = {
+        description = "Your service";
+        mainProgram = "tezos-node";
+      };
+    };
+
+    trunk-octez-dal-node = ocamlPackages.buildDunePackage rec {
+      pname = "octez-dal-node";
+      inherit (ocamlPackages.tezos-stdlib) version src;
+
+      minimalOCamlVersion = "4.14";
+
+      duneVersion = "3";
+
+      buildInputs = with ocamlPackages; [
+        tezos-base
+        tezos-clic
+        tezos-client-base
+        tezos-client-base-unix
+        tezos-client-commands
+        tezos-rpc-http
+        tezos-rpc-http-server
+        tezos-protocol-updater
+        tezos-rpc-http-client-unix
+        tezos-stdlib-unix
+        tezos-stdlib
+        tezos-dal-node-lib
+        tezos-dal-node-services
+        tezos-layer2-store
+        tezos-crypto-dal
+        irmin-pack
+        irmin
+        tezos-dal-016-PtMumbai
+      ];
+
+      checkInputs = with ocamlPackages; [tezos-base-test-helpers];
 
       doCheck = true;
 
