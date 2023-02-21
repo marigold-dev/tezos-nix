@@ -256,4 +256,27 @@ in rec {
         description = "Tezos/Protocol: protocol testing framework";
       };
   };
+
+  layer2-utils = buildDunePackage {
+    pname = "tezos-layer2-utils-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      client
+      protocol
+
+      ppx_expect
+      tezos-base
+      tezos-rpc
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library for Layer 2 utils";
+      };
+  };
 }
