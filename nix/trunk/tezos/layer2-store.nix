@@ -3,28 +3,33 @@
   buildDunePackage,
   tezos-stdlib,
   tezos-base,
+  irmin-pack,
+  irmin,
+  aches-lwt,
   tezos-stdlib-unix,
-  tezos-shell-services,
-  tezos-rpc-http,
-  tezos-rpc-http-server,
   tezos-context,
-  tezos-validation,
-  tezos-store,
+  tezos-error-monad,
+  qcheck-alcotest,
+  alcotest-lwt,
 }:
 buildDunePackage {
-  pname = "octez-node-config";
+  pname = "tezos-layer2-store";
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
   propagatedBuildInputs = [
     tezos-base
+    irmin-pack
+    irmin
+    aches-lwt
     tezos-stdlib-unix
-    tezos-shell-services
-    tezos-rpc-http
-    tezos-rpc-http-server
     tezos-context
-    tezos-validation
-    tezos-store
+  ];
+
+  checkInputs = [
+    tezos-error-monad
+    qcheck-alcotest
+    alcotest-lwt
   ];
 
   doCheck = true;
@@ -32,6 +37,6 @@ buildDunePackage {
   meta =
     tezos-stdlib.meta
     // {
-      description = "Octez: `octez-node-config` library";
+      description = "Tezos: layer2 storage utils";
     };
 }

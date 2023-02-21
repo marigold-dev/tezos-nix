@@ -164,6 +164,7 @@
         "nixpkgs": "nixpkgs",
         "pre-commit-hooks": "pre-commit-hooks",
         "tezos_release": "tezos_release",
+        "tezos_trunk": "tezos_trunk",
         "treefmt-nix": "treefmt-nix"
       }
     },
@@ -187,11 +188,11 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1676886892,
-        "narHash": "sha256-+fMRQcpJEnCaL0o2VpxhTmVmekynHKMz954fpvEiU7E=",
+        "lastModified": 1676985788,
+        "narHash": "sha256-pW74cn2oYdhbaztp9wFkD3Pu6//ZMoUyUirBcnQnQds=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "7897d8e0920e04f1f2b9df70389aefc264d9be9d",
+        "rev": "68edaa0242fb45ae34dd2740713312e1a4730a12",
         "type": "gitlab"
       },
       "original": {
