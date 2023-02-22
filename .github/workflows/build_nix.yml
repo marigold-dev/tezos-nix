@@ -29,29 +29,27 @@ jobs:
           export NIXPKGS_ALLOW_BROKEN=1
           nix flake check --impure
       - name: "Check formatting"
-        run: nix fmt -- --check flake.nix ./nix/*
+        run: nix fmt --accept-flake-config -- --fail-on-change
       - name: "Lint"
         run: nix run nixpkgs#statix -- check
 
       - name: Build default
-        run: nix --log-format raw -L build .#
+        run: nix --log-format raw -L build --accept-flake-config .#
       - name: "Build client"
-        run: nix --log-format raw -L build .#octez-client
+        run: nix --log-format raw -L build --accept-flake-config .#octez-client
       - name: "Build node"
-        run: nix --log-format raw -L build .#octez-node
+        run: nix --log-format raw -L build --accept-flake-config .#octez-node
       - name: "Build baker-alpha"
-        run: nix --log-format raw -L build .#octez-baker-alpha
-      - name: "Build rollup-node-alpha"
-        run: nix --log-format raw -L build .#octez-tx-rollup-node-alpha
+        run: nix --log-format raw -L build --accept-flake-config .#octez-baker-alpha
       - name: "Build trunk-client"
-        run: nix --log-format raw -L build .#trunk-octez-client
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-client
         continue-on-error: true
       - name: "Build trunk-node"
-        run: nix --log-format raw -L build .#trunk-octez-node
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-node
         continue-on-error: true
       - name: "Build trunk-baker-alpha"
-        run: nix --log-format raw -L build .#trunk-octez-baker-alpha
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-baker-alpha
         continue-on-error: true
-      - name: "Build trunk-rollup-node-alpha"
-        run: nix --log-format raw -L build .#trunk-octez-tx-rollup-node-alpha
+      - name: "Build trunk-octez-dal-node"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dal-node
         continue-on-error: true
