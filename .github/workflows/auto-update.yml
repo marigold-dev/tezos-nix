@@ -21,6 +21,14 @@ jobs:
         run: |
           nix flake update
           sed -i "s/octez_version = \".*\";/octez_version = \"$(date '+%Y%m%d')\";/g" ./nix/trunk/default.nix
+      - name: "Update sources"
+        uses: actions/github-script@v6
+        id: update-sources
+        with:
+          result-encoding: string
+          script: |
+            const script = require('./.github/workflows/auto-update.js')
+            return await script({github, context, core, require})
       - name: Commit updated flake
         env:
           GITHUB_JOB: ${{ env.GITHUB_JOB }}
