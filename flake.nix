@@ -42,11 +42,12 @@
       };
       systems = ["aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
       perSystem = {
-        self',
+        config,
         pkgs,
         system,
         ...
       }: {
+        devShells.default = config.devShells.dev;
         treefmt = {
           projectRootFile = "flake.nix";
           programs = {
@@ -62,7 +63,7 @@
             };
           };
         };
-        packages = {default = self'.packages.octez-client;};
+        packages = {default = config.packages.octez-client;};
       };
     };
 }
