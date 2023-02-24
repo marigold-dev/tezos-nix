@@ -25,7 +25,6 @@
     self,
     nixpkgs,
     flake-parts,
-    pre-commit-hooks,
     tezos_release,
     tezos_trunk,
     ...
@@ -34,6 +33,7 @@
     {
       imports = [
         inputs.treefmt-nix.flakeModule
+        inputs.pre-commit-hooks.flakeModule
         ./nix/release
         ./nix/trunk
       ];
@@ -53,16 +53,16 @@
             alejandra.enable = true;
           };
         };
-        packages = {default = self'.packages.octez-client;};
-        checks = {
-          pre-commit-check = pre-commit-hooks.lib.${system}.run {
-            src = ./.;
+        pre-commit = {
+          check.enable = true;
+          settings = {
             hooks = {
               alejandra.enable = true;
               statix.enable = true;
             };
           };
         };
+        packages = {default = self'.packages.octez-client;};
       };
     };
 }
