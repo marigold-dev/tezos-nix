@@ -182,4 +182,77 @@ in
         mainProgram = "tezos-node";
       };
     };
+
+    trunk-tezos-tps-evaluation = ocamlPackages.buildDunePackage rec {
+      pname = "tezos-tps-evaluation";
+      inherit (ocamlPackages.tezos-stdlib) version src;
+
+      minimalOCamlVersion = "4.14";
+
+      duneVersion = "3";
+
+      nativeBuildInputs = with ocamlPackages; [ocp-ocamlres];
+
+      propagatedBuildInputs = [ocamlPackages.findlib];
+
+      buildInputs = with ocamlPackages; [
+        tezos-base
+        caqti
+        caqti-dynload
+        caqti-lwt
+        data-encoding
+        lwt
+        tezos-client-base-unix
+        tezos-alpha.baking
+        tezos-alpha.client
+        tezos-alpha.protocol
+        tezt
+        tezt-tezos
+        tezt-performance-regression
+        uri
+        tezos-dal-node-services
+        tezos-context-ops
+      ];
+
+      doCheck = true;
+
+      meta = {
+        description = "Your service";
+        mainProgram = "tezos-node";
+      };
+    };
+
+    trunk-octez-snoop = ocamlPackages.buildDunePackage rec {
+      pname = "octez-snoop";
+      inherit (ocamlPackages.tezos-stdlib) version src;
+
+      minimalOCamlVersion = "4.14";
+
+      duneVersion = "3";
+
+      nativeBuildInputs = with ocamlPackages; [ocp-ocamlres];
+
+      propagatedBuildInputs = [ocamlPackages.findlib];
+
+      buildInputs = with ocamlPackages; [
+        tezos-base
+        tezos-base
+        tezos-stdlib-unix
+        tezos-clic
+        tezos-benchmark
+        tezos-benchmark-examples
+        # tezos-shell-benchmarks
+        # tezos-benchmarks-proto-alpha
+        ocamlgraph
+        pyml
+        prbnmcn-stats
+      ];
+
+      doCheck = true;
+
+      meta = {
+        description = "Your service";
+        mainProgram = "tezos-node";
+      };
+    };
   }

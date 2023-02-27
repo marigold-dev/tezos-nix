@@ -246,6 +246,8 @@ in rec {
       tezos-shell-services
       tezos-stdlib-unix
       tezos-test-helpers
+
+      tezos-plompiler
     ];
 
     doCheck = true;
