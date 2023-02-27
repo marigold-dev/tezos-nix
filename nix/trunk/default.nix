@@ -51,13 +51,13 @@ in {
         isTezosPackage = drv: let
           name = l.getName drv;
         in
-          l.hasPrefix "tezos-" name || l.hasPrefix "octez-" name || l.hasPrefix "trunk-octez-" name;
+          l.hasPrefix "tezos-" name || l.hasPrefix "octez-" name || l.hasPrefix "tezt-" name;
 
         recurseInputs = topInputs: olAccum: let
           accum =
             l.mapAttrs
             (k: v:
-              v ++ (olAccum.${k} or []))
+              (l.filter (i: !isTezosPackage i)) (v ++ (olAccum.${k} or [])))
             (l.mapAttrs (_: l.filter (i: !isTezosPackage i)) topInputs);
           tezosPackages = l.filter isTezosPackage (l.flatten (l.attrValues topInputs));
           newInputs = collectInputs tezosPackages;
@@ -72,14 +72,18 @@ in {
       pkgs.mkShell {
         name = "tezos-dev";
         inputsFrom = [inputs];
-        nativeBuildInputs = [pkgs.ocamlPackages.js_of_ocaml pkgs.nodejs pkgs.python311];
-        buildInputs = [pkgs.tezos-rust-libs] ++ (with pkgs.ocamlPackages; [hashcons tezt tezos-plompiler tezos-plonk pyml ppx_import]);
+        nativeBuildInputs = with pkgs;
+          [nodejs python311 dune_3]
+          ++ (with pkgs.ocamlPackages; [ocaml findlib js_of_ocaml]);
+        buildInputs =
+          [pkgs.tezos-rust-libs]
+          ++ (with pkgs.ocamlPackages; [hashcons tezt tezos-plompiler tezos-plonk pyml ppx_import ocaml-lsp]);
 
         shellHook = ''
           export OPAM_SWITCH_PREFIX="${pkgs.tezos-rust-libs}"
           export TEZOS_WITHOUT_OPAM=true
 
-          echo "Don't forget to run `npm install`, happy hacking!"
+          echo "Don't forget to run npm install, happy hacking!"
         '';
       };
   };
