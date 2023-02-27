@@ -1,5 +1,5 @@
 {
-  description = "Tezos packaged for nix";
+  description = "Nix packaging for Tezos that comes with a devShell";
 
   nixConfig = {
     extra-substituters = ["https://tezos.nix-cache.workers.dev"];
@@ -8,10 +8,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
-    flake-parts.url = "github:hercules-ci/flake-parts";
+
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
     tezos_release.url = "gitlab:tezos/tezos/v16.0-rc2";
@@ -23,10 +24,7 @@
 
   outputs = inputs @ {
     self,
-    nixpkgs,
     flake-parts,
-    tezos_release,
-    tezos_trunk,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;}
@@ -37,32 +35,25 @@
         ./nix/release
         ./nix/trunk
       ];
-      flake = {
-        hydraJobs = self.packages;
-      };
+      flake.hydraJobs = self.packages;
       systems = ["aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
       perSystem = {
-        self',
+        config,
         pkgs,
         system,
         ...
       }: {
-        treefmt = {
-          projectRootFile = "flake.nix";
-          programs = {
-            alejandra.enable = true;
-          };
+        packages.default = config.packages.octez-client;
+        devShells.default = config.devShells.dev;
+
+        treefmt.projectRootFile = "flake.nix";
+        treefmt.programs.alejandra.enable = true;
+
+        pre-commit.check.enable = true;
+        pre-commit.settings.hooks = {
+          alejandra.enable = true;
+          statix.enable = true;
         };
-        pre-commit = {
-          check.enable = true;
-          settings = {
-            hooks = {
-              alejandra.enable = true;
-              statix.enable = true;
-            };
-          };
-        };
-        packages = {default = self'.packages.octez-client;};
       };
     };
 }

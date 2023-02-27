@@ -28,11 +28,51 @@ in {
       ];
     };
 
+    l = pkgs.lib // builtins;
     tezos_pkgs = pkgs.callPackage ./pkgs.nix {doCheck = true;};
   in {
     packages = builtins.removeAttrs tezos_pkgs [
       "override"
       "overrideDerivation"
     ];
+    devShells.dev = let
+      trunkPackages = l.filterAttrs (k: _: l.hasPrefix "trunk" k) config.packages;
+
+      collectInputs = topInputs:
+        l.foldAttrs (
+          item: accum:
+            l.unique (item ++ accum)
+        )
+        []
+        (l.map (i: l.filterAttrs (k: _: l.hasSuffix "Inputs" k) i) topInputs);
+
+      topLevelInputs = collectInputs (l.attrValues trunkPackages);
+
+      inputs = let
+        isTezosPackage = drv: let
+          name = l.getName drv;
+        in
+          l.hasPrefix "tezos" name || l.hasPrefix "octez" name;
+
+        recurseInputs = topInputs: olAccum: let
+          accum = l.mapAttrs (k: v:
+            v ++ (olAccum.${k} or []))
+          (l.mapAttrs (_: v: l.filter (i: !isTezosPackage i) v) topInputs);
+          tezosPackages = l.filter isTezosPackage (l.flatten (l.attrValues topInputs));
+          newInputs = collectInputs tezosPackages;
+          inputContainsTezosPkg = l.filter isTezosPackage (l.flatten (l.attrValues newInputs)) != [];
+        in
+          if inputContainsTezosPkg
+          then recurseInputs newInputs accum
+          else l.mapAttrs (k: v: v ++ (accum.${k} or [])) newInputs;
+      in
+        recurseInputs topLevelInputs {};
+    in
+      pkgs.mkShell {
+        name = "tezos-dev";
+        inputsFrom = [inputs];
+        nativeBuildInputs = [pkgs.ocamlPackages.js_of_ocaml];
+        buildInputs = [pkgs.tezos-rust-libs];
+      };
   };
 }
