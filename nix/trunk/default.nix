@@ -43,7 +43,7 @@ in {
             l.unique (item ++ accum)
         )
         []
-        (l.map (i: l.filterAttrs (k: _: l.hasSuffix "Inputs" k) i) topInputs);
+        (l.map (l.filterAttrs (k: _: l.hasSuffix "Inputs" k)) topInputs);
 
       topLevelInputs = collectInputs (l.attrValues packages);
 
@@ -58,7 +58,7 @@ in {
             l.mapAttrs
             (k: v:
               v ++ (olAccum.${k} or []))
-            (l.mapAttrs (_: v: l.filter (i: !isTezosPackage i) v) topInputs);
+            (l.mapAttrs (_: l.filter (i: !isTezosPackage i)) topInputs);
           tezosPackages = l.filter isTezosPackage (l.flatten (l.attrValues topInputs));
           newInputs = collectInputs tezosPackages;
           inputContainsTezosPkg = l.filter isTezosPackage (l.flatten (l.attrValues newInputs)) != [];
