@@ -72,12 +72,14 @@ in {
       pkgs.mkShell {
         name = "tezos-dev";
         inputsFrom = [inputs];
-        nativeBuildInputs = [pkgs.ocamlPackages.js_of_ocaml pkgs.nodejs];
+        nativeBuildInputs = [pkgs.ocamlPackages.js_of_ocaml pkgs.nodejs pkgs.python311];
         buildInputs = [pkgs.tezos-rust-libs] ++ (with pkgs.ocamlPackages; [hashcons tezt tezos-plompiler tezos-plonk pyml ppx_import]);
 
         shellHook = ''
           export OPAM_SWITCH_PREFIX="${pkgs.tezos-rust-libs}"
           export TEZOS_WITHOUT_OPAM=true
+
+          echo "Don't forget to run `npm install`, happy hacking!"
         '';
       };
   };
