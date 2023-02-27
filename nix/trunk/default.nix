@@ -27,37 +27,38 @@ in {
         self.overlays.trunk
       ];
     };
-
-    l = pkgs.lib // builtins;
     tezos_pkgs = pkgs.callPackage ./pkgs.nix {doCheck = true;};
-  in {
+    l = pkgs.lib // builtins;
     packages = builtins.removeAttrs tezos_pkgs [
       "override"
       "overrideDerivation"
     ];
+  in {
+    inherit packages;
     devShells.dev = let
-      trunkPackages = l.filterAttrs (k: _: l.hasPrefix "trunk" k) config.packages;
-
       collectInputs = topInputs:
-        l.foldAttrs (
+        l.foldAttrs
+        (
           item: accum:
             l.unique (item ++ accum)
         )
         []
-        (l.map (i: l.filterAttrs (k: _: l.hasSuffix "Inputs" k) i) topInputs);
+        (l.map (l.filterAttrs (k: _: l.hasSuffix "Inputs" k)) topInputs);
 
-      topLevelInputs = collectInputs (l.attrValues trunkPackages);
+      topLevelInputs = collectInputs (l.attrValues packages);
 
       inputs = let
         isTezosPackage = drv: let
           name = l.getName drv;
         in
-          l.hasPrefix "tezos" name || l.hasPrefix "octez" name;
+          l.hasPrefix "tezos-" name || l.hasPrefix "octez-" name || l.hasPrefix "trunk-octez-" name;
 
         recurseInputs = topInputs: olAccum: let
-          accum = l.mapAttrs (k: v:
-            v ++ (olAccum.${k} or []))
-          (l.mapAttrs (_: v: l.filter (i: !isTezosPackage i) v) topInputs);
+          accum =
+            l.mapAttrs
+            (k: v:
+              v ++ (olAccum.${k} or []))
+            (l.mapAttrs (_: l.filter (i: !isTezosPackage i)) topInputs);
           tezosPackages = l.filter isTezosPackage (l.flatten (l.attrValues topInputs));
           newInputs = collectInputs tezosPackages;
           inputContainsTezosPkg = l.filter isTezosPackage (l.flatten (l.attrValues newInputs)) != [];
@@ -71,8 +72,13 @@ in {
       pkgs.mkShell {
         name = "tezos-dev";
         inputsFrom = [inputs];
-        nativeBuildInputs = [pkgs.ocamlPackages.js_of_ocaml];
-        buildInputs = [pkgs.tezos-rust-libs];
+        nativeBuildInputs = [pkgs.ocamlPackages.js_of_ocaml pkgs.nodejs];
+        buildInputs = [pkgs.tezos-rust-libs] ++ (with pkgs.ocamlPackages; [hashcons tezt tezos-plompiler tezos-plonk pyml ppx_import]);
+
+        shellHook = ''
+          export OPAM_SWITCH_PREFIX="${pkgs.tezos-rust-libs}"
+          export TEZOS_WITHOUT_OPAM=true
+        '';
       };
   };
 }

@@ -59,6 +59,30 @@
             doCheck = false;
           });
       in {
+        tezt = oself.buildDunePackage rec {
+          pname = "tezt";
+          version = "3.0.0";
+          src = prev.fetchFromGitLab {
+            owner = "nomadic-labs";
+            repo = "tezt";
+            rev = "${version}";
+            sha256 = "sha256-C7mqOUmZ2h3J1Yee3Yx/EBqldYUgtf0BpoRx9EsdFVA=";
+          };
+
+          duneVersion = "3";
+
+          nativeBuildInputs = with oself; [
+            js_of_ocaml
+          ];
+
+          propagatedBuildInputs = with oself; [
+            re
+            lwt
+            ezjsonm
+            js_of_ocaml
+            js_of_ocaml-lwt
+          ];
+        };
         data-encoding = osuper.data-encoding.overrideAttrs (_: rec {
           version = "0.7.1";
           src = prev.fetchFromGitLab {
