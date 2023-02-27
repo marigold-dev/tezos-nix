@@ -90,15 +90,15 @@ final: prev: {
 
         prbnmcn-stats = oself.buildDunePackage rec {
           pname = "prbnmcn-stats";
-          version = "0.0.6";
+          version = "0.0.4";
           src = final.fetchFromGitHub {
             owner = "igarnier";
             repo = pname;
             rev = version;
-            sha256 = "sha256-/KzpgnHtNwwBjzEiCi7UKhcrk5+yXMtSX3fmkO7UbNs=";
+            sha256 = "sha256-DpmUvyOSV+yTKXXObq6MoqI4xIInund670qxCDDqBsE=";
           };
 
-          propagatedBuildInputs = with oself; [prbnmcn-basic-structures];
+          propagatedBuildInputs = with oself; [prbnmcn-basic-structures prbnmcn-linalg];
 
           checkInputs = with oself; [qcheck ocamlgraph];
         };

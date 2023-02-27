@@ -1,6 +1,7 @@
 {
   lib,
   buildDunePackage,
+  python311,
   tezos-stdlib,
   tezos-base,
   tezos-stdlib-unix,
@@ -12,7 +13,6 @@
   prbnmcn-dagger,
   prbnmcn-dagger-stats,
   prbnmcn-stats,
-  prbnmcn-linalg,
   pringo,
   pyml,
   ocaml-migrate-parsetree,
@@ -33,11 +33,12 @@ buildDunePackage {
     prbnmcn-dagger
     prbnmcn-dagger-stats
     prbnmcn-stats
-    prbnmcn-linalg
     pringo
     pyml
     # ocaml-migrate-parsetree
   ];
+
+  nativeCheckInputs = [python311];
 
   doCheck = true;
 
