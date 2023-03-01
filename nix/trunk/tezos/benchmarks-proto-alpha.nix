@@ -18,7 +18,7 @@
 , ocamlgraph
 }:
 buildDunePackage {
-  pname = "tezos-benchmark";
+  pname = "tezos-benchmarks-proto-alpha";
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
@@ -36,7 +36,6 @@ buildDunePackage {
     pringo
     pyml
     ocamlgraph
-    # ocaml-migrate-parsetree
   ];
 
   nativeCheckInputs = [ python311 ];

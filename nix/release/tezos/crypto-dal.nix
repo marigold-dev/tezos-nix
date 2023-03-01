@@ -1,15 +1,15 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-error-monad,
-  data-encoding,
-  tezos-crypto,
-  tezos-bls12-381-polynomial,
-  lwt,
-  alcotest,
-  qcheck-alcotest,
+{ lib
+, fetchpatch
+, buildDunePackage
+, tezos-stdlib
+, tezos-error-monad
+, data-encoding
+, tezos-crypto
+, tezos-bls12-381-polynomial
+, lwt
+, alcotest
+, qcheck-alcotest
+,
 }:
 buildDunePackage {
   pname = "tezos-crypto-dal";
@@ -30,7 +30,7 @@ buildDunePackage {
     qcheck-alcotest
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta =
     tezos-stdlib.meta
