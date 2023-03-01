@@ -1,21 +1,22 @@
-{ lib
-, buildDunePackage
-, python311
-, tezos-stdlib
-, tezos-base
-, tezos-stdlib-unix
-, tezos-crypto
-, tezos-micheline
-, tezos-clic
-, data-encoding
-, prbnmcn-cgrph
-, prbnmcn-dagger
-, prbnmcn-dagger-stats
-, prbnmcn-stats
-, pringo
-, pyml
-, ocaml-migrate-parsetree
-, ocamlgraph
+{
+  lib,
+  buildDunePackage,
+  python311,
+  tezos-stdlib,
+  tezos-base,
+  tezos-stdlib-unix,
+  tezos-crypto,
+  tezos-micheline,
+  tezos-clic,
+  data-encoding,
+  prbnmcn-cgrph,
+  prbnmcn-dagger,
+  prbnmcn-dagger-stats,
+  prbnmcn-stats,
+  pringo,
+  pyml,
+  ocaml-migrate-parsetree,
+  ocamlgraph,
 }:
 buildDunePackage {
   pname = "tezos-benchmarks-proto-alpha";
@@ -38,7 +39,7 @@ buildDunePackage {
     ocamlgraph
   ];
 
-  nativeCheckInputs = [ python311 ];
+  nativeCheckInputs = [python311];
 
   doCheck = true;
 
