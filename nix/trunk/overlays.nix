@@ -9,8 +9,8 @@ final: prev: {
       sha256 = "sha256-SuCqDZDXmWdGI/GN+3nYcUk66jnW5FQQaeTB76/rvaw=";
     };
 
-    nativeBuildInputs = [final.llvmPackages_12.llvm final.cargo];
-    propagatedBuildDeps = [final.llvmPackages_12.libllvm];
+    nativeBuildInputs = [ final.llvmPackages_12.llvm final.cargo ];
+    propagatedBuildDeps = [ final.llvmPackages_12.libllvm ];
 
     preInstall = ''
       mkdir -p $out/lib/tezos-rust-libs
@@ -48,204 +48,255 @@ final: prev: {
   };
   ocaml-ng =
     builtins.mapAttrs
-    (ocamlVersion: curr_ocaml:
-      curr_ocaml.overrideScope' (oself: osuper: let
-        inherit (oself) callPackage;
-      in {
-        ezjsonm = osuper.ezjsonm.overrideAttrs (_: rec {
-          version = "1.3.0";
-          src = final.fetchurl {
-            url = "https://github.com/mirage/ezjsonm/releases/download/v${version}/ezjsonm-${version}.tbz";
-            sha256 = "sha256-CGM+Dw52eoroGTXKfnTxaTuFp5xFAtVo7t/1Fw8M13s=";
-          };
-        });
+      (ocamlVersion: curr_ocaml:
+        curr_ocaml.overrideScope' (oself: osuper:
+          let
+            inherit (oself) callPackage;
+          in
+          {
+            x509 = osuper.x509.overrideAttrs (_: {
+              doCheck = false;
+            });
 
-        prbnmcn-linalg = oself.buildDunePackage rec {
-          pname = "prbnmcn-linalg";
-          version = "0.0.1";
-          src = final.fetchFromGitHub {
-            owner = "igarnier";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-nr7W5TRkgTnkYEiWZIDcXcsUIswzDZf5CrhFu7kEAt0=";
-          };
+            mirage-crypto = osuper.mirage-crypto.overrideAttrs (_: rec {
+              version = "0.11.0";
+              src = final.fetchurl {
+                url = "https://github.com/mirage/mirage-crypto/releases/download/v${version}/mirage-crypto-${version}.tbz";
+                sha256 = "sha256-A5SCuVmcIJo3dL0Tu//fQqEV0v3FuCxuANWnBo7hUeQ=";
+              };
+            });
 
-          propagatedBuildInputs = with oself; [prbnmcn-basic-structures];
+            mirage-crypto-rng-lwt = oself.buildDunePackage rec {
+              inherit (oself.mirage-crypto) version src;
+              pname = "mirage-crypto-rng-lwt";
 
-          checkInputs = with oself; [crowbar prbnmcn-proptest];
-        };
+              propagatedBuildInputs = with oself; [
+                duration
+                logs
+                mirage-crypto
+                mirage-crypto-rng
+                mtime
+                lwt
+              ];
+            };
 
-        prbnmcn-proptest = oself.buildDunePackage rec {
-          pname = "prbnmcn-proptest";
-          version = "0.0.1";
-          src = final.fetchFromGitHub {
-            owner = "igarnier";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-nr7W5TRkgTnkYEiWZIDcXcsUIswzDZf5CrhFu7kEAt0=";
-          };
+            tls = osuper.tls.overrideAttrs (_: rec {
+              version = "0.16.0";
+              src = final.fetchurl {
+                url = "https://github.com/mirleft/ocaml-tls/releases/download/v${version}/tls-${version}.tbz";
+                sha256 = "sha256-uvIDZLNy6E/ce7YmzUUVaOeGRaHqPSUzuEPQDMu09tM=";
+              };
+            });
 
-          propagatedBuildInputs = with oself; [prbnmcn-basic-structures crowbar zarith];
-        };
+            tls-lwt = oself.buildDunePackage rec {
+              inherit (oself.tls) version src;
+              pname = "tls-lwt";
 
-        prbnmcn-stats = oself.buildDunePackage rec {
-          pname = "prbnmcn-stats";
-          version = "0.0.4";
-          src = final.fetchFromGitHub {
-            owner = "igarnier";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-DpmUvyOSV+yTKXXObq6MoqI4xIInund670qxCDDqBsE=";
-          };
+              duneVersion = "3";
 
-          propagatedBuildInputs = with oself; [prbnmcn-basic-structures prbnmcn-linalg];
+              propagatedBuildInputs = with oself; [
+                tls
+                lwt
+                mirage-crypto-rng-lwt
+                x509
+                cmdliner
+              ];
+            };
 
-          checkInputs = with oself; [qcheck ocamlgraph];
-        };
+            ezjsonm = osuper.ezjsonm.overrideAttrs (_: rec {
+              version = "1.3.0";
+              src = final.fetchurl {
+                url = "https://github.com/mirage/ezjsonm/releases/download/v${version}/ezjsonm-${version}.tbz";
+                sha256 = "sha256-CGM+Dw52eoroGTXKfnTxaTuFp5xFAtVo7t/1Fw8M13s=";
+              };
+            });
 
-        prbnmcn-cgrph = oself.buildDunePackage rec {
-          pname = "prbnmcn-cgrph";
-          version = "0.0.2";
-          src = final.fetchFromGitHub {
-            owner = "igarnier";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-UFICImWjbuOUnjRWmWgtQ+yno1QFp3mX2d7U2EFA9HA=";
-          };
+            prbnmcn-linalg = oself.buildDunePackage rec {
+              pname = "prbnmcn-linalg";
+              version = "0.0.1";
+              src = final.fetchFromGitHub {
+                owner = "igarnier";
+                repo = pname;
+                rev = version;
+                sha256 = "sha256-nr7W5TRkgTnkYEiWZIDcXcsUIswzDZf5CrhFu7kEAt0=";
+              };
 
-          preBuild = "ls";
+              propagatedBuildInputs = with oself; [ prbnmcn-basic-structures ];
 
-          checkInputs = with oself; [qcheck];
-        };
+              checkInputs = with oself; [ crowbar prbnmcn-proptest ];
+            };
 
-        prbnmcn-dagger = oself.buildDunePackage rec {
-          pname = "prbnmcn-dagger";
-          version = "0.0.2";
-          src = final.fetchFromGitHub {
-            owner = "igarnier";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-+xbw17jvGlvOCX2c3ZSfpQ0YY7EsOxRA1qMFmDPQn7Y=";
-          };
+            prbnmcn-proptest = oself.buildDunePackage rec {
+              pname = "prbnmcn-proptest";
+              version = "0.0.1";
+              src = final.fetchFromGitHub {
+                owner = "igarnier";
+                repo = pname;
+                rev = version;
+                sha256 = "sha256-nr7W5TRkgTnkYEiWZIDcXcsUIswzDZf5CrhFu7kEAt0=";
+              };
 
-          propagatedBuildInputs = with oself; [prbnmcn-cgrph pringo];
-        };
+              propagatedBuildInputs = with oself; [ prbnmcn-basic-structures crowbar zarith ];
+            };
 
-        prbnmcn-dagger-stats = oself.buildDunePackage {
-          pname = "prbnmcn-dagger-stats";
-          inherit (oself.prbnmcn-dagger) version src;
+            prbnmcn-stats = oself.buildDunePackage rec {
+              pname = "prbnmcn-stats";
+              version = "0.0.4";
+              src = final.fetchFromGitHub {
+                owner = "igarnier";
+                repo = pname;
+                rev = version;
+                sha256 = "sha256-DpmUvyOSV+yTKXXObq6MoqI4xIInund670qxCDDqBsE=";
+              };
 
-          propagatedBuildInputs = with oself; [prbnmcn-dagger prbnmcn-stats];
-        };
+              propagatedBuildInputs = with oself; [ prbnmcn-basic-structures prbnmcn-linalg ];
 
-        prbnmcn-basic-structures = oself.buildDunePackage rec {
-          pname = "prbnmcn-basic-structures";
-          version = "0.0.1";
-          src = final.fetchFromGitHub {
-            owner = "igarnier";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-0lcGsL+rrc13ZwfzfAneLwJVoi0MbPjOEhQiveexOco=";
-          };
+              checkInputs = with oself; [ qcheck ocamlgraph ];
+            };
 
-          propagatedBuildInputs = with oself; [zarith];
-        };
+            prbnmcn-cgrph = oself.buildDunePackage rec {
+              pname = "prbnmcn-cgrph";
+              version = "0.0.2";
+              src = final.fetchFromGitHub {
+                owner = "igarnier";
+                repo = pname;
+                rev = version;
+                sha256 = "sha256-UFICImWjbuOUnjRWmWgtQ+yno1QFp3mX2d7U2EFA9HA=";
+              };
 
-        pringo = final.stdenv.mkDerivation rec {
-          pname = "pringo";
-          version = "1.3";
-          src = final.fetchFromGitHub {
-            owner = "xavierleroy";
-            repo = pname;
-            rev = version;
-            sha256 = "sha256-DyW8hPAxyL9xV0JGWI/rFHiN+FiRnkUL6xSHhoafy44=";
-          };
+              preBuild = "ls";
 
-          nativeBuildInputs = with oself; [ocaml findlib];
+              checkInputs = with oself; [ qcheck ];
+            };
 
-          preInstall = ''
-            mkdir -p $out/lib/ocaml/${oself.ocaml.version}/site-lib/${pname}
-          '';
+            prbnmcn-dagger = oself.buildDunePackage rec {
+              pname = "prbnmcn-dagger";
+              version = "0.0.2";
+              src = final.fetchFromGitHub {
+                owner = "igarnier";
+                repo = pname;
+                rev = version;
+                sha256 = "sha256-+xbw17jvGlvOCX2c3ZSfpQ0YY7EsOxRA1qMFmDPQn7Y=";
+              };
 
-          doCheck = false;
-        };
+              propagatedBuildInputs = with oself; [ prbnmcn-cgrph pringo ];
+            };
 
-        tezos-benchmark = callPackage ./tezos/benchmark.nix {};
-        tezos-benchmark-examples = callPackage ./tezos/benchmark-examples.nix {};
+            prbnmcn-dagger-stats = oself.buildDunePackage {
+              pname = "prbnmcn-dagger-stats";
+              inherit (oself.prbnmcn-dagger) version src;
 
-        tezos-bls12-381-polynomial-internal = callPackage ./tezos/bls12-381-polynomial-internal.nix {};
+              propagatedBuildInputs = with oself; [ prbnmcn-dagger prbnmcn-stats ];
+            };
 
-        tezos-dal-node-services = callPackage ./tezos/dal-node-services.nix {};
+            prbnmcn-basic-structures = oself.buildDunePackage rec {
+              pname = "prbnmcn-basic-structures";
+              version = "0.0.1";
+              src = final.fetchFromGitHub {
+                owner = "igarnier";
+                repo = pname;
+                rev = version;
+                sha256 = "sha256-0lcGsL+rrc13ZwfzfAneLwJVoi0MbPjOEhQiveexOco=";
+              };
 
-        tezos-dal-node-lib = callPackage ./tezos/dal-node-lib.nix {};
+              propagatedBuildInputs = with oself; [ zarith ];
+            };
 
-        tezos-layer2-store = callPackage ./tezos/layer2-store.nix {};
+            pringo = final.stdenv.mkDerivation rec {
+              pname = "pringo";
+              version = "1.3";
+              src = final.fetchFromGitHub {
+                owner = "xavierleroy";
+                repo = pname;
+                rev = version;
+                sha256 = "sha256-DyW8hPAxyL9xV0JGWI/rFHiN+FiRnkUL6xSHhoafy44=";
+              };
 
-        tezos-dal-016-PtMumbai = callPackage ./tezos/dal-016-PtMumbai.nix {};
+              nativeBuildInputs = with oself; [ ocaml findlib ];
 
-        tezos-crypto-dal = osuper.tezos-crypto-dal.overrideAttrs (o: {
-          propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.tezos-bls12-381-polynomial-internal];
+              preInstall = ''
+                mkdir -p $out/lib/ocaml/${oself.ocaml.version}/site-lib/${pname}
+              '';
 
-          checkInputs =
-            o.checkInputs
-            ++ [
-              oself.tezos-test-helpers
-            ];
-        });
+              doCheck = false;
+            };
 
-        tezos-alpha = callPackage ./tezos/generic-protocol.nix {
-          protocol-name = "alpha";
-          ocamlPackages = oself;
-        };
+            tezos-benchmark = callPackage ./tezos/benchmark.nix { };
+            tezos-benchmark-examples = callPackage ./tezos/benchmark-examples.nix { };
 
-        tezt-tezos = callPackage ./tezos/tezt-tezos.nix {};
-        tezt-performance-regression = callPackage ./tezos/tezt-performance-regression.nix {};
+            tezos-bls12-381-polynomial-internal = callPackage ./tezos/bls12-381-polynomial-internal.nix { };
 
-        tezos-protocol-environment = osuper.tezos-protocol-environment.overrideAttrs (o: {
-          propagatedBuildInputs = with oself; [
-            tezos-stdlib
-            tezos-crypto
-            tezos-crypto-dal
-            tezos-lwt-result-stdlib
-            tezos-scoru-wasm
+            tezos-dal-node-services = callPackage ./tezos/dal-node-services.nix { };
 
-            data-encoding
-            bls12-381
-            tezos-plonk
-            zarith
-            zarith_stubs_js
-            class_group_vdf
-            ringo
-            aches-lwt
+            tezos-dal-node-lib = callPackage ./tezos/dal-node-lib.nix { };
 
-            tezos-base
-            tezos-sapling
-            tezos-micheline
-            tezos-context
-            tezos-event-logging
-          ];
-        });
-        tezos-proxy = osuper.tezos-proxy.overrideAttrs (o: {
-          propagatedBuildInputs = with oself; [tezos-mockup-proxy tezos-context];
-        });
-        tezos-store = osuper.tezos-store.overrideAttrs (o: {
-          propagatedBuildInputs = with oself; [
-            index
-            camlzip
-            tar-unix
-            digestif
-            lwt-watcher
-            tezos-protocol-updater
-            tezos-validation
-            prometheus
-          ];
-        });
-        tezos-clic = osuper.tezos-clic.overrideAttrs (o: {
-          propagatedBuildInputs = with oself; [tezos-lwt-result-stdlib tezos-stdlib-unix tezos-error-monad];
-        });
-        tezos-stdlib-unix = osuper.tezos-stdlib-unix.overrideAttrs (o: {
-          checkInputs = with oself; [alcotest-lwt qcheck-alcotest];
-        });
-      }))
-    prev.ocaml-ng;
+            tezos-layer2-store = callPackage ./tezos/layer2-store.nix { };
+
+            tezos-dal-016-PtMumbai = callPackage ./tezos/dal-016-PtMumbai.nix { };
+
+            tezos-crypto-dal = osuper.tezos-crypto-dal.overrideAttrs (o: {
+              propagatedBuildInputs = o.propagatedBuildInputs ++ [ oself.tezos-bls12-381-polynomial-internal ];
+
+              checkInputs =
+                o.checkInputs
+                ++ [
+                  oself.tezos-test-helpers
+                ];
+            });
+
+            tezos-alpha = callPackage ./tezos/generic-protocol.nix {
+              protocol-name = "alpha";
+              ocamlPackages = oself;
+            };
+
+            tezt-tezos = callPackage ./tezos/tezt-tezos.nix { };
+            tezt-performance-regression = callPackage ./tezos/tezt-performance-regression.nix { };
+
+            tezos-protocol-environment = osuper.tezos-protocol-environment.overrideAttrs (o: {
+              propagatedBuildInputs = with oself; [
+                tezos-stdlib
+                tezos-crypto
+                tezos-crypto-dal
+                tezos-lwt-result-stdlib
+                tezos-scoru-wasm
+
+                data-encoding
+                bls12-381
+                tezos-plonk
+                zarith
+                zarith_stubs_js
+                class_group_vdf
+                ringo
+                aches-lwt
+
+                tezos-base
+                tezos-sapling
+                tezos-micheline
+                tezos-context
+                tezos-event-logging
+              ];
+            });
+            tezos-proxy = osuper.tezos-proxy.overrideAttrs (o: {
+              propagatedBuildInputs = with oself; [ tezos-mockup-proxy tezos-context ];
+            });
+            tezos-store = osuper.tezos-store.overrideAttrs (o: {
+              propagatedBuildInputs = with oself; [
+                index
+                camlzip
+                tar-unix
+                digestif
+                lwt-watcher
+                tezos-protocol-updater
+                tezos-validation
+                prometheus
+              ];
+            });
+            tezos-clic = osuper.tezos-clic.overrideAttrs (o: {
+              propagatedBuildInputs = with oself; [ tezos-lwt-result-stdlib tezos-stdlib-unix tezos-error-monad ];
+            });
+            tezos-stdlib-unix = osuper.tezos-stdlib-unix.overrideAttrs (o: {
+              checkInputs = with oself; [ alcotest-lwt qcheck-alcotest ];
+            });
+          }))
+      prev.ocaml-ng;
 }
