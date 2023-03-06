@@ -59,6 +59,128 @@
             doCheck = false;
           });
       in {
+        seqes = osuper.buildDunePackage rec {
+          pname = "seqes";
+          version = "0.2";
+          src = final.fetchurl {
+            url = "https://gitlab.com/nomadic-labs/seqes/-/archive/${version}/seqes-${version}.tar.gz";
+            sha256 = "sha256-IxLA0jaIPdX9Zn/GL8UHDJYjA1UBW6leGbZmp64YMjI=";
+          };
+
+          duneVersion = "3";
+
+          checkInputs = with osuper; [qcheck qcheck-alcotest alcotest];
+        };
+        prbnmcn-linalg = oself.buildDunePackage rec {
+          pname = "prbnmcn-linalg";
+          version = "0.0.1";
+          src = final.fetchFromGitHub {
+            owner = "igarnier";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-nr7W5TRkgTnkYEiWZIDcXcsUIswzDZf5CrhFu7kEAt0=";
+          };
+
+          propagatedBuildInputs = with oself; [prbnmcn-basic-structures];
+
+          checkInputs = with oself; [crowbar prbnmcn-proptest];
+        };
+
+        prbnmcn-proptest = oself.buildDunePackage rec {
+          pname = "prbnmcn-proptest";
+          version = "0.0.1";
+          src = final.fetchFromGitHub {
+            owner = "igarnier";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-nr7W5TRkgTnkYEiWZIDcXcsUIswzDZf5CrhFu7kEAt0=";
+          };
+
+          propagatedBuildInputs = with oself; [prbnmcn-basic-structures crowbar zarith];
+        };
+
+        prbnmcn-stats = oself.buildDunePackage rec {
+          pname = "prbnmcn-stats";
+          version = "0.0.4";
+          src = final.fetchFromGitHub {
+            owner = "igarnier";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-DpmUvyOSV+yTKXXObq6MoqI4xIInund670qxCDDqBsE=";
+          };
+
+          propagatedBuildInputs = with oself; [prbnmcn-basic-structures prbnmcn-linalg];
+
+          checkInputs = with oself; [qcheck ocamlgraph];
+        };
+
+        prbnmcn-cgrph = oself.buildDunePackage rec {
+          pname = "prbnmcn-cgrph";
+          version = "0.0.2";
+          src = final.fetchFromGitHub {
+            owner = "igarnier";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-UFICImWjbuOUnjRWmWgtQ+yno1QFp3mX2d7U2EFA9HA=";
+          };
+
+          preBuild = "ls";
+
+          checkInputs = with oself; [qcheck];
+        };
+
+        prbnmcn-dagger = oself.buildDunePackage rec {
+          pname = "prbnmcn-dagger";
+          version = "0.0.2";
+          src = final.fetchFromGitHub {
+            owner = "igarnier";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-+xbw17jvGlvOCX2c3ZSfpQ0YY7EsOxRA1qMFmDPQn7Y=";
+          };
+
+          propagatedBuildInputs = with oself; [prbnmcn-cgrph pringo];
+        };
+
+        prbnmcn-dagger-stats = oself.buildDunePackage {
+          pname = "prbnmcn-dagger-stats";
+          inherit (oself.prbnmcn-dagger) version src;
+
+          propagatedBuildInputs = with oself; [prbnmcn-dagger prbnmcn-stats];
+        };
+
+        prbnmcn-basic-structures = oself.buildDunePackage rec {
+          pname = "prbnmcn-basic-structures";
+          version = "0.0.1";
+          src = final.fetchFromGitHub {
+            owner = "igarnier";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-0lcGsL+rrc13ZwfzfAneLwJVoi0MbPjOEhQiveexOco=";
+          };
+
+          propagatedBuildInputs = with oself; [zarith];
+        };
+
+        pringo = final.stdenv.mkDerivation rec {
+          pname = "pringo";
+          version = "1.3";
+          src = final.fetchFromGitHub {
+            owner = "xavierleroy";
+            repo = pname;
+            rev = version;
+            sha256 = "sha256-DyW8hPAxyL9xV0JGWI/rFHiN+FiRnkUL6xSHhoafy44=";
+          };
+
+          nativeBuildInputs = with oself; [ocaml findlib];
+
+          preInstall = ''
+            mkdir -p $out/lib/ocaml/${oself.ocaml.version}/site-lib/${pname}
+          '';
+
+          doCheck = false;
+        };
+
         tezt = oself.buildDunePackage rec {
           pname = "tezt";
           version = "3.0.0";
@@ -83,6 +205,10 @@
             js_of_ocaml-lwt
           ];
         };
+
+        tezt-tezos = callPackage ./tezos/tezt-tezos.nix {};
+        tezt-performance-regression = callPackage ./tezos/tezt-performance-regression.nix {};
+
         data-encoding = osuper.data-encoding.overrideAttrs (_: rec {
           version = "0.7.1";
           src = prev.fetchFromGitLab {

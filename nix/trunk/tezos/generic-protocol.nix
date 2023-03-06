@@ -16,6 +16,7 @@ in rec {
     propagatedBuildInputs = with ocamlPackages; [
       protocol-plugin
       protocol
+      smart-rollup
 
       tezos-mockup-registration
       tezos-proxy
@@ -197,6 +198,7 @@ in rec {
     buildInputs = with ocamlPackages; [
       embedded-protocol
       protocol
+      smart-rollup
 
       tezos-shell
       qcheck-alcotest
@@ -223,7 +225,7 @@ in rec {
 
     buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
 
-    propagatedBuildInputs = with ocamlPackages; [protocol-plugin];
+    propagatedBuildInputs = with ocamlPackages; [protocol-plugin smart-rollup];
 
     doCheck = true;
 
@@ -279,6 +281,28 @@ in rec {
       tezos-stdlib.meta
       // {
         description = "Tezos/Protocol: protocol specific library for Layer 2 utils";
+      };
+  };
+
+  smart-rollup = buildDunePackage {
+    pname = "tezos-smart-rollup-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      protocol
+
+      ppx_expect
+      tezos-protocol-environment
+      tezos-base
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library of helpers for `tezos-smart-rollup`";
       };
   };
 }
