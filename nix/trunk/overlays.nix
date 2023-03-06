@@ -109,6 +109,8 @@ final: prev: {
           };
         });
 
+        tezos-micheline-rewriting = callPackage ./tezos/micheline-rewriting.nix {};
+
         tezos-benchmark = callPackage ./tezos/benchmark.nix {};
         tezos-benchmark-examples = callPackage ./tezos/benchmark-examples.nix {};
 
@@ -131,6 +133,8 @@ final: prev: {
               oself.tezos-test-helpers
             ];
         });
+
+        tezos-shell-benchmarks = callPackage ./tezos/shell-benchmarks.nix {};
 
         tezos-alpha = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "alpha";

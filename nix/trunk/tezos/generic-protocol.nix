@@ -1,13 +1,15 @@
-{
-  lib,
-  buildDunePackage,
-  ocamlPackages,
-  tezos-stdlib,
-  cacert,
-  protocol-name,
-}: let
-  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
-in rec {
+{ lib
+, buildDunePackage
+, ocamlPackages
+, tezos-stdlib
+, cacert
+, protocol-name
+,
+}:
+let
+  underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
+in
+rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
@@ -153,9 +155,9 @@ in rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
+    nativeBuildInputs = with ocamlPackages; [ octez-protocol-compiler ];
 
-    buildInputs = with ocamlPackages; [tezos-protocol-environment];
+    buildInputs = with ocamlPackages; [ tezos-protocol-environment ];
 
     doCheck = true;
 
@@ -173,11 +175,11 @@ in rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
+    nativeBuildInputs = with ocamlPackages; [ octez-protocol-compiler ];
 
-    buildInputs = with ocamlPackages; [tezos-protocol-updater octez-protocol-compiler];
+    buildInputs = with ocamlPackages; [ tezos-protocol-updater octez-protocol-compiler ];
 
-    propagatedBuildInputs = [protocol];
+    propagatedBuildInputs = [ protocol ];
 
     doCheck = true;
 
@@ -205,7 +207,7 @@ in rec {
       tezos-test-helpers
     ];
 
-    checkInputs = with ocamlPackages; [qcheck-alcotest tezos-test-helpers];
+    checkInputs = with ocamlPackages; [ qcheck-alcotest tezos-test-helpers ];
 
     doCheck = true;
 
@@ -223,9 +225,9 @@ in rec {
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
+    buildInputs = with ocamlPackages; [ protocol embedded-protocol tezos-shell ];
 
-    propagatedBuildInputs = with ocamlPackages; [protocol-plugin smart-rollup];
+    propagatedBuildInputs = with ocamlPackages; [ protocol-plugin smart-rollup ];
 
     doCheck = true;
 
@@ -303,6 +305,98 @@ in rec {
       tezos-stdlib.meta
       // {
         description = "Tezos/Protocol: protocol specific library of helpers for `tezos-smart-rollup`";
+      };
+  };
+
+  benchmark-type-inference = buildDunePackage {
+    pname = "tezos-benchmark-type-inference-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      protocol
+      client
+
+      tezos-stdlib
+      tezos-error-monad
+      tezos-crypto
+      tezos-micheline
+      tezos-micheline-rewriting
+      tezos-protocol-environment
+      hashcons
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: library for writing benchmarks (protocol-specific part)";
+      };
+  };
+
+  benchmark = buildDunePackage {
+    pname = "tezos-benchmark-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      benchmark-type-inference
+      protocol
+      test-helpers
+
+      tezos-stdlib
+      tezos-base
+      tezos-error-monad
+      tezos-micheline
+      tezos-micheline-rewriting
+      tezos-benchmark
+      tezos-crypto
+
+      hashcons
+      prbnmcn-stats
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: library for writing benchmarks (protocol-specific part)";
+      };
+  };
+
+  benchmarks = buildDunePackage {
+    pname = "tezos-benchmarks-proto-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      client
+      protocol
+      protocol-plugin
+      benchmark
+      benchmark-type-inference
+      test-helpers
+
+      tezos-stdlib
+      tezos-base
+      tezos-error-monad
+      tezos-lazy-containers
+      tezos-benchmark
+      tezos-crypto
+      tezos-shell-benchmarks
+      tezos-micheline
+      tezos-sapling
+      tezos-protocol-environment
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol benchmarks";
       };
   };
 }
