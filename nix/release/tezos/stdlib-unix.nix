@@ -9,6 +9,8 @@
   ipaddr,
   ezjsonm,
   fmt,
+  alcotest-lwt,
+  qcheck-alcotest,
 }:
 buildDunePackage {
   pname = "tezos-stdlib-unix";
@@ -16,6 +18,7 @@ buildDunePackage {
   duneVersion = "3";
 
   propagatedBuildInputs = [tezos-event-logging re ptime mtime ipaddr ezjsonm fmt];
+  checkInputs = [alcotest-lwt qcheck-alcotest];
 
   doCheck = true;
 
