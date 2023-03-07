@@ -101,51 +101,6 @@ final: prev: {
           ];
         };
 
-        ezjsonm = osuper.ezjsonm.overrideAttrs (_: rec {
-          version = "1.3.0";
-          src = final.fetchurl {
-            url = "https://github.com/mirage/ezjsonm/releases/download/v${version}/ezjsonm-${version}.tbz";
-            sha256 = "sha256-CGM+Dw52eoroGTXKfnTxaTuFp5xFAtVo7t/1Fw8M13s=";
-          };
-        });
-
-        tezos-micheline-rewriting = callPackage ./tezos/micheline-rewriting.nix {};
-
-        tezos-benchmark = callPackage ./tezos/benchmark.nix {};
-        tezos-benchmark-examples = callPackage ./tezos/benchmark-examples.nix {};
-
-        tezos-bls12-381-polynomial-internal = callPackage ./tezos/bls12-381-polynomial-internal.nix {};
-
-        tezos-dal-node-services = callPackage ./tezos/dal-node-services.nix {};
-
-        tezos-dal-node-lib = callPackage ./tezos/dal-node-lib.nix {};
-
-        tezos-layer2-store = callPackage ./tezos/layer2-store.nix {};
-
-        tezos-dal-016-PtMumbai = callPackage ./tezos/dal-016-PtMumbai.nix {};
-
-        tezos-crypto-dal = osuper.tezos-crypto-dal.overrideAttrs (o: {
-          propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.tezos-bls12-381-polynomial-internal];
-
-          checkInputs =
-            o.checkInputs
-            ++ [
-              oself.tezos-test-helpers
-            ];
-        });
-
-        tezos-shell-benchmarks = callPackage ./tezos/shell-benchmarks.nix {};
-
-        tezos-alpha = callPackage ./tezos/generic-protocol.nix {
-          protocol-name = "alpha";
-          ocamlPackages = oself;
-        };
-
-        tezos-016-PtMumbai = callPackage ./tezos/generic-protocol.nix {
-          protocol-name = "016-PtMumbai";
-          ocamlPackages = oself;
-        };
-
         tezos-protocol-environment = osuper.tezos-protocol-environment.overrideAttrs (o: {
           propagatedBuildInputs = with oself; [
             tezos-stdlib
@@ -172,25 +127,23 @@ final: prev: {
         });
 
         tezos-store = osuper.tezos-store.overrideAttrs (o: {
-          propagatedBuildInputs = with oself; [
-            index
-            camlzip
-            tar-unix
-            digestif
-            lwt-watcher
-            tezos-protocol-updater
-            tezos-validation
-            prometheus
-          ];
-        });
-
-        tezos-clic = osuper.tezos-clic.overrideAttrs (o: {
-          propagatedBuildInputs = with oself; [tezos-lwt-result-stdlib tezos-stdlib-unix tezos-error-monad];
+          propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.digestif];
         });
 
         tezos-lwt-result-stdlib = osuper.tezos-lwt-result-stdlib.overrideAttrs (o: {
-          propagatedBuildInputs = with oself; [seqes] ++ o.propagatedBuildInputs;
+          propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.seqes];
         });
+
+        tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix {};
+        tezos-bls12-381-polynomial-internal = callPackage ./tezos/bls12-381-polynomial-internal.nix {};
+        tezos-016-PtMumbai = callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "016-PtMumbai";
+          ocamlPackages = oself;
+        };
+        tezos-alpha = callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "alpha";
+          ocamlPackages = oself;
+        };
       }))
     prev.ocaml-ng;
 }

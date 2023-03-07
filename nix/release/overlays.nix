@@ -59,6 +59,14 @@
             doCheck = false;
           });
       in {
+        ezjsonm = osuper.ezjsonm.overrideAttrs (_: rec {
+          version = "1.3.0";
+          src = final.fetchurl {
+            url = "https://github.com/mirage/ezjsonm/releases/download/v${version}/ezjsonm-${version}.tbz";
+            sha256 = "sha256-CGM+Dw52eoroGTXKfnTxaTuFp5xFAtVo7t/1Fw8M13s=";
+          };
+        });
+
         seqes = osuper.buildDunePackage rec {
           pname = "seqes";
           version = "0.2";
@@ -71,6 +79,7 @@
 
           checkInputs = with osuper; [qcheck qcheck-alcotest alcotest];
         };
+
         prbnmcn-linalg = oself.buildDunePackage rec {
           pname = "prbnmcn-linalg";
           version = "0.0.1";
@@ -205,9 +214,6 @@
             js_of_ocaml-lwt
           ];
         };
-
-        tezt-tezos = callPackage ./tezos/tezt-tezos.nix {};
-        tezt-performance-regression = callPackage ./tezos/tezt-performance-regression.nix {};
 
         data-encoding = osuper.data-encoding.overrideAttrs (_: rec {
           version = "0.7.1";
@@ -356,6 +362,9 @@
           meta = {inherit (oself.ocaml.meta) platforms;};
         };
 
+        tezt-tezos = callPackage ./tezos/tezt-tezos.nix {};
+        tezt-performance-regression = callPackage ./tezos/tezt-performance-regression.nix {};
+        tezos-layer2-store = callPackage ./tezos/layer2-store.nix {};
         tezos-layer2-utils-alpha = callPackage ./tezos/layer2-utils-alpha.nix {};
         tezos-lazy-containers = oself.callPackage ./tezos/lazy-containers.nix {};
         tezos-tree-encoding = oself.callPackage ./tezos/tree-encoding.nix {};
@@ -369,6 +378,9 @@
           protocol-name = "genesis-carthagenet";
           ocamlPackages = oself;
         };
+        tezos-dal-node-services = callPackage ./tezos/dal-node-services.nix {};
+        tezos-dal-node-lib = callPackage ./tezos/dal-node-lib.nix {};
+        tezos-dal-016-PtMumbai = callPackage ./tezos/dal-016-PtMumbai.nix {};
         tezos-demo-counter = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "demo-counter";
           ocamlPackages = oself;
@@ -457,6 +469,8 @@
         tezos-base = callPackage ./tezos/base.nix {};
         tezos-base-test-helpers =
           callPackage ./tezos/base-test-helpers.nix {};
+        tezos-benchmark = callPackage ./tezos/benchmark.nix {};
+        tezos-benchmark-examples = callPackage ./tezos/benchmark-examples.nix {};
         tezos-clic = callPackage ./tezos/clic.nix {};
         tezos-client-base = callPackage ./tezos/client-base.nix {};
         tezos-client-base-unix = callPackage ./tezos/client-base-unix.nix {};
@@ -476,6 +490,7 @@
         tezos-hacl-glue-unix = callPackage ./tezos/hacl-glue-unix.nix {};
         tezos-lwt-result-stdlib = callPackage ./tezos/lwt-result-stdlib.nix {};
         tezos-micheline = callPackage ./tezos/micheline.nix {};
+        tezos-micheline-rewriting = callPackage ./tezos/micheline-rewriting.nix {};
         tezos-mockup-commands = callPackage ./tezos/mockup-commands.nix {};
         tezos-mockup-proxy = callPackage ./tezos/mockup-proxy.nix {};
         tezos-mockup-registration =
@@ -500,6 +515,7 @@
         tezos-rpc = callPackage ./tezos/rpc.nix {};
         tezos-sapling = callPackage ./tezos/sapling.nix {};
         tezos-scoru-wasm = callPackage ./tezos/scoru-wasm.nix {};
+        tezos-shell-benchmarks = callPackage ./tezos/shell-benchmarks.nix {};
         tezos-shell-context = callPackage ./tezos/shell-context.nix {};
         tezos-shell-services = callPackage ./tezos/shell-services.nix {};
         tezos-shell-services-test-helpers =
