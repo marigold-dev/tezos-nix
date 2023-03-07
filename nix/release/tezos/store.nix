@@ -2,16 +2,33 @@
   lib,
   buildDunePackage,
   tezos-stdlib,
-  tezos-protocol-updater,
+  tezos-stdlib-unix,
+  tezos-base,
+  tezos-crypto,
+  tezos-shell-services,
+  aches,
+  aches-lwt,
   tezos-validation,
-  octez-protocol-compiler,
+  tezos-version,
   index,
-  camlzip,
-  tar-unix,
-  digestif,
-  alcotest-lwt,
+  irmin-pack,
+  tezos-protocol-environment,
+  tezos-context,
+  tezos-context-ops,
+  tezos-shell-context,
+  tezos-protocol-updater,
   lwt-watcher,
+  camlzip,
+  tar,
+  tar-unix,
   prometheus,
+  tezos-rpc,
+  tezos-alpha,
+  tezos-genesis,
+  tezos-demo-noops,
+  alcotest-lwt,
+  tezos-test-helpers,
+  tezos-test-helpers-extra,
 }:
 buildDunePackage {
   pname = "tezos-store";
@@ -19,23 +36,47 @@ buildDunePackage {
   duneVersion = "3";
 
   propagatedBuildInputs = [
-    index
-    camlzip
-    tar-unix
-    digestif
-    lwt-watcher
-    tezos-protocol-updater
+    tezos-stdlib-unix
+    tezos-base
+    tezos-crypto
+    tezos-shell-services
+    aches
+    aches-lwt
     tezos-validation
+    tezos-version
+    index
+    irmin-pack
+    tezos-protocol-environment
+    tezos-context
+    tezos-context-ops
+    tezos-shell-context
+    tezos-protocol-updater
+    tezos-stdlib
+    lwt-watcher
+    camlzip
+    tar
+    tar-unix
     prometheus
+    tezos-rpc
   ];
 
-  nativeBuildInputs = [octez-protocol-compiler];
+  # nativeBuildInputs = [octez-protocol-compiler];
 
   strictDeps = true;
 
-  checkInputs = [alcotest-lwt];
+  checkInputs = [
+    tezos-demo-noops.embedded-protocol
+    tezos-genesis.embedded-protocol
+    tezos-alpha.embedded-protocol
+    tezos-alpha.protocol
+    tezos-alpha.protocol-plugin
+    alcotest-lwt
+    tezos-test-helpers
+    tezos-test-helpers-extra
+  ];
 
-  # A lot of extra deps with wide dependency cones needed
+  # We're getting infinite recursion from the function that creates the protocol packages
+  # If we want to enable this we need to split that function again, but it seems worth it to skip this test
   doCheck = false;
 
   meta =

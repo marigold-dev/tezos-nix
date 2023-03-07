@@ -2,7 +2,11 @@
   lib,
   buildDunePackage,
   tezos-stdlib,
+  tezos-lwt-result-stdlib,
   tezos-stdlib-unix,
+  tezos-error-monad,
+  re,
+  lwt,
   alcotest,
   alcotest-lwt,
 }:
@@ -11,7 +15,7 @@ buildDunePackage {
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
-  propagatedBuildInputs = [tezos-stdlib-unix];
+  propagatedBuildInputs = [tezos-lwt-result-stdlib tezos-stdlib-unix tezos-error-monad re lwt tezos-stdlib];
 
   checkInputs = [alcotest alcotest-lwt];
 

@@ -1,15 +1,13 @@
-{ lib
-, buildDunePackage
-, ocamlPackages
-, tezos-stdlib
-, cacert
-, protocol-name
-,
-}:
-let
-  underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
-in
-rec {
+{
+  lib,
+  buildDunePackage,
+  ocamlPackages,
+  tezos-stdlib,
+  cacert,
+  protocol-name,
+}: let
+  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
+in rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
@@ -155,9 +153,9 @@ rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [ octez-protocol-compiler ];
+    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
 
-    buildInputs = with ocamlPackages; [ tezos-protocol-environment ];
+    buildInputs = with ocamlPackages; [tezos-protocol-environment];
 
     doCheck = true;
 
@@ -175,11 +173,11 @@ rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [ octez-protocol-compiler ];
+    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
 
-    buildInputs = with ocamlPackages; [ tezos-protocol-updater octez-protocol-compiler ];
+    buildInputs = with ocamlPackages; [tezos-protocol-updater octez-protocol-compiler];
 
-    propagatedBuildInputs = [ protocol ];
+    propagatedBuildInputs = [protocol];
 
     doCheck = true;
 
@@ -207,7 +205,7 @@ rec {
       tezos-test-helpers
     ];
 
-    checkInputs = with ocamlPackages; [ qcheck-alcotest tezos-test-helpers ];
+    checkInputs = with ocamlPackages; [qcheck-alcotest tezos-test-helpers];
 
     doCheck = true;
 
@@ -225,9 +223,9 @@ rec {
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [ protocol embedded-protocol tezos-shell ];
+    buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
 
-    propagatedBuildInputs = with ocamlPackages; [ protocol-plugin smart-rollup ];
+    propagatedBuildInputs = with ocamlPackages; [protocol-plugin smart-rollup];
 
     doCheck = true;
 

@@ -2,32 +2,68 @@
   lib,
   buildDunePackage,
   tezos-stdlib,
-  tezos-p2p,
-  tezos-requester,
-  tezos-validation,
-  tezos-store,
+  ppx_expect,
+  lwt-watcher,
   lwt-canceler,
+  prometheus,
+  tezos-base,
+  tezos-rpc,
+  tezos-context,
+  tezos-store,
+  tezos-protocol-environment,
+  tezos-context-ops,
+  tezos-shell-context,
+  tezos-p2p,
+  tezos-stdlib-unix,
+  tezos-shell-services,
+  tezos-p2p-services,
+  tezos-protocol-updater,
+  tezos-requester,
+  tezos-workers,
+  tezos-validation,
+  tezos-version,
+  lwt-exit,
   alcotest-lwt,
-  qcheck-alcotest,
   tezos-base-test-helpers,
   tezos-test-helpers,
-  tezos-workers,
-  prometheus,
+  tezos-demo-noops,
+  tezos-alpha,
 }:
 buildDunePackage {
   pname = "tezos-shell";
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
-  propagatedBuildInputs = [lwt-canceler tezos-p2p tezos-requester tezos-store tezos-validation prometheus tezos-workers];
+  propagatedBuildInputs = [
+    ppx_expect
+    lwt-watcher
+    lwt-canceler
+    prometheus
+    tezos-base
+    tezos-rpc
+    tezos-context
+    tezos-store
+    tezos-protocol-environment
+    tezos-context-ops
+    tezos-shell-context
+    tezos-p2p
+    tezos-stdlib-unix
+    tezos-shell-services
+    tezos-p2p-services
+    tezos-protocol-updater
+    tezos-requester
+    tezos-workers
+    tezos-validation
+    tezos-version
+    lwt-exit
+  ];
 
   checkInputs = [
     alcotest-lwt
-    qcheck-alcotest
     tezos-base-test-helpers
     tezos-test-helpers
-    # tezos-demo-noops.embedded-protocol
-    # tezos-alpha.protocol-plugin
+    tezos-demo-noops.embedded-protocol
+    tezos-alpha.protocol-plugin
   ];
 
   # We're getting infinite recursion from the function that creates the protocol packages

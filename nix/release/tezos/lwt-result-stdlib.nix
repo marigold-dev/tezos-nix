@@ -4,6 +4,7 @@
   ocaml,
   tezos-stdlib,
   lwt,
+  qcheck-alcotest,
   alcotest-lwt,
   tezos-test-helpers,
   ppx_inline_test,
@@ -19,7 +20,7 @@ buildDunePackage {
 
   buildInputs = [ppx_inline_test];
 
-  checkInputs = [alcotest-lwt tezos-test-helpers];
+  checkInputs = [alcotest-lwt qcheck-alcotest tezos-test-helpers];
 
   doCheck = true;
 
