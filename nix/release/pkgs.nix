@@ -89,6 +89,7 @@ in
       duneVersion = "3";
 
       buildInputs = with ocamlPackages; [
+        tls-lwt
         tezos-base
         tezos-version
         tezos-rpc-http-server

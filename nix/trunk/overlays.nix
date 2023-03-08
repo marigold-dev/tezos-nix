@@ -52,55 +52,6 @@ final: prev: {
       curr_ocaml.overrideScope' (oself: osuper: let
         inherit (oself) callPackage;
       in {
-        mirage-crypto = osuper.mirage-crypto.overrideAttrs (_: rec {
-          version = "0.11.0";
-          src = final.fetchurl {
-            url = "https://github.com/mirage/mirage-crypto/releases/download/v${version}/mirage-crypto-${version}.tbz";
-            sha256 = "sha256-A5SCuVmcIJo3dL0Tu//fQqEV0v3FuCxuANWnBo7hUeQ=";
-          };
-        });
-
-        x509 = osuper.x509.overrideAttrs (_: {
-          checkPhase = false; # Broken with upgraded mirage-crypto-rng
-        });
-
-        mirage-crypto-rng-lwt = oself.buildDunePackage rec {
-          inherit (oself.mirage-crypto) version src;
-          pname = "mirage-crypto-rng-lwt";
-
-          propagatedBuildInputs = with oself; [
-            duration
-            logs
-            mirage-crypto
-            mirage-crypto-rng
-            mtime
-            lwt
-          ];
-        };
-
-        tls = osuper.tls.overrideAttrs (_: rec {
-          version = "0.16.0";
-          src = final.fetchurl {
-            url = "https://github.com/mirleft/ocaml-tls/releases/download/v${version}/tls-${version}.tbz";
-            sha256 = "sha256-uvIDZLNy6E/ce7YmzUUVaOeGRaHqPSUzuEPQDMu09tM=";
-          };
-        });
-
-        tls-lwt = oself.buildDunePackage rec {
-          inherit (oself.tls) version src;
-          pname = "tls-lwt";
-
-          duneVersion = "3";
-
-          propagatedBuildInputs = with oself; [
-            tls
-            lwt
-            mirage-crypto-rng-lwt
-            x509
-            cmdliner
-          ];
-        };
-
         tezos-protocol-environment = osuper.tezos-protocol-environment.overrideAttrs (o: {
           propagatedBuildInputs = with oself; [
             tezos-stdlib
