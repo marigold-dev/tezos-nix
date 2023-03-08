@@ -7,22 +7,30 @@
   protocol-name,
 }: let
   underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
+  protocol_number = proto:
+    if builtins.substring 0 4 proto == "demo"
+    then -1
+    else if proto == "alpha"
+    then 1000
+    else lib.toIntBase10 (builtins.substring 0 3 proto);
 in rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
 
-    propagatedBuildInputs = with ocamlPackages; [
-      protocol-plugin
-      protocol
+    propagatedBuildInputs = with ocamlPackages;
+      [
+        protocol-plugin
+        protocol
 
-      tezos-mockup-registration
-      tezos-proxy
-      tezos-signer-backends
-      tezos-client-commands
-      tezos-client-base-unix
-    ];
+        tezos-mockup-registration
+        tezos-proxy
+        tezos-signer-backends
+        tezos-client-commands
+        tezos-client-base-unix
+      ]
+      ++ lib.optional (protocol_number protocol-name >= 16) smart-rollup;
 
     checkInputs = with ocamlPackages; [
       alcotest-lwt
@@ -197,14 +205,16 @@ in rec {
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [
-      embedded-protocol
-      protocol
+    buildInputs = with ocamlPackages;
+      [
+        embedded-protocol
+        protocol
 
-      tezos-shell
-      qcheck-alcotest
-      tezos-test-helpers
-    ];
+        tezos-shell
+        qcheck-alcotest
+        tezos-test-helpers
+      ]
+      ++ lib.optional (protocol_number protocol-name >= 16) smart-rollup;
 
     checkInputs = with ocamlPackages; [qcheck-alcotest tezos-test-helpers];
 
@@ -226,7 +236,7 @@ in rec {
 
     buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
 
-    propagatedBuildInputs = with ocamlPackages; [protocol-plugin];
+    propagatedBuildInputs = with ocamlPackages; [protocol-plugin] ++ lib.optional (protocol_number protocol-name >= 16) smart-rollup;
 
     doCheck = true;
 
@@ -292,7 +302,6 @@ in rec {
 
     propagatedBuildInputs = with ocamlPackages; [
       protocol
-      injector
 
       ppx_expect
       tezos-protocol-environment
