@@ -41,6 +41,15 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#octez-node
       - name: "Build baker-alpha"
         run: nix --log-format raw -L build --accept-flake-config .#octez-baker-alpha
+      - name: "Build octez-dal-node"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-dal-node
+      - name: "Build tezos-tps-evaluation"
+        run: nix --log-format raw -L build --accept-flake-config .#tezos-tps-evaluation
+      - name: "Build octez-snoop"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-snoop
+      - name: "Build octez-smart-rollup-wasm-debugger"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-wasm-debugger
+
       - name: "Build trunk-client"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-client
         continue-on-error: true
@@ -52,4 +61,13 @@ jobs:
         continue-on-error: true
       - name: "Build trunk-octez-dal-node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dal-node
+        continue-on-error: true
+      - name: "Build trunk-tezos-tps-evaluation"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-tezos-tps-evaluation
+        continue-on-error: true
+      - name: "Build trunk-octez-snoop"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-snoop
+        continue-on-error: true
+      - name: "Build trunk-octez-smart-rollup-wasm-debugger"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-wasm-debugger
         continue-on-error: true
