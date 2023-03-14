@@ -15,7 +15,7 @@
 
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
-    tezos_release.url = "gitlab:tezos/tezos/v16.0-rc3";
+    tezos_release.url = "gitlab:tezos/tezos/v16.0";
     tezos_release.flake = false;
 
     tezos_trunk.url = "gitlab:tezos/tezos";
