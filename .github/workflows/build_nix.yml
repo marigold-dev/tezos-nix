@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  linux:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -49,6 +49,24 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#octez-snoop
       - name: "Build octez-smart-rollup-wasm-debugger"
         run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-wasm-debugger
+  trunk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v17
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            system-features = nixos-test benchmark big-parallel kvm
+            extra-substituters = https://tezos.nix-cache.workers.dev
+            extra-trusted-public-keys = tezos-nix-cache.marigold.dev-1:4nS7FPPQPKJIaNQcbwzN6m7kylv16UCWWgjeZZr2wXA=
+
+      - uses: ulrikstrid/nix-s3-action@fork
+        with:
+          endpoint: "s3://tezos-nix?endpoint=https://7a53c28e9b7a91239f9ed42da04276bc.r2.cloudflarestorage.com/tezos-nix"
+          signingKey: ${{ secrets.CACHE_PRIV_KEY }}
+          awsAccessKeyId: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
 
       - name: "Build trunk-client"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-client
