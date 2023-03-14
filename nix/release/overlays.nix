@@ -59,32 +59,6 @@
             doCheck = false;
           });
       in {
-        mirage-crypto = osuper.mirage-crypto.overrideAttrs (_: rec {
-          version = "0.11.0";
-          src = final.fetchurl {
-            url = "https://github.com/mirage/mirage-crypto/releases/download/v${version}/mirage-crypto-${version}.tbz";
-            sha256 = "sha256-A5SCuVmcIJo3dL0Tu//fQqEV0v3FuCxuANWnBo7hUeQ=";
-          };
-        });
-
-        x509 = osuper.x509.overrideAttrs (_: {
-          checkPhase = false; # Broken with upgraded mirage-crypto-rng
-        });
-
-        mirage-crypto-rng-lwt = oself.buildDunePackage rec {
-          inherit (oself.mirage-crypto) version src;
-          pname = "mirage-crypto-rng-lwt";
-
-          propagatedBuildInputs = with oself; [
-            duration
-            logs
-            mirage-crypto
-            mirage-crypto-rng
-            mtime
-            lwt
-          ];
-        };
-
         tls = osuper.tls.overrideAttrs (_: rec {
           version = "0.16.0";
           src = final.fetchurl {
@@ -107,6 +81,28 @@
             cmdliner
           ];
         };
+
+        /*
+        ctypes-foreign = oself.buildDunePackage rec {
+        version = "0.18.0";
+        src = final.fetchFromGitHub {
+        owner = "yallop";
+        repo = "ocaml-ctypes";
+        rev = "${version}";
+        sha256 = "sha256-eu5RAuPYC97IM4XUsUw3HQ1BJlEHQ+eBpsdUE6hd+Q8=";
+        };
+        pname = "ctypes-foreign";
+
+        duneVersion = "3";
+
+        propagatedBuildInputs = with oself; [
+        ctypes
+        final.libffi
+        ];
+
+        nativeBuildInputs = [ final.pkg-config ];
+        };
+        */
 
         ezjsonm = osuper.ezjsonm.overrideAttrs (_: rec {
           version = "1.3.0";
@@ -564,6 +560,8 @@
         tezos-rpc = callPackage ./tezos/rpc.nix {};
         tezos-sapling = callPackage ./tezos/sapling.nix {};
         tezos-scoru-wasm = callPackage ./tezos/scoru-wasm.nix {};
+        tezos-scoru-wasm-fast = callPackage ./tezos/scoru-wasm-fast.nix {};
+        tezos-scoru-wasm-helpers = callPackage ./tezos/scoru-wasm-helpers.nix {};
         tezos-shell-benchmarks = callPackage ./tezos/shell-benchmarks.nix {};
         tezos-shell-context = callPackage ./tezos/shell-context.nix {};
         tezos-shell-services = callPackage ./tezos/shell-services.nix {};
@@ -582,7 +580,9 @@
         tezos-store = callPackage ./tezos/store.nix {};
         tezos-validation = callPackage ./tezos/validation.nix {};
         tezos-version = callPackage ./tezos/version.nix {};
+        tezos-wasmer = callPackage ./tezos/wasmer.nix {};
         tezos-webassembly-interpreter = callPackage ./tezos/webassembly-interpreter.nix {};
+        tezos-webassembly-interpreter-extra = callPackage ./tezos/webassembly-interpreter-extra.nix {};
         tezos-workers = callPackage ./tezos/workers.nix {};
       }))
     prev.ocaml-ng;

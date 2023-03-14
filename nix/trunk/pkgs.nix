@@ -238,7 +238,6 @@ in
 
       buildInputs = with ocamlPackages; [
         tezos-base
-        tezos-base
         tezos-stdlib-unix
         tezos-clic
         tezos-benchmark
@@ -249,6 +248,39 @@ in
         ocamlgraph
         pyml
         prbnmcn-stats
+      ];
+
+      doCheck = true;
+
+      meta = {
+        description = "Your service";
+        mainProgram = "tezos-node";
+      };
+    };
+
+    trunk-octez-smart-rollup-wasm-debugger = ocamlPackages.buildDunePackage rec {
+      pname = "octez-smart-rollup-wasm-debugger";
+      inherit (ocamlPackages.tezos-stdlib) version src;
+
+      minimalOCamlVersion = "4.14";
+
+      duneVersion = "3";
+
+      nativeBuildInputs = with ocamlPackages; [ocp-ocamlres pkgs.jq];
+
+      propagatedBuildInputs = [ocamlPackages.findlib];
+
+      buildInputs = with ocamlPackages; [
+        tezos-base
+        tezos-clic
+        tezos-tree-encoding
+
+        tezos-alpha.client
+        tezos-scoru-wasm
+        tezos-scoru-wasm-helpers
+        tezos-webassembly-interpreter
+        tezos-webassembly-interpreter-extra
+        octez-smart-rollup-wasm-benchmark-lib
       ];
 
       doCheck = true;
