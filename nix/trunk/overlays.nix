@@ -95,6 +95,7 @@ final: prev: {
           protocol-name = "alpha";
           ocamlPackages = oself;
         };
+        octez-smart-rollup-wasm-benchmark-lib = oself.callPackage ./tezos/octez-smart-rollup-wasm-benchmark-lib.nix {};
       }))
     prev.ocaml-ng;
 }
