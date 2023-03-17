@@ -21,12 +21,6 @@ module.exports = async ({ github, context, core, require }) => {
 ${commit_texts.join("\n")}
 
 #### Diff URL: ${url}
-
-${error == null ? "" : `#### Error
-
-${error}
-
-`}
 `;
 
     return post_text;
