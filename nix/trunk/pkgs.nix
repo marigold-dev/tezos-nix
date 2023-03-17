@@ -166,6 +166,7 @@ in
         tezos-rpc-http-client-unix
         tezos-stdlib-unix
         tezos-stdlib
+        tezos-store
         tezos-dal-node-lib
         tezos-dal-node-services
         tezos-layer2-store

@@ -85,6 +85,8 @@ final: prev: {
           propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.seqes];
         });
 
+        tezos-proxy = oself.callPackage ./tezos/proxy.nix {};
+
         tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix {};
         tezos-bls12-381-polynomial-internal = callPackage ./tezos/bls12-381-polynomial-internal.nix {};
         tezos-016-PtMumbai = callPackage ./tezos/generic-protocol.nix {
