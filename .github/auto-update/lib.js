@@ -8,6 +8,8 @@ module.exports = (require) => {
     return new Promise((resolve, reject) => {
       const url = new URL(uri);
 
+      console.log("uri: " + uri);
+
       return https
         .get(
           {
