@@ -1,7 +1,7 @@
 const https = require("https");
 const { URL } = require("url");
 
-const { execSync } = require("child_process");
+const { exec } = require("child_process");
 
 function http_request(uri) {
   return new Promise((resolve, reject) => {
@@ -65,15 +65,30 @@ function get_commits(sha1, sha2) {
 }
 
 function find_shas() {
-  const output = execSync("git diff ./flake.lock").toString();
+  return new Promise((resolve, reject) => {
+    exec("git diff ./flake.lock", (error, output) => {
+      if (error == null) {
+        reject(error);
+        return;
+      } else {
+        let prev_sha_regex = /tezos_trunk.*-        "rev": "([A-Za-z0-9]+)"/ms;
+        let next_sha_regex = /tezos_trunk.*\+        "rev": "([A-Za-z0-9]+)"/ms;
+      
+        const prev_match = output.match(prev_sha_regex);
+        const next_match = output.match(next_sha_regex);
 
-  let prev_sha_regex = /tezos_trunk.*-        "rev": "([A-Za-z0-9]+)"/ms;
-  let next_sha_regex = /tezos_trunk.*\+        "rev": "([A-Za-z0-9]+)"/ms;
+        // Only write the file if the commit hash has changed
+        // Otherwise just cancel the workflow. We don't need to do anything
+        if (prev_rev.startsWith(next_sha)) {
+          reject(new Error("Shas were the same"));
+          return;
+        }
 
-  const prev_match = output.match(prev_sha_regex);
-  const next_match = output.match(next_sha_regex);
-
-  return { prev_sha: prev_match[1], next_sha: next_match[1] };
+        resolve({ prev_sha: prev_match[1], next_sha: next_match[1] });
+        return;
+      }      
+    });
+  });
 }
 
 function escapeForGHActions(s) {
