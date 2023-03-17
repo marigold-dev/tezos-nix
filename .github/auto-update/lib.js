@@ -85,8 +85,8 @@ module.exports = (require) => {
           let prev_sha_regex = /Updated input \'tezos_trunk\':$\n    'gitlab:tezos\/tezos\/(.*)'/ms;
           let next_sha_regex = /Updated input \'tezos_trunk\':.*  → 'gitlab:tezos\/tezos\/(.*)'/ms;
 
-          const prev_match = output.match(prev_sha_regex);
-          const next_match = output.match(next_sha_regex);
+          const prev_match = stderr.match(prev_sha_regex);
+          const next_match = stderr.match(next_sha_regex);
 
           const prev_sha = prev_match[1];
           const next_sha = next_match[1];
