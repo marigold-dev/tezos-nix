@@ -31,6 +31,8 @@ function http_request(uri) {
             const response = Buffer.concat(response_data);
             const response_string = response.toString();
 
+            console.log(response_string);
+
             try {
               return resolve(JSON.parse(response_string));
             } catch (e) {
@@ -68,9 +70,11 @@ function find_shas() {
   return new Promise((resolve, reject) => {
     exec("git diff ./flake.lock", (error, output) => {
       if (error == null) {
+        console.log(error);
         reject(error);
         return;
       } else {
+        console.log(output);
         let prev_sha_regex = /tezos_trunk.*-        "rev": "([A-Za-z0-9]+)"/ms;
         let next_sha_regex = /tezos_trunk.*\+        "rev": "([A-Za-z0-9]+)"/ms;
       
