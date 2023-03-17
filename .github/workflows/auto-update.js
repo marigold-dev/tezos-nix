@@ -1,9 +1,10 @@
 module.exports = async ({ github, context, core, require }) => {
+  const lib = require("./.github/auto-update/lib.js");
   const {
     find_shas,
     get_commits,
     escapeForGHActions,
-  } = require("./.github/auto-update/lib.js");
+  } = lib(require);
 
   return find_shas()
     .then(shas => get_commits(shas.prev_sha, shas.next_sha))
