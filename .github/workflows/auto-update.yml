@@ -17,9 +17,8 @@ jobs:
       - uses: cachix/install-nix-action@v18
         with:
           nix_path: nixpkgs=channel:nixpkgs-unstable
-      - name: Update trunk
+      - name: Update date
         run: |
-          nix flake update
           sed -i "s/octez_version = \".*\";/octez_version = \"$(date '+%Y%m%d')\";/g" ./nix/trunk/default.nix
       - name: "Update sources"
         uses: actions/github-script@v6

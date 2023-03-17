@@ -70,10 +70,40 @@ module.exports = (require) => {
       });
   }
 
+  function update_trunk() {
+    return new Promise((resolve, reject) => {
+      exec("nix flake update", (error, output) => {
+        if (error != null) {
+          console.log("can't update flake");
+          console.error(error);
+          reject(error);
+          return;
+        } else {
+          console.log("output: " + output);
+          let prev_sha_regex = /Updated input \'tezos_trunk\':$\n    'gitlab:tezos\/tezos\/(.*)'/ms;
+          let next_sha_regex = /Updated input \'tezos_trunk\':$\n.*$\n  → 'gitlab:tezos\/tezos\/(.*)'/ms;
+
+          const prev_match = output.match(prev_sha_regex);
+          const next_match = output.match(next_sha_regex);
+
+          // Only write the file if the commit hash has changed
+          // Otherwise just cancel the workflow. We don't need to do anything
+          if (prev_rev.startsWith(next_sha)) {
+            reject(new Error("Shas were the same"));
+            return;
+          }
+
+          resolve({ prev_sha: prev_match[1], next_sha: next_match[1] });
+          return;
+        }
+      });
+    });
+  }
+
   function find_shas() {
     return new Promise((resolve, reject) => {
       exec("git diff ./flake.lock", (error, output) => {
-        if (error == null) {
+        if (error != null) {
           console.log("Can't git diff");
           console.error(error);
           reject(error);
@@ -113,6 +143,7 @@ module.exports = (require) => {
   }
 
   return {
+    update_trunk,
     find_shas,
     get_commits,
     escapeForGHActions,

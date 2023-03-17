@@ -1,12 +1,12 @@
 module.exports = async ({ github, context, core, require }) => {
   const lib = require("./.github/auto-update/lib.js");
   const {
-    find_shas,
+    update_trunk,
     get_commits,
     escapeForGHActions,
   } = lib(require);
 
-  return find_shas()
+  return update_trunk()
     .then(shas => get_commits(shas.prev_sha, shas.next_sha))
     .then(diff => {
       const url = diff.web_url;
