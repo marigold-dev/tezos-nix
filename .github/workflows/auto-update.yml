@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/auto-update.yml'
   schedule:
-    - cron: "30 7 * * *"
+    - cron: "30 6 * * 1-5"
 
 jobs:
   update-sources:
@@ -51,4 +51,4 @@ jobs:
           pr_body: ":robot_face: Updating sources to the latest version.\n${{steps.update-sources.outputs.result}}"
           pr_reviewer: "ulrikstrid"
           pr_assignee: "ulrikstrid"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT_ULRIKSTRID }}
