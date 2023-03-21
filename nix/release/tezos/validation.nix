@@ -8,7 +8,7 @@
 }:
 buildDunePackage {
   pname = "tezos-validation";
-  inherit (tezos-stdlib) version src postPatch;
+  inherit (tezos-stdlib) version src;
   duneVersion = "3";
 
   propagatedBuildInputs = [tezos-protocol-updater tezos-context-ops];

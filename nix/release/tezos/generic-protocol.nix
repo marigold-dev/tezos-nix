@@ -178,7 +178,7 @@ in rec {
 
   embedded-protocol = buildDunePackage {
     pname = "tezos-embedded-protocol-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
+    inherit (tezos-stdlib) version src;
     duneVersion = "3";
 
     strictDeps = true;
@@ -297,7 +297,7 @@ in rec {
 
   smart-rollup = buildDunePackage {
     pname = "tezos-smart-rollup-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
+    inherit (tezos-stdlib) version src;
     duneVersion = "3";
 
     propagatedBuildInputs = with ocamlPackages; [
