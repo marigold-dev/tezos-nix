@@ -188,11 +188,11 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1679535521,
-        "narHash": "sha256-up00BhjnApBG52tuR2KzHxCHuaGyMNlSTvJAyhJA9Ac=",
+        "lastModified": 1679629711,
+        "narHash": "sha256-lOfebHMqqhEs81EvG9SWHaiuXMe3GXnZz7h0hU/PAXk=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "3b485961d93420225794101607f3f3a50d3828ee",
+        "rev": "f00fadb9842cd553c2a32980d87758f6a13dcc9e",
         "type": "gitlab"
       },
       "original": {
@@ -208,11 +208,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1678901796,
-        "narHash": "sha256-9myDjq948gHbiv16HnFQZaswQEpNodE/CuGCfDNnv/g=",
+        "lastModified": 1679588014,
+        "narHash": "sha256-URkRSunu8HAp2vH2KgLogjAXckiufCDFrBs59g9uiLY=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "0f560a84215e79facd2833b20bfdc2033266f126",
+        "rev": "af75d6efe437858f9ca5535e622cfbedad1ba717",
         "type": "github"
       },
       "original": {
