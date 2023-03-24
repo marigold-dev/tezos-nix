@@ -1,13 +1,15 @@
-{
-  lib,
-  buildDunePackage,
-  ocamlPackages,
-  tezos-stdlib,
-  cacert,
-  protocol-name,
-}: let
-  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
-in rec {
+{ lib
+, buildDunePackage
+, ocamlPackages
+, tezos-stdlib
+, cacert
+, protocol-name
+,
+}:
+let
+  underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
+in
+rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
@@ -108,7 +110,7 @@ in rec {
       tezos-micheline
       tezos-shell
       tezos-workers
-      tezos-layer2-utils-alpha
+      layer2-utils
     ];
   };
 
@@ -153,9 +155,9 @@ in rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
+    nativeBuildInputs = with ocamlPackages; [ octez-protocol-compiler ];
 
-    buildInputs = with ocamlPackages; [tezos-protocol-environment];
+    buildInputs = with ocamlPackages; [ tezos-protocol-environment ];
 
     doCheck = true;
 
@@ -173,11 +175,11 @@ in rec {
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
+    nativeBuildInputs = with ocamlPackages; [ octez-protocol-compiler ];
 
-    buildInputs = with ocamlPackages; [tezos-protocol-updater octez-protocol-compiler];
+    buildInputs = with ocamlPackages; [ tezos-protocol-updater octez-protocol-compiler ];
 
-    propagatedBuildInputs = [protocol];
+    propagatedBuildInputs = [ protocol ];
 
     doCheck = true;
 
@@ -205,7 +207,7 @@ in rec {
       tezos-test-helpers
     ];
 
-    checkInputs = with ocamlPackages; [qcheck-alcotest tezos-test-helpers];
+    checkInputs = with ocamlPackages; [ qcheck-alcotest tezos-test-helpers ];
 
     doCheck = true;
 
@@ -223,9 +225,9 @@ in rec {
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
+    buildInputs = with ocamlPackages; [ protocol embedded-protocol tezos-shell ];
 
-    propagatedBuildInputs = with ocamlPackages; [protocol-plugin smart-rollup];
+    propagatedBuildInputs = with ocamlPackages; [ protocol-plugin smart-rollup ];
 
     doCheck = true;
 
@@ -303,6 +305,49 @@ in rec {
       tezos-stdlib.meta
       // {
         description = "Tezos/Protocol: protocol specific library of helpers for `tezos-smart-rollup`";
+      };
+  };
+
+  smart-rollup-layer2 = buildDunePackage {
+    pname = "tezos-smart-rollup-layer2-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      tezos-base
+      octez-injector
+      protocol
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library defining L2 operations";
+      };
+  };
+
+  smart-rollup-client = buildDunePackage {
+    pname = "octez-smart-rollup-client-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      smart-rollup
+      smart-rollup-layer2
+      tezos-base
+      protocol
+      tezos-client-base
+      tezos-client-base-unix
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library of building clients for `tezos-smart-rollup`";
       };
   };
 

@@ -410,7 +410,6 @@
         tezt-tezos = callPackage ./tezos/tezt-tezos.nix {};
         tezt-performance-regression = callPackage ./tezos/tezt-performance-regression.nix {};
         tezos-layer2-store = callPackage ./tezos/layer2-store.nix {};
-        tezos-layer2-utils-alpha = callPackage ./tezos/layer2-utils-alpha.nix {};
         tezos-lazy-containers = oself.callPackage ./tezos/lazy-containers.nix {};
         tezos-tree-encoding = oself.callPackage ./tezos/tree-encoding.nix {};
         tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix {};
@@ -550,6 +549,7 @@
         tezos-protocol-environment =
           callPackage ./tezos/protocol-environment.nix {};
         tezos-protocol-updater = callPackage ./tezos/protocol-updater.nix {};
+        tezos-proxy-server-config = callPackage ./tezos/proxy-server-config.nix {};
         tezos-proxy = callPackage ./tezos/proxy.nix {};
         tezos-requester = callPackage ./tezos/requester.nix {};
         tezos-rpc-http-client-unix =

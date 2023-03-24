@@ -33,22 +33,40 @@ jobs:
       - name: "Lint"
         run: nix run nixpkgs#statix -- check
 
-      - name: Build default
-        run: nix --log-format raw -L build --accept-flake-config .#
       - name: "Build client"
         run: nix --log-format raw -L build --accept-flake-config .#octez-client
-      - name: "Build node"
-        run: nix --log-format raw -L build --accept-flake-config .#octez-node
-      - name: "Build baker-alpha"
-        run: nix --log-format raw -L build --accept-flake-config .#octez-baker-alpha
+      - name: "Build codec"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-codec
       - name: "Build octez-dal-node"
         run: nix --log-format raw -L build --accept-flake-config .#octez-dal-node
-      - name: "Build tezos-tps-evaluation"
-        run: nix --log-format raw -L build --accept-flake-config .#tezos-tps-evaluation
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-node
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-proxy-server
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-signer
       - name: "Build octez-snoop"
         run: nix --log-format raw -L build --accept-flake-config .#octez-snoop
+      - name: "Build tezos-tps-evaluation"
+        run: nix --log-format raw -L build --accept-flake-config .#tezos-tps-evaluation
       - name: "Build octez-smart-rollup-wasm-debugger"
         run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-wasm-debugger
+      - name: "Build accuser-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-accuser-alpha
+      - name: "Build baker-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-baker-alpha
+      - name: "Build smart-rollup-client-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-client-alpha
+      - name: "Build smart-rollup-node-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-node-alpha
+      - name: "Build accuser-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-accuser-PtMumbai
+      - name: "Build baker-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-baker-PtMumbai
+      - name: "Build smart-rollup-client-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-client-PtMumbai
+      - name: "Build smart-rollup-node-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-node-PtMumbai
   trunk:
     runs-on: ubuntu-latest
     steps:
@@ -68,24 +86,37 @@ jobs:
           awsAccessKeyId: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
           awsSecretAccessKey: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
 
-      - name: "Build trunk-client"
+      - name: "Build client"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-client
-        continue-on-error: true
-      - name: "Build trunk-node"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-node
-        continue-on-error: true
-      - name: "Build trunk-baker-alpha"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-baker-alpha
-        continue-on-error: true
-      - name: "Build trunk-octez-dal-node"
+      - name: "Build codec"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-codec
+      - name: "Build octez-dal-node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dal-node
-        continue-on-error: true
-      - name: "Build trunk-tezos-tps-evaluation"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-tezos-tps-evaluation
-        continue-on-error: true
-      - name: "Build trunk-octez-snoop"
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-node
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-proxy-server
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-signer
+      - name: "Build octez-snoop"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-snoop
-        continue-on-error: true
-      - name: "Build trunk-octez-smart-rollup-wasm-debugger"
+      - name: "Build tezos-tps-evaluation"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-tezos-tps-evaluation
+      - name: "Build octez-smart-rollup-wasm-debugger"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-wasm-debugger
-        continue-on-error: true
+      - name: "Build accuser-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-accuser-alpha
+      - name: "Build baker-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-baker-alpha
+      - name: "Build smart-rollup-client-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-client-alpha
+      - name: "Build smart-rollup-node-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-node-alpha
+      - name: "Build accuser-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-accuser-PtMumbai
+      - name: "Build baker-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-baker-PtMumbai
+      - name: "Build smart-rollup-client-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-client-PtMumbai
+      - name: "Build smart-rollup-node-PtMumbai"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-node-PtMumbai
