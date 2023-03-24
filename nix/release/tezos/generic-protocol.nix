@@ -317,6 +317,49 @@ in rec {
       };
   };
 
+  smart-rollup-layer2 = buildDunePackage {
+    pname = "tezos-smart-rollup-layer2-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      tezos-base
+      injector
+      protocol
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library defining L2 operations";
+      };
+  };
+
+  smart-rollup-client = buildDunePackage {
+    pname = "octez-smart-rollup-client-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      smart-rollup
+      smart-rollup-layer2
+      tezos-base
+      protocol
+      tezos-client-base
+      tezos-client-base-unix
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library of building clients for `tezos-smart-rollup`";
+      };
+  };
+
   benchmark-type-inference = buildDunePackage {
     pname = "tezos-benchmark-type-inference-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
