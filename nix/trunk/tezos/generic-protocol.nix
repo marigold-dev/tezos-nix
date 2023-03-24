@@ -31,8 +31,7 @@ in rec {
       ppx_inline_test
     ];
 
-    # flaky
-    doCheck = false;
+    doCheck = true;
   };
 
   sapling-client = buildDunePackage {
@@ -90,8 +89,7 @@ in rec {
       cacert
     ];
 
-    # flaky
-    doCheck = false;
+    doCheck = true;
   };
 
   injector = buildDunePackage {

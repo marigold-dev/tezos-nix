@@ -12,7 +12,7 @@
 in
   with ocamlPackages;
     {
-      octez-client = buildDunePackage {
+      octez-client = buildDunePackage rec {
         pname = "octez-client";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -42,7 +42,7 @@ in
 
         meta = {
           description = "octez-client binary";
-          mainProgram = "octez-client";
+          mainProgram = pname;
         };
       };
 

@@ -104,6 +104,8 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-signer
       - name: "Build octez-snoop"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-snoop
+      - name: "Build octez-testnet-scenarios"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-testnet-scenarios
       - name: "Build tezos-tps-evaluation"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-tezos-tps-evaluation
       - name: "Build octez-smart-rollup-wasm-debugger"

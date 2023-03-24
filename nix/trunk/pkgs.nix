@@ -13,7 +13,7 @@
 in
   with ocamlPackages;
     {
-      trunk-octez-client = buildDunePackage {
+      trunk-octez-client = buildDunePackage rec {
         pname = "octez-client";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -37,8 +37,8 @@ in
         inherit doCheck;
 
         meta = {
-          description = "Your service";
-          mainProgram = "octez-client";
+          description = "octez-client binary";
+          mainProgram = pname;
         };
       };
 
@@ -247,8 +247,8 @@ in
         doCheck = true;
 
         meta = {
-          description = "Your service";
-          mainProgram = "tezos-node";
+          description = "`octez-node` binary";
+          mainProgram = pname;
         };
       };
 
@@ -349,8 +349,29 @@ in
         doCheck = true;
 
         meta = {
-          description = "Your service";
-          mainProgram = "tezos-node";
+          description = "`octez-snoop` binary";
+          mainProgram = pname;
+        };
+      };
+
+      trunk-octez-testnet-scenarios = ocamlPackages.buildDunePackage rec {
+        pname = "octez-testnet-scenarios";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        minimalOCamlVersion = "4.14";
+
+        duneVersion = "3";
+
+        buildInputs = with ocamlPackages; [
+          tezt
+          tezt-tezos
+        ];
+
+        doCheck = true;
+
+        meta = {
+          description = "Run scenarios on testnets";
+          mainProgram = pname;
         };
       };
 
@@ -388,8 +409,8 @@ in
         doCheck = true;
 
         meta = {
-          description = "Your service";
-          mainProgram = "tezos-node";
+          description = "Tezos TPS evaluation tool";
+          mainProgram = pname;
         };
       };
 
@@ -421,7 +442,7 @@ in
         doCheck = true;
 
         meta = {
-          description = "Your service";
+          description = "Debugger for the smart rollups’ WASM kernels";
           mainProgram = "tezos-node";
         };
       };
