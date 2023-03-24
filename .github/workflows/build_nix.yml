@@ -94,6 +94,8 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dac-node
       - name: "Build octez-dal-node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dal-node
+      - name: "Build evm-proxy"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-evm-proxy
       - name: "Build node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-node
       - name: "Build node"

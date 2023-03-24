@@ -154,6 +154,38 @@ in
         };
       };
 
+      trunk-octez-evm-proxy = ocamlPackages.buildDunePackage rec {
+        pname = "octez-evm-proxy";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        minimalOCamlVersion = "4.14";
+
+        duneVersion = "3";
+
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          tezos-clic
+          tezos-rpc
+          tezos-rpc-http
+          tezos-rpc-http-server
+          tezos-rpc-http-client-unix
+          tezos-stdlib-unix
+          tezos-crypto
+          tezos-stdlib
+          tezos-version
+          lwt-exit
+        ];
+
+        checkInputs = with ocamlPackages; [tezos-base-test-helpers];
+
+        doCheck = true;
+
+        meta = {
+          description = "`octez-dal-node` binary";
+          mainProgram = "${pname}-server";
+        };
+      };
+
       trunk-octez-node = ocamlPackages.buildDunePackage rec {
         pname = "octez-node";
         inherit (ocamlPackages.tezos-stdlib) version src;
