@@ -90,6 +90,8 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-client
       - name: "Build codec"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-codec
+      - name: "Build octez-dac-node"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dac-node
       - name: "Build octez-dal-node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dal-node
       - name: "Build node"

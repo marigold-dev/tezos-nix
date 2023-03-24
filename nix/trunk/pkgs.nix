@@ -78,6 +78,42 @@ in
           };
         };
 
+      trunk-octez-dac-node = ocamlPackages.buildDunePackage rec {
+        pname = "octez-dac-node";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        minimalOCamlVersion = "4.14";
+
+        duneVersion = "3";
+
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          tezos-clic
+          tezos-client-base
+          tezos-client-base-unix
+          tezos-client-commands
+          tezos-rpc-http
+          tezos-rpc-http-server
+          tezos-protocol-updater
+          tezos-rpc-http-client-unix
+          tezos-stdlib-unix
+          tezos-stdlib
+          tezos-dac-node-lib
+          tezos-layer2-store
+          irmin-pack
+          irmin
+        ];
+
+        checkInputs = with ocamlPackages; [tezos-base-test-helpers];
+
+        doCheck = true;
+
+        meta = {
+          description = "`octez-dac-node` binary";
+          mainProgram = pname;
+        };
+      };
+
       trunk-octez-dal-node = ocamlPackages.buildDunePackage rec {
         pname = "octez-dal-node";
         inherit (ocamlPackages.tezos-stdlib) version src;
