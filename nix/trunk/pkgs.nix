@@ -1,50 +1,19 @@
-{ pkgs
-, stdenv
-, lib
-, fetchFromGitLab
-, ocamlPackages
-, zcash
-, cacert
-, static ? false
-, doCheck
-,
-}:
-let
+{
+  pkgs,
+  stdenv,
+  lib,
+  fetchFromGitLab,
+  ocamlPackages,
+  zcash,
+  cacert,
+  static ? false,
+  doCheck,
+}: let
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
 in
-with ocamlPackages; {
-  trunk-octez-client = buildDunePackage {
-    pname = "octez-client";
-    inherit (ocamlPackages.tezos-stdlib) version src;
-
-    minimalOCamlVersion = "4.14";
-
-    duneVersion = "3";
-
-    buildInputs = with ocamlPackages; [
-      tezos-signer-backends
-      tezos-client-base-unix
-
-      tezos-alpha.protocol-plugin
-      tezos-alpha.baking-commands
-
-      tezos-015-PtLimaPt.protocol
-      tezos-015-PtLimaPt.protocol-plugin
-      tezos-015-PtLimaPt.baking-commands
-      tezos-016-PtMumbai.baking-commands
-    ];
-
-    inherit doCheck;
-
-    meta = {
-      description = "Your service";
-      mainProgram = "octez-client";
-    };
-  };
-
-  trunk-octez-codec =
-    ocamlPackages.buildDunePackage
-      rec {
+  with ocamlPackages;
+    {
+      trunk-octez-client = buildDunePackage {
         pname = "octez-client";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -53,318 +22,349 @@ with ocamlPackages; {
         duneVersion = "3";
 
         buildInputs = with ocamlPackages; [
-          data-encoding
-          tezos-base
+          tezos-signer-backends
           tezos-client-base-unix
-          tezos-client-base
-          tezos-clic
-          tezos-stdlib-unix
-          tezos-event-logging
-          tezos-signer-services
 
+          tezos-alpha.protocol-plugin
+          tezos-alpha.baking-commands
+
+          tezos-015-PtLimaPt.protocol
           tezos-015-PtLimaPt.protocol-plugin
           tezos-015-PtLimaPt.baking-commands
-          tezos-016-PtMumbai.protocol-plugin
           tezos-016-PtMumbai.baking-commands
         ];
 
         inherit doCheck;
 
-        isLibrary = false;
+        meta = {
+          description = "Your service";
+          mainProgram = "octez-client";
+        };
+      };
+
+      trunk-octez-codec =
+        ocamlPackages.buildDunePackage
+        rec {
+          pname = "octez-client";
+          inherit (ocamlPackages.tezos-stdlib) version src;
+
+          minimalOCamlVersion = "4.14";
+
+          duneVersion = "3";
+
+          buildInputs = with ocamlPackages; [
+            data-encoding
+            tezos-base
+            tezos-client-base-unix
+            tezos-client-base
+            tezos-clic
+            tezos-stdlib-unix
+            tezos-event-logging
+            tezos-signer-services
+
+            tezos-015-PtLimaPt.protocol-plugin
+            tezos-015-PtLimaPt.baking-commands
+            tezos-016-PtMumbai.protocol-plugin
+            tezos-016-PtMumbai.baking-commands
+          ];
+
+          inherit doCheck;
+
+          isLibrary = false;
+
+          meta = {
+            description = "`octez-codec` binary to encode and decode values";
+            mainProgram = pname;
+          };
+        };
+
+      trunk-octez-dal-node = ocamlPackages.buildDunePackage rec {
+        pname = "octez-dal-node";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        minimalOCamlVersion = "4.14";
+
+        duneVersion = "3";
+
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          tezos-clic
+          tezos-client-base
+          tezos-client-base-unix
+          tezos-client-commands
+          tezos-rpc-http
+          tezos-rpc-http-server
+          tezos-protocol-updater
+          tezos-rpc-http-client-unix
+          tezos-stdlib-unix
+          tezos-stdlib
+          tezos-store
+          tezos-dal-node-lib
+          tezos-dal-node-services
+          tezos-layer2-store
+          tezos-crypto-dal
+          irmin-pack
+          irmin
+          tezos-dal-016-PtMumbai
+        ];
+
+        checkInputs = with ocamlPackages; [tezos-base-test-helpers];
+
+        doCheck = true;
 
         meta = {
-          description = "`octez-codec` binary to encode and decode values";
+          description = "`octez-dal-node` binary";
           mainProgram = pname;
         };
       };
 
-  trunk-octez-dal-node = ocamlPackages.buildDunePackage rec {
-    pname = "octez-dal-node";
-    inherit (ocamlPackages.tezos-stdlib) version src;
+      trunk-octez-node = ocamlPackages.buildDunePackage rec {
+        pname = "octez-node";
+        inherit (ocamlPackages.tezos-stdlib) version src;
 
-    minimalOCamlVersion = "4.14";
+        minimalOCamlVersion = "4.14";
 
-    duneVersion = "3";
+        duneVersion = "3";
 
-    buildInputs = with ocamlPackages; [
-      tezos-base
-      tezos-clic
-      tezos-client-base
-      tezos-client-base-unix
-      tezos-client-commands
-      tezos-rpc-http
-      tezos-rpc-http-server
-      tezos-protocol-updater
-      tezos-rpc-http-client-unix
-      tezos-stdlib-unix
-      tezos-stdlib
-      tezos-store
-      tezos-dal-node-lib
-      tezos-dal-node-services
-      tezos-layer2-store
-      tezos-crypto-dal
-      irmin-pack
-      irmin
-      tezos-dal-016-PtMumbai
-    ];
+        buildInputs = with ocamlPackages; [
+          tls
+          tezos-base
+          tezos-version
+          tezos-rpc-http-server
+          tezos-p2p
+          tezos-shell
+          tezos-workers
+          tezos-protocol-updater
+          tezos-validation
+          octez-node-config
+          tezos-alpha.embedded-protocol
+          tezos-000-Ps9mPmXa.embedded-protocol
+          tezos-001-PtCJ7pwo.embedded-protocol
+          tezos-002-PsYLVpVv.embedded-protocol
+          tezos-003-PsddFKi3.embedded-protocol
+          tezos-004-Pt24m4xi.embedded-protocol
+          tezos-005-PsBABY5H.embedded-protocol
+          tezos-005-PsBabyM1.embedded-protocol
+          tezos-006-PsCARTHA.embedded-protocol
+          tezos-007-PsDELPH1.embedded-protocol
+          tezos-008-PtEdo2Zk.embedded-protocol
+          tezos-009-PsFLoren.embedded-protocol
+          tezos-010-PtGRANAD.embedded-protocol
+          tezos-011-PtHangz2.embedded-protocol
+          tezos-012-Psithaca.embedded-protocol
+          tezos-013-PtJakart.embedded-protocol
+          tezos-014-PtKathma.embedded-protocol
+          tezos-014-PtKathma.protocol-plugin-registerer
+          tezos-015-PtLimaPt.embedded-protocol
+          tezos-015-PtLimaPt.protocol-plugin-registerer
+          tezos-016-PtMumbai.embedded-protocol
+          tezos-016-PtMumbai.protocol-plugin-registerer
+          tezos-alpha.protocol-plugin-registerer
+          tezos-014-PtKathma.protocol-plugin
+          tezos-015-PtLimaPt.protocol-plugin
+          tezos-016-PtMumbai.protocol-plugin
+          prometheus-app
+          lwt-exit
+          tls
+          tls-lwt
+          cstruct
+        ];
 
-    checkInputs = with ocamlPackages; [ tezos-base-test-helpers ];
+        checkInputs = with ocamlPackages; [tezos-base-test-helpers];
 
-    doCheck = true;
+        postInstall = ''
+          patchShebangs tezos-sandboxed-node.sh
+        '';
 
-    meta = {
-      description = "`octez-dal-node` binary";
-      mainProgram = pname;
-    };
-  };
+        doCheck = true;
 
-  trunk-octez-node = ocamlPackages.buildDunePackage rec {
-    pname = "octez-node";
-    inherit (ocamlPackages.tezos-stdlib) version src;
+        meta = {
+          description = "Your service";
+          mainProgram = "tezos-node";
+        };
+      };
 
-    minimalOCamlVersion = "4.14";
+      trunk-octez-proxy-server = ocamlPackages.buildDunePackage rec {
+        pname = "octez-proxy-server";
+        inherit (ocamlPackages.tezos-stdlib) version src;
 
-    duneVersion = "3";
+        minimalOCamlVersion = "4.14";
 
-    buildInputs = with ocamlPackages; [
-      tls
-      tezos-base
-      tezos-version
-      tezos-rpc-http-server
-      tezos-p2p
-      tezos-shell
-      tezos-workers
-      tezos-protocol-updater
-      tezos-validation
-      octez-node-config
-      tezos-alpha.embedded-protocol
-      tezos-000-Ps9mPmXa.embedded-protocol
-      tezos-001-PtCJ7pwo.embedded-protocol
-      tezos-002-PsYLVpVv.embedded-protocol
-      tezos-003-PsddFKi3.embedded-protocol
-      tezos-004-Pt24m4xi.embedded-protocol
-      tezos-005-PsBABY5H.embedded-protocol
-      tezos-005-PsBabyM1.embedded-protocol
-      tezos-006-PsCARTHA.embedded-protocol
-      tezos-007-PsDELPH1.embedded-protocol
-      tezos-008-PtEdo2Zk.embedded-protocol
-      tezos-009-PsFLoren.embedded-protocol
-      tezos-010-PtGRANAD.embedded-protocol
-      tezos-011-PtHangz2.embedded-protocol
-      tezos-012-Psithaca.embedded-protocol
-      tezos-013-PtJakart.embedded-protocol
-      tezos-014-PtKathma.embedded-protocol
-      tezos-014-PtKathma.protocol-plugin-registerer
-      tezos-015-PtLimaPt.embedded-protocol
-      tezos-015-PtLimaPt.protocol-plugin-registerer
-      tezos-016-PtMumbai.embedded-protocol
-      tezos-016-PtMumbai.protocol-plugin-registerer
-      tezos-alpha.protocol-plugin-registerer
-      tezos-014-PtKathma.protocol-plugin
-      tezos-015-PtLimaPt.protocol-plugin
-      tezos-016-PtMumbai.protocol-plugin
-      prometheus-app
-      lwt-exit
-      tls
-      tls-lwt
-      cstruct
-    ];
+        duneVersion = "3";
 
-    checkInputs = with ocamlPackages; [ tezos-base-test-helpers ];
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          tezos-stdlib-unix
+          tezos-rpc
+          cmdliner
+          lwt-exit
+          lwt
+          tezos-proxy
+          tezos-proxy-server-config
+          tezos-rpc-http-client-unix
+          tezos-rpc-http-server
+          tezos-shell-services
+          tezos-shell-context
+          tezos-version
+          uri
+        ];
 
-    postInstall = ''
-      patchShebangs tezos-sandboxed-node.sh
-    '';
+        checkInputs = with ocamlPackages; [tezos-base-test-helpers];
 
-    doCheck = true;
+        doCheck = true;
 
-    meta = {
-      description = "Your service";
-      mainProgram = "tezos-node";
-    };
-  };
+        meta = {
+          description = "`octez-proxy-server` binary";
+          mainProgram = pname;
+        };
+      };
 
-  trunk-octez-proxy-server = ocamlPackages.buildDunePackage rec {
-    pname = "octez-proxy-server";
-    inherit (ocamlPackages.tezos-stdlib) version src;
+      trunk-octez-signer = ocamlPackages.buildDunePackage rec {
+        pname = "octez-signer";
+        inherit (ocamlPackages.tezos-stdlib) version src;
 
-    minimalOCamlVersion = "4.14";
+        minimalOCamlVersion = "4.14";
 
-    duneVersion = "3";
+        duneVersion = "3";
 
-    buildInputs = with ocamlPackages; [
-      tezos-base
-      tezos-stdlib-unix
-      tezos-rpc
-      cmdliner
-      lwt-exit
-      lwt
-      tezos-proxy
-      tezos-proxy-server-config
-      tezos-rpc-http-client-unix
-      tezos-rpc-http-server
-      tezos-shell-services
-      tezos-shell-context
-      tezos-version
-      uri
-    ];
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          tezos-clic
+          tezos-client-base
+          tezos-client-base-unix
+          tezos-client-commands
+          tezos-signer-services
+          tezos-rpc-http
+          tezos-rpc-http-server
+          tezos-rpc-http-client-unix
+          tezos-stdlib-unix
+          tezos-stdlib
+          tezos-signer-backends
+        ];
 
-    checkInputs = with ocamlPackages; [ tezos-base-test-helpers ];
+        checkInputs = with ocamlPackages; [tezos-base-test-helpers];
 
-    doCheck = true;
+        doCheck = true;
 
-    meta = {
-      description = "`octez-proxy-server` binary";
-      mainProgram = pname;
-    };
-  };
+        meta = {
+          description = "`octez-signer` binary";
+          mainProgram = pname;
+        };
+      };
 
-  trunk-octez-signer = ocamlPackages.buildDunePackage rec {
-    pname = "octez-signer";
-    inherit (ocamlPackages.tezos-stdlib) version src;
+      trunk-octez-snoop = ocamlPackages.buildDunePackage rec {
+        pname = "octez-snoop";
+        inherit (ocamlPackages.tezos-stdlib) version src;
 
-    minimalOCamlVersion = "4.14";
+        minimalOCamlVersion = "4.14";
 
-    duneVersion = "3";
+        duneVersion = "3";
 
-    buildInputs = with ocamlPackages; [
-      tezos-base
-      tezos-clic
-      tezos-client-base
-      tezos-client-base-unix
-      tezos-client-commands
-      tezos-signer-services
-      tezos-rpc-http
-      tezos-rpc-http-server
-      tezos-rpc-http-client-unix
-      tezos-stdlib-unix
-      tezos-stdlib
-      tezos-signer-backends
-    ];
+        nativeBuildInputs = with ocamlPackages; [ocp-ocamlres pkgs.jq];
 
-    checkInputs = with ocamlPackages; [ tezos-base-test-helpers ];
+        propagatedBuildInputs = [ocamlPackages.findlib];
 
-    doCheck = true;
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          tezos-stdlib-unix
+          tezos-clic
+          tezos-benchmark
+          tezos-benchmark-examples
+          tezos-alpha.benchmarks
+          # tezos-shell-benchmarks
+          # tezos-benchmarks-proto-alpha
+          ocamlgraph
+          pyml
+          prbnmcn-stats
+        ];
 
-    meta = {
-      description = "`octez-signer` binary";
-      mainProgram = pname;
-    };
-  };
+        doCheck = true;
 
-  trunk-octez-snoop = ocamlPackages.buildDunePackage rec {
-    pname = "octez-snoop";
-    inherit (ocamlPackages.tezos-stdlib) version src;
+        meta = {
+          description = "Your service";
+          mainProgram = "tezos-node";
+        };
+      };
 
-    minimalOCamlVersion = "4.14";
+      trunk-tezos-tps-evaluation = ocamlPackages.buildDunePackage rec {
+        pname = "tezos-tps-evaluation";
+        inherit (ocamlPackages.tezos-stdlib) version src;
 
-    duneVersion = "3";
+        minimalOCamlVersion = "4.14";
 
-    nativeBuildInputs = with ocamlPackages; [ ocp-ocamlres pkgs.jq ];
+        duneVersion = "3";
 
-    propagatedBuildInputs = [ ocamlPackages.findlib ];
+        nativeBuildInputs = with ocamlPackages; [ocp-ocamlres];
 
-    buildInputs = with ocamlPackages; [
-      tezos-base
-      tezos-stdlib-unix
-      tezos-clic
-      tezos-benchmark
-      tezos-benchmark-examples
-      tezos-alpha.benchmarks
-      # tezos-shell-benchmarks
-      # tezos-benchmarks-proto-alpha
-      ocamlgraph
-      pyml
-      prbnmcn-stats
-    ];
+        propagatedBuildInputs = [ocamlPackages.findlib];
 
-    doCheck = true;
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          caqti
+          caqti-dynload
+          caqti-lwt
+          data-encoding
+          lwt
+          tezos-client-base-unix
+          tezos-alpha.baking
+          tezos-alpha.client
+          tezos-alpha.protocol
+          tezt
+          tezt-tezos
+          tezt-performance-regression
+          uri
+          tezos-dal-node-services
+          tezos-context-ops
+        ];
 
-    meta = {
-      description = "Your service";
-      mainProgram = "tezos-node";
-    };
-  };
+        doCheck = true;
 
-  trunk-tezos-tps-evaluation = ocamlPackages.buildDunePackage rec {
-    pname = "tezos-tps-evaluation";
-    inherit (ocamlPackages.tezos-stdlib) version src;
+        meta = {
+          description = "Your service";
+          mainProgram = "tezos-node";
+        };
+      };
 
-    minimalOCamlVersion = "4.14";
+      trunk-octez-smart-rollup-wasm-debugger = ocamlPackages.buildDunePackage rec {
+        pname = "octez-smart-rollup-wasm-debugger";
+        inherit (ocamlPackages.tezos-stdlib) version src;
 
-    duneVersion = "3";
+        minimalOCamlVersion = "4.14";
 
-    nativeBuildInputs = with ocamlPackages; [ ocp-ocamlres ];
+        duneVersion = "3";
 
-    propagatedBuildInputs = [ ocamlPackages.findlib ];
+        nativeBuildInputs = with ocamlPackages; [ocp-ocamlres pkgs.jq];
 
-    buildInputs = with ocamlPackages; [
-      tezos-base
-      caqti
-      caqti-dynload
-      caqti-lwt
-      data-encoding
-      lwt
-      tezos-client-base-unix
-      tezos-alpha.baking
-      tezos-alpha.client
-      tezos-alpha.protocol
-      tezt
-      tezt-tezos
-      tezt-performance-regression
-      uri
-      tezos-dal-node-services
-      tezos-context-ops
-    ];
+        propagatedBuildInputs = [ocamlPackages.findlib];
 
-    doCheck = true;
+        buildInputs = with ocamlPackages; [
+          tezos-base
+          tezos-clic
+          tezos-tree-encoding
 
-    meta = {
-      description = "Your service";
-      mainProgram = "tezos-node";
-    };
-  };
+          tezos-alpha.client
+          tezos-scoru-wasm
+          tezos-scoru-wasm-helpers
+          tezos-webassembly-interpreter
+          tezos-webassembly-interpreter-extra
+          octez-smart-rollup-wasm-benchmark-lib
+        ];
 
-  trunk-octez-smart-rollup-wasm-debugger = ocamlPackages.buildDunePackage rec {
-    pname = "octez-smart-rollup-wasm-debugger";
-    inherit (ocamlPackages.tezos-stdlib) version src;
+        doCheck = true;
 
-    minimalOCamlVersion = "4.14";
-
-    duneVersion = "3";
-
-    nativeBuildInputs = with ocamlPackages; [ ocp-ocamlres pkgs.jq ];
-
-    propagatedBuildInputs = [ ocamlPackages.findlib ];
-
-    buildInputs = with ocamlPackages; [
-      tezos-base
-      tezos-clic
-      tezos-tree-encoding
-
-      tezos-alpha.client
-      tezos-scoru-wasm
-      tezos-scoru-wasm-helpers
-      tezos-webassembly-interpreter
-      tezos-webassembly-interpreter-extra
-      octez-smart-rollup-wasm-benchmark-lib
-    ];
-
-    doCheck = true;
-
-    meta = {
-      description = "Your service";
-      mainProgram = "tezos-node";
-    };
-  };
-}
-// (ocamlPackages.callPackage ./generic-protocol-bin.nix {
-  inherit doCheck;
-  protocol-name = "alpha";
-  protocol-libs = tezos-alpha;
-})
-  // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
-  inherit doCheck;
-  protocol-name = "PtMumbai";
-  protocol-libs = tezos-016-PtMumbai;
-})
+        meta = {
+          description = "Your service";
+          mainProgram = "tezos-node";
+        };
+      };
+    }
+    // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
+      inherit doCheck;
+      protocol-name = "alpha";
+      protocol-libs = tezos-alpha;
+    })
+    // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
+      inherit doCheck;
+      protocol-name = "PtMumbai";
+      protocol-libs = tezos-016-PtMumbai;
+    })

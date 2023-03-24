@@ -1,23 +1,21 @@
-{ lib
-, buildDunePackage
-, cacert
-, ocamlPackages
-, tezos-stdlib
-, protocol-name
-, protocol-libs
-, doCheck
-,
-}:
-let
-  underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
+{
+  lib,
+  buildDunePackage,
+  cacert,
+  ocamlPackages,
+  tezos-stdlib,
+  protocol-name,
+  protocol-libs,
+  doCheck,
+}: let
+  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
   protocol_number = proto:
     if builtins.substring 0 4 proto == "demo"
     then -1
     else if proto == "alpha"
     then 1000
     else lib.toIntBase10 (builtins.substring 0 3 proto);
-in
-rec {
+in rec {
   "trunk-octez-accuser-${protocol-name}" = ocamlPackages.buildDunePackage rec {
     pname = "octez-accuser-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;

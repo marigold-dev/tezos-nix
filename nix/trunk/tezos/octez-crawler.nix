@@ -1,12 +1,13 @@
-{ lib
-, fetchpatch
-, buildDunePackage
-, tezos-stdlib
-, tezos-base
-, tezos-rpc-http
-, tezos-stdlib-unix
-, tezos-client-base
-, tezos-shell
+{
+  lib,
+  fetchpatch,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-base,
+  tezos-rpc-http,
+  tezos-stdlib-unix,
+  tezos-client-base,
+  tezos-shell,
 }:
 buildDunePackage {
   pname = "octez-crawler";

@@ -1,16 +1,17 @@
-{ lib
-, fetchpatch
-, buildDunePackage
-, tezos-stdlib
-, tezos-base
-, logs
-, tezos-stdlib-unix
-, tezos-crypto
-, tezos-micheline
-, tezos-client-base
-, tezos-workers
-, tezos-shell
-, octez-crawler
+{
+  lib,
+  fetchpatch,
+  buildDunePackage,
+  tezos-stdlib,
+  tezos-base,
+  logs,
+  tezos-stdlib-unix,
+  tezos-crypto,
+  tezos-micheline,
+  tezos-client-base,
+  tezos-workers,
+  tezos-shell,
+  octez-crawler,
 }:
 buildDunePackage {
   pname = "octez-injector";
