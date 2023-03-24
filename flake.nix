@@ -20,7 +20,7 @@
     tezos_release.url = "gitlab:tezos/tezos/v16.1";
     tezos_release.flake = false;
 
-    tezos_trunk.url = "gitlab:tezos/tezos";
+    tezos_trunk.url = "gitlab:marigold/tezos/d4hines/make-soru-client-public";
     tezos_trunk.flake = false;
   };
 

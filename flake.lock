@@ -238,15 +238,16 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1679661643,
-        "narHash": "sha256-jBx/cSJ0zXZJH6roMUuFjBQxQBroxd4Gz1n4xRZCGoY=",
-        "owner": "tezos",
+        "lastModified": 1679679899,
+        "narHash": "sha256-YnMfSf3Bg0leP3OI6szu66b07G3eZb9KLORVxOrYjgU=",
+        "owner": "marigold",
         "repo": "tezos",
-        "rev": "3b517d3669d7b7515b7de62a81197862d35b3d22",
+        "rev": "be635e8b418a91046b87d8099428c794e1d4ce0d",
         "type": "gitlab"
       },
       "original": {
-        "owner": "tezos",
+        "owner": "marigold",
+        "ref": "d4hines/make-soru-client-public",
         "repo": "tezos",
         "type": "gitlab"
       }

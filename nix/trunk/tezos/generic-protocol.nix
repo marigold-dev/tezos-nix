@@ -324,12 +324,13 @@ in rec {
       };
   };
 
-  smart-rollup-client = buildDunePackage {
-    pname = "octez-smart-rollup-client-${protocol-name}";
+  smart-rollup-client-lib = buildDunePackage {
+    pname = "octez-smart-rollup-client-lib-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
 
     propagatedBuildInputs = with ocamlPackages; [
+      client
       smart-rollup
       smart-rollup-layer2
       tezos-base

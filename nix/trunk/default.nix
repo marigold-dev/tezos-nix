@@ -10,7 +10,9 @@
   };
 in {
   flake = {
-    overlays = {trunk = overlay;};
+    overlays = {
+      trunk = inputs.nixpkgs.lib.composeExtensions (self.overlays.release version) overlay;
+    };
   };
 
   perSystem = {
