@@ -31,7 +31,7 @@ buildDunePackage {
   checkInputs = [
   ];
 
-  doCheck = false;
+  doCheck = true;
 
   meta =
     tezos-stdlib.meta

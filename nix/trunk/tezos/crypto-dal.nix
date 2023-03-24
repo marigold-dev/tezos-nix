@@ -34,7 +34,7 @@ buildDunePackage {
     tezos-test-helpers
   ];
 
-  doCheck = false;
+  doCheck = true;
 
   meta =
     tezos-stdlib.meta

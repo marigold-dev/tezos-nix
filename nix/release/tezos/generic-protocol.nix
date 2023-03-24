@@ -118,7 +118,7 @@ in rec {
       tezos-client-base
       tezos-workers
       tezos-shell
-      tezos-layer2-utils-alpha
+      layer2-utils
     ];
   };
 

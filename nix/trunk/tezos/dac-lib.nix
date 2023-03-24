@@ -1,23 +1,19 @@
 {
   lib,
+  fetchpatch,
   buildDunePackage,
   tezos-stdlib,
-  ppx_expect,
   tezos-base,
-  tezos-alpha,
-  tezos-rpc,
+  tezos-protocol-updater,
 }:
 buildDunePackage {
-  pname = "tezos-layer2-utils-alpha";
+  pname = "tezos-dac-lib";
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
   propagatedBuildInputs = [
-    ppx_expect
     tezos-base
-    tezos-alpha.protocol
-    tezos-alpha.client
-    tezos-rpc
+    tezos-protocol-updater
   ];
 
   doCheck = true;
@@ -25,6 +21,6 @@ buildDunePackage {
   meta =
     tezos-stdlib.meta
     // {
-      description = "Tezos/Protocol: protocol specific library for Layer 2 utils";
+      description = "Tezos: `tezos-dac` library";
     };
 }

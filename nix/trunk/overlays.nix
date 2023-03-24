@@ -87,6 +87,10 @@ final: prev: {
 
         tezos-proxy = oself.callPackage ./tezos/proxy.nix {};
 
+        tezos-dac-lib = oself.callPackage ./tezos/dac-lib.nix {};
+        tezos-dac-client-lib = oself.callPackage ./tezos/dac-client-lib.nix {};
+        tezos-dac-node-lib = oself.callPackage ./tezos/dac-node-lib.nix {};
+
         tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix {};
         tezos-bls12-381-polynomial-internal = callPackage ./tezos/bls12-381-polynomial-internal.nix {};
         tezos-016-PtMumbai = callPackage ./tezos/generic-protocol.nix {
@@ -98,6 +102,8 @@ final: prev: {
           ocamlPackages = oself;
         };
         octez-smart-rollup-wasm-benchmark-lib = oself.callPackage ./tezos/octez-smart-rollup-wasm-benchmark-lib.nix {};
+        octez-crawler = oself.callPackage ./tezos/octez-crawler.nix {};
+        octez-injector = oself.callPackage ./tezos/octez-injector.nix {};
       }))
     prev.ocaml-ng;
 }
