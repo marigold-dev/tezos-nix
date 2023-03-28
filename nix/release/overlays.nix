@@ -316,9 +316,30 @@
 
         hacl-star-raw = callPackage ./hacl-star-raw.nix {};
 
-        hacl-star = osuper.hacl-star.overrideAttrs (_: {
-          buildInputs = [oself.alcotest];
-        });
+        hacl-star = with oself;
+          buildDunePackage {
+            pname = "hacl-star";
+
+            inherit (hacl-star-raw) version src meta doCheck minimalOCamlVersion;
+
+            duneVersion = "3";
+
+            propagatedBuildInputs = [
+              hacl-star-raw
+              zarith
+            ];
+
+            nativeBuildInputs = [
+              cppo
+            ];
+
+            checkInputs = [
+              alcotest
+              secp256k1-internal
+              qcheck-core
+              cstruct
+            ];
+          };
 
         ringo = osuper.ringo.overrideAttrs (_: rec {
           version = "1.0.0";
