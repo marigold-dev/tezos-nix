@@ -280,6 +280,8 @@
             sha256 = "sha256-cfsSVmN4rbKcLcPcy6NduZktJhPXiVdK75LypmaSe9I=";
           };
 
+          duneVersion = "3";
+
           propagatedBuildInputs = [oself.bls12-381];
         };
 
