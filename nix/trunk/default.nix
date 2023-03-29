@@ -22,6 +22,19 @@ in {
     system,
     ...
   }: let
+    nodePackages =
+      (inputs.dream2nix.lib.makeFlakeOutputs {
+        systems = [system];
+        source = inputs.nix-filter.lib.filter {
+          root = ../../.;
+          include = ["package.json" "yarn.lock"];
+        };
+
+        settings = [{subsystemInfo.nodejs = builtins.substring 0 2 pkgs.nodejs.version;}];
+      })
+      .packages
+      .${system}
+      .default;
     pkgs = import inputs.nixpkgs {
       inherit system;
       overlays = [
@@ -82,6 +95,7 @@ in {
           ++ (with pkgs.ocamlPackages; [hashcons tezt tezos-plompiler tezos-plonk pyml ppx_import ocaml-lsp]);
 
         shellHook = ''
+          export PATH=$PATH:${nodePackages}/lib/node_modules/.bin
           export OPAM_SWITCH_PREFIX="${pkgs.tezos-rust-libs}"
           export TEZOS_WITHOUT_OPAM=true
 

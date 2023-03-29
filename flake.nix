@@ -22,6 +22,9 @@
 
     tezos_trunk.url = "gitlab:tezos/tezos";
     tezos_trunk.flake = false;
+
+    dream2nix.url = "github:nix-community/dream2nix/421c623275dd9a8684ab3bfd6d78b9a1bba16923";
+    nix-filter.url = "github:numtide/nix-filter";
   };
 
   outputs = inputs @ {

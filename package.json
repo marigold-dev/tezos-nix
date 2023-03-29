@@ -1,0 +1,11 @@
+{
+  "name": "tezos-nix",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:marigold-dev/tezos-nix.git",
+  "author": "Ulrik Strid <ulrik.strid@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "eth-cli": "^2.0.2"
+  }
+}
