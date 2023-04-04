@@ -92,7 +92,6 @@ final: prev: {
         tezos-dac-node-lib = oself.callPackage ./tezos/dac-node-lib.nix {};
 
         tezos-crypto-dal = oself.callPackage ./tezos/crypto-dal.nix {};
-        tezos-bls12-381-polynomial-internal = callPackage ./tezos/bls12-381-polynomial-internal.nix {};
         tezos-016-PtMumbai = callPackage ./tezos/generic-protocol.nix {
           protocol-name = "016-PtMumbai";
           ocamlPackages = oself;

@@ -7,7 +7,6 @@
   data-encoding,
   tezos-crypto,
   tezos-bls12-381-polynomial,
-  tezos-bls12-381-polynomial-internal,
   tezos-test-helpers,
   lwt,
   alcotest,
@@ -24,7 +23,6 @@ buildDunePackage {
     data-encoding
     tezos-crypto
     tezos-bls12-381-polynomial
-    tezos-bls12-381-polynomial-internal
     lwt
   ];
 
