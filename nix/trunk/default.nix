@@ -79,7 +79,7 @@ in {
           ++ (with pkgs.ocamlPackages; [ocaml findlib js_of_ocaml]);
         buildInputs =
           [pkgs.tezos-rust-libs]
-          ++ (with pkgs.ocamlPackages; [hashcons tezt tezos-plompiler tezos-plonk pyml ppx_import ocaml-lsp]);
+          ++ (with pkgs.ocamlPackages; [hashcons tezt pyml ppx_import ocaml-lsp]);
 
         shellHook = ''
           export OPAM_SWITCH_PREFIX="${pkgs.tezos-rust-libs}"

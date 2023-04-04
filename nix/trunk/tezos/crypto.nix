@@ -3,31 +3,48 @@
   fetchpatch,
   buildDunePackage,
   tezos-stdlib,
+  tezos-lwt-result-stdlib,
+  tezos-hacl,
   tezos-error-monad,
+  tezos-rpc,
+  secp256k1-internal,
   data-encoding,
-  tezos-crypto,
-  octez-bls12-381-polynomial,
-  tezos-test-helpers,
   lwt,
-  alcotest,
+  aches,
+  zarith,
+  zarith_stubs_js,
+  bls12-381,
+  octez-bls12-381-signature,
+  tezt,
+  octez-alcotezt,
   qcheck-alcotest,
+  tezos-test-helpers,
 }:
 buildDunePackage {
-  pname = "tezos-crypto-dal";
+  pname = "tezos-crypto";
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
   propagatedBuildInputs = [
     tezos-stdlib
+    tezos-lwt-result-stdlib
+    tezos-hacl
     tezos-error-monad
+    tezos-rpc
+
+    secp256k1-internal
     data-encoding
-    tezos-crypto
-    octez-bls12-381-polynomial
     lwt
+    aches
+    zarith
+    zarith_stubs_js
+    bls12-381
+    octez-bls12-381-signature
   ];
 
   checkInputs = [
-    alcotest
+    tezt
+    octez-alcotezt
     qcheck-alcotest
     tezos-test-helpers
   ];
