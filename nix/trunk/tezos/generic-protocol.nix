@@ -92,6 +92,82 @@ in rec {
     doCheck = true;
   };
 
+  dac = buildDunePackage {
+    pname = "tezos-dac-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    nativeBuildInputs = with ocamlPackages; [
+      octez-protocol-compiler
+    ];
+
+    propagatedBuildInputs = with ocamlPackages; [
+      client
+      embedded-protocol
+      protocol
+    ];
+
+    buildInputs = with ocamlPackages; [
+      ppx_expect
+      tezos-base
+      tezos-stdlib-unix
+      tezos-dac-lib
+      tezos-dac-client-lib
+    ];
+
+    checkInputs = with ocamlPackages; [
+      tezt
+      tezos-base-test-helpers
+      test-helpers
+      tezos-dac-node-lib
+      octez-alcotezt
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library for the Data availability Committee";
+      };
+  };
+
+  dal = buildDunePackage {
+    pname = "tezos-dal-${protocol-name}";
+    inherit (tezos-stdlib) version src postPatch;
+    duneVersion = "3";
+
+    propagatedBuildInputs = with ocamlPackages; [
+      protocol
+      protocol-plugin
+      embedded-protocol
+      client
+      layer2-utils
+
+      tezos-base
+      octez-protocol-compiler
+      tezos-stdlib-unix
+      tezos-dal-node-lib
+    ];
+
+    buildInputs = with ocamlPackages; [ppx_expect];
+
+    checkInputs = with ocamlPackages; [
+      tezos-base-test-helpers
+      test-helpers
+      alcotest-lwt
+      cacert
+    ];
+
+    doCheck = true;
+
+    meta =
+      tezos-stdlib.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library for the Data availability Layer";
+      };
+  };
+
   injector = buildDunePackage {
     pname = "tezos-injector-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
