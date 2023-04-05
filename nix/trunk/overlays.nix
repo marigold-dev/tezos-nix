@@ -103,6 +103,10 @@ final: prev: {
           protocol-name = "alpha";
           ocamlPackages = oself;
         };
+        tezos-017-PtNairob = oself.callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "017-PtNairob";
+          ocamlPackages = oself;
+        };
         octez-alcotezt = oself.callPackage ./octez/octez-alcotezt.nix {};
         octez-bls12-381-hash = oself.callPackage ./octez/octez-bls12-381-hash.nix {};
         octez-bls12-381-polynomial = oself.callPackage ./octez/octez-bls12-381-polynomial.nix {};
