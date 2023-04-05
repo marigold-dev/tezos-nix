@@ -27,11 +27,13 @@ in
 
           tezos-alpha.protocol-plugin
           tezos-alpha.baking-commands
-
-          tezos-015-PtLimaPt.protocol
-          tezos-015-PtLimaPt.protocol-plugin
           tezos-015-PtLimaPt.baking-commands
+          tezos-015-PtLimaPt.protocol-plugin
           tezos-016-PtMumbai.baking-commands
+          tezos-016-PtMumbai.protocol-plugin
+          tezos-017-PtNairob.baking-commands
+          tezos-017-PtNairob.protocol
+          tezos-017-PtNairob.protocol-plugin
         ];
 
         inherit doCheck;
@@ -66,6 +68,8 @@ in
             tezos-015-PtLimaPt.baking-commands
             tezos-016-PtMumbai.protocol-plugin
             tezos-016-PtMumbai.baking-commands
+            tezos-017-PtNairob.protocol-plugin
+            tezos-017-PtNairob.baking-commands
           ];
 
           inherit doCheck;
@@ -102,6 +106,7 @@ in
           tezos-layer2-store
           irmin-pack
           irmin
+          tezos-017-PtNairob.dac
         ];
 
         checkInputs = with ocamlPackages; [tezos-base-test-helpers];
@@ -141,7 +146,8 @@ in
           tezos-crypto-dal
           irmin-pack
           irmin
-          tezos-dal-016-PtMumbai
+          tezos-016-PtMumbai.dal
+          tezos-017-PtNairob.dal
         ];
 
         checkInputs = with ocamlPackages; [tezos-base-test-helpers];
@@ -227,10 +233,13 @@ in
           tezos-015-PtLimaPt.protocol-plugin-registerer
           tezos-016-PtMumbai.embedded-protocol
           tezos-016-PtMumbai.protocol-plugin-registerer
+          tezos-017-PtNairob.embedded-protocol
+          tezos-017-PtNairob.protocol-plugin-registerer
           tezos-alpha.protocol-plugin-registerer
           tezos-014-PtKathma.protocol-plugin
           tezos-015-PtLimaPt.protocol-plugin
           tezos-016-PtMumbai.protocol-plugin
+          tezos-017-PtNairob.protocol-plugin
           prometheus-app
           lwt-exit
           tls
