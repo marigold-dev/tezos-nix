@@ -118,11 +118,11 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-client-alpha
       - name: "Build smart-rollup-node-alpha"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-node-alpha
-      - name: "Build accuser-PtMumbai"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-accuser-PtMumbai
-      - name: "Build baker-PtMumbai"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-baker-PtMumbai
-      - name: "Build smart-rollup-client-PtMumbai"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-client-PtMumbai
-      - name: "Build smart-rollup-node-PtMumbai"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-node-PtMumbai
+      - name: "Build accuser-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-accuser-PtNairob
+      - name: "Build baker-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-baker-PtNairob
+      - name: "Build smart-rollup-client-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-client-PtNairob
+      - name: "Build smart-rollup-node-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-node-PtNairob

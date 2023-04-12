@@ -105,14 +105,14 @@ in rec {
       client
       embedded-protocol
       protocol
+      tezos-dac-client-lib
+      tezos-dac-lib
     ];
 
     buildInputs = with ocamlPackages; [
       ppx_expect
       tezos-base
       tezos-stdlib-unix
-      tezos-dac-lib
-      tezos-dac-client-lib
     ];
 
     checkInputs = with ocamlPackages; [
