@@ -459,6 +459,6 @@ in
     })
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
       inherit doCheck;
-      protocol-name = "PtMumbai";
-      protocol-libs = tezos-016-PtMumbai;
+      protocol-name = "PtNairob";
+      protocol-libs = tezos-017-PtNairob;
     })
