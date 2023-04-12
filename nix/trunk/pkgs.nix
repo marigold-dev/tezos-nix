@@ -27,8 +27,6 @@ in
 
           tezos-alpha.protocol-plugin
           tezos-alpha.baking-commands
-          tezos-015-PtLimaPt.baking-commands
-          tezos-015-PtLimaPt.protocol-plugin
           tezos-016-PtMumbai.baking-commands
           tezos-016-PtMumbai.protocol-plugin
           tezos-017-PtNairob.baking-commands
@@ -64,8 +62,6 @@ in
             tezos-event-logging
             tezos-signer-services
 
-            tezos-015-PtLimaPt.protocol-plugin
-            tezos-015-PtLimaPt.baking-commands
             tezos-016-PtMumbai.protocol-plugin
             tezos-016-PtMumbai.baking-commands
             tezos-017-PtNairob.protocol-plugin

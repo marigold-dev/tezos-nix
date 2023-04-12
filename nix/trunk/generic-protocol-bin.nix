@@ -119,6 +119,7 @@ in rec {
       protocol-libs.smart-rollup
       protocol-libs.smart-rollup-layer2
       protocol-libs.layer2-utils
+      protocol-libs.dac
 
       tezos-base
       tezos-clic
