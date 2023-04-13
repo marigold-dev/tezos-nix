@@ -8,7 +8,7 @@
 , ...
 }:
 with lib; let
-  cfg = config.services.tezos-node;
+  cfg = config.services.tezos-baking;
   node_pkg = cfg.nodePackage;
   baker_pkg = cfg.bakerPackage;
   accuser_pkg = cfg.accuserPackage;
