@@ -1,3 +1,7 @@
+{ nodePackage
+, bakerPackage
+, accuserPackage
+}:
 { config
 , pkgs
 , lib
@@ -21,21 +25,21 @@ in
     # TODO: Move the node to separate option
     nodePackage = mkOption {
       type = types.package;
-      default = pkgs.octez-node;
+      default = nodePackage;
       defaultText = literalExpression "pkgs.octez-node";
       description = lib.mdDoc "The Tezos Node package to use.";
     };
 
     bakerPackage = mkOption {
       type = types.package;
-      default = pkgs.octez-node;
+      default = bakerPackage;
       defaultText = literalExpression "pkgs.octez-baker";
       description = lib.mdDoc "The Tezos Baker package to use.";
     };
 
     accuserPackage = mkOption {
       type = types.package;
-      default = pkgs.octez-node;
+      default = accuserPackage;
       defaultText = literalExpression "pkgs.octez-accuser";
       description = lib.mdDoc "The Tezos Accuser package to use.";
     };
