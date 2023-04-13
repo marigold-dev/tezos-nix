@@ -297,6 +297,10 @@
           propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.ppx_repr];
         });
 
+        ff-sig = osuper.ff-sig.overrideAttrs (_: {
+          duneVersion = "3";
+        });
+
         polynomial = oself.buildDunePackage rec {
           pname = "polynomial";
           version = "0.4.0";
@@ -306,6 +310,8 @@
             rev = version;
             sha256 = "sha256-is/PrYLCwStHiQsNq5OVRCwHdXjO2K2Z7FrXgytRfAU=";
           };
+
+          duneVersion = "3";
 
           propagatedBuildInputs = with oself; [zarith ff-sig];
         };
