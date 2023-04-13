@@ -57,7 +57,7 @@ in
       services = {
         tezos-node = {
           description = "Tezos Node Service";
-          documentation = "http://tezos.gitlab.io/";
+          documentation = [ "http://tezos.gitlab.io/" ];
           wants = [ "network.target" ];
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
@@ -74,7 +74,7 @@ in
 
         tezos-baker = {
           description = "Tezos baker Service";
-          documentation = "http://tezos.gitlab.io/";
+          documentation = [ "http://tezos.gitlab.io/" ];
           wants = [ "network.target" ];
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
@@ -91,7 +91,7 @@ in
 
         tezos-accuser = {
           description = "Tezos accuser Service";
-          documentation = "http://tezos.gitlab.io/";
+          documentation = [ "http://tezos.gitlab.io/" ];
           wants = [ "network.target" ];
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
