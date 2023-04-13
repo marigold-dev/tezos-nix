@@ -12,6 +12,7 @@ with lib; let
   node_pkg = cfg.nodePackage;
   baker_pkg = cfg.bakerPackage;
   accuser_pkg = cfg.accuserPackage;
+  port = builtins.toString cfg.port;
 in
 {
   options.services.tezos-baking = {
@@ -63,7 +64,7 @@ in
           requiredBy = [ "tezos-baker.service" "tezos-accuser.service" ];
           serviceConfig = {
             Type = "simple";
-            ExecStart = "${node_pkg}/bin/octez-node --rpc-addr 127.0.0.1:${cfg.port} --data-dir /run/tezos/.octez-node";
+            ExecStart = "${node_pkg}/bin/octez-node --rpc-addr 127.0.0.1:${port} --data-dir /run/tezos/.octez-node";
             Restart = "on-failure";
             StateDirectory = "tezos";
             RuntimeDirectory = "tezos";
@@ -80,7 +81,7 @@ in
           requires = [ "tezos-node.service" ];
           serviceConfig = {
             Type = "simple";
-            ExecStart = "${baker_pkg}/bin/${baker_pkg.pname} --endpoint http://127.0.0.1:${cfg.port} run with local node /run/tezos/.octez-node --liquidity-baking-toggle-vote on";
+            ExecStart = "${baker_pkg}/bin/${baker_pkg.pname} --endpoint http://127.0.0.1:${port} run with local node /run/tezos/.octez-node --liquidity-baking-toggle-vote on";
             Restart = "on-failure";
             StateDirectory = "tezos";
             RuntimeDirectory = "tezos";
@@ -97,7 +98,7 @@ in
           requires = [ "tezos-node.service" ];
           serviceConfig = {
             Type = "simple";
-            ExecStart = "${accuser_pkg}/bin/${accuser_pkg.pname} --endpoint http://127.0.0.1:${cfg.port} run";
+            ExecStart = "${accuser_pkg}/bin/${accuser_pkg.pname} --endpoint http://127.0.0.1:${port} run";
             Restart = "on-failure";
             StateDirectory = "tezos";
             RuntimeDirectory = "tezos";
