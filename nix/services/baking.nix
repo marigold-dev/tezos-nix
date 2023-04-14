@@ -13,6 +13,8 @@ with lib; let
   baker_pkg = cfg.bakerPackage;
   accuser_pkg = cfg.accuserPackage;
   port = builtins.toString cfg.port;
+  listToString = lib.strings.concatStringsSep ",";
+  environment = builtins.mapAttrs (_: value: builtins.toString value) cfg.environment;
 in
 {
   options.services.tezos-baking = {
@@ -50,6 +52,12 @@ in
       default = false;
       description = lib.mdDoc "Open ports in the firewall for the tezos node.";
     };
+
+    # TODO: Should maybe split this into multiple options instead
+    environment = mkOption {
+      type = types.attrsOf (types.oneOf [ types.bool types.str types.int ]);
+      description = lib.mdDoc "Environment variables passed to the Octez node";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -62,6 +70,7 @@ in
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
           requiredBy = [ "tezos-baker.service" "tezos-accuser.service" ];
+          inherit environment;
           serviceConfig = {
             Type = "simple";
             ExecStart = "${node_pkg}/bin/octez-node run --rpc-addr 127.0.0.1:${port} --data-dir /run/tezos/.octez-node";
