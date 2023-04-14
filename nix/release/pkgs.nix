@@ -10,7 +10,7 @@
 }: let
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
   inject-zcash = {
-    nativeBuildInputs = [ pkgs.makeWrapper ];
+    nativeBuildInputs = [pkgs.makeWrapper];
     postFixup = ''
       for bin in $(find $out/bin -not -name '*.sh' -type f -executable); do
         wrapProgram "$bin" --prefix XDG_DATA_DIRS : ${pkgs.zcash-params}
@@ -369,12 +369,12 @@ in
       };
     }
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
-      inherit doCheck;
+      inherit doCheck inject-zcash;
       protocol-name = "alpha";
       protocol-libs = tezos-alpha;
     })
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
-      inherit doCheck;
+      inherit doCheck inject-zcash;
       protocol-name = "PtMumbai";
       protocol-libs = tezos-016-PtMumbai;
     })

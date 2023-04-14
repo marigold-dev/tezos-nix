@@ -1,11 +1,12 @@
-{ nodePackage
-, bakerPackage
-, accuserPackage
-}:
-{ config
-, pkgs
-, lib
-, ...
+{
+  nodePackage,
+  bakerPackage,
+  accuserPackage,
+}: {
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib; let
   cfg = config.services.tezos-baking;
@@ -15,8 +16,7 @@ with lib; let
   port = builtins.toString cfg.port;
   listToString = lib.strings.concatStringsSep ",";
   environment = builtins.mapAttrs (_: value: builtins.toString value) cfg.environment;
-in
-{
+in {
   options.services.tezos-baking = {
     enable = mkEnableOption "Tezos Baking";
     port = mkOption {
@@ -54,26 +54,26 @@ in
     };
 
     historyMode = mkOption {
-      type = types.string;
+      type = types.str;
       default = "rolling";
       description = lib.mdDoc "What history mode to run in, valid values are `rolling`, `full` and `archive`";
     };
 
     tezosNetwork = mkOption {
-      type = types.string;
+      type = types.str;
       default = "mainnet";
       description = lib.mdDoc "What network to target";
     };
 
     snapshotUrl = mkOption {
-      type = types.string;
+      type = types.str;
       default = "https://snapshots.tezos.marigold.dev/api/mainnet/${cfg.tezosNetwork}";
       description = lib.mdDoc "Where to get snapshots";
     };
 
     # TODO: Should maybe split this into multiple options instead
     environment = mkOption {
-      type = types.attrsOf (types.oneOf [ types.bool types.str types.int ]);
+      type = types.attrsOf (types.oneOf [types.bool types.str types.int]);
       description = lib.mdDoc "Environment variables passed to the Octez node";
     };
   };
@@ -83,11 +83,11 @@ in
       services = {
         tezos-node = {
           description = "Tezos Node Service";
-          documentation = [ "http://tezos.gitlab.io/" ];
-          wants = [ "network.target" ];
-          after = [ "network.target" ];
-          wantedBy = [ "multi-user.target" ];
-          requiredBy = [ "tezos-baker.service" "tezos-accuser.service" ];
+          documentation = ["http://tezos.gitlab.io/"];
+          wants = ["network.target"];
+          after = ["network.target"];
+          wantedBy = ["multi-user.target"];
+          requiredBy = ["tezos-baker.service" "tezos-accuser.service"];
           environment.TEZOS_NETWORK = cfg.tezosNetwork;
           environment.SNAPSHOT_URL = cfg.snapshotUrl;
           environment.HISTORY_MODE = cfg.historyMode;
@@ -103,11 +103,11 @@ in
 
         tezos-baker = {
           description = "Tezos baker Service";
-          documentation = [ "http://tezos.gitlab.io/" ];
-          wants = [ "network.target" ];
-          after = [ "network.target" ];
-          wantedBy = [ "multi-user.target" ];
-          requires = [ "tezos-node.service" ];
+          documentation = ["http://tezos.gitlab.io/"];
+          wants = ["network.target"];
+          after = ["network.target"];
+          wantedBy = ["multi-user.target"];
+          requires = ["tezos-node.service"];
           serviceConfig = {
             Type = "simple";
             ExecStart = "${baker_pkg}/bin/${baker_pkg.pname} --endpoint http://127.0.0.1:${port} run with local node /run/tezos/.octez-node --liquidity-baking-toggle-vote on";
@@ -120,11 +120,11 @@ in
 
         tezos-accuser = {
           description = "Tezos accuser Service";
-          documentation = [ "http://tezos.gitlab.io/" ];
-          wants = [ "network.target" ];
-          after = [ "network.target" ];
-          wantedBy = [ "multi-user.target" ];
-          requires = [ "tezos-node.service" ];
+          documentation = ["http://tezos.gitlab.io/"];
+          wants = ["network.target"];
+          after = ["network.target"];
+          wantedBy = ["multi-user.target"];
+          requires = ["tezos-node.service"];
           serviceConfig = {
             Type = "simple";
             ExecStart = "${accuser_pkg}/bin/${accuser_pkg.pname} --endpoint http://127.0.0.1:${port} run";
