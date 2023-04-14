@@ -64,7 +64,7 @@ in
           requiredBy = [ "tezos-baker.service" "tezos-accuser.service" ];
           serviceConfig = {
             Type = "simple";
-            ExecStart = "${node_pkg}/bin/octez-node --rpc-addr 127.0.0.1:${port} --data-dir /run/tezos/.octez-node";
+            ExecStart = "${node_pkg}/bin/octez-node run --rpc-addr 127.0.0.1:${port} --data-dir /run/tezos/.octez-node";
             Restart = "on-failure";
             StateDirectory = "tezos";
             RuntimeDirectory = "tezos";
