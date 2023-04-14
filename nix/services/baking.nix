@@ -53,6 +53,24 @@ in
       description = lib.mdDoc "Open ports in the firewall for the tezos node.";
     };
 
+    historyMode = mkOption {
+      type = types.string;
+      default = "rolling";
+      description = lib.mdDoc "What history mode to run in, valid values are `rolling`, `full` and `archive`";
+    };
+
+    tezosNetwork = mkOption {
+      type = types.string;
+      default = "mainnet";
+      description = lib.mdDoc "What network to target";
+    };
+
+    snapshotUrl = mkOption {
+      type = types.string;
+      default = "https://snapshots.tezos.marigold.dev/api/mainnet/${cfg.tezosNetwork}";
+      description = lib.mdDoc "Where to get snapshots";
+    };
+
     # TODO: Should maybe split this into multiple options instead
     environment = mkOption {
       type = types.attrsOf (types.oneOf [ types.bool types.str types.int ]);
@@ -70,7 +88,9 @@ in
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
           requiredBy = [ "tezos-baker.service" "tezos-accuser.service" ];
-          inherit environment;
+          environment.TEZOS_NETWORK = cfg.tezosNetwork;
+          environment.SNAPSHOT_URL = cfg.snapshotUrl;
+          environment.HISTORY_MODE = cfg.historyMode;
           serviceConfig = {
             Type = "simple";
             ExecStart = "${node_pkg}/bin/octez-node run --rpc-addr 127.0.0.1:${port} --data-dir /run/tezos/.octez-node";
