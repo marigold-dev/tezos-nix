@@ -9,6 +9,14 @@
   doCheck,
 }: let
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
+  inject-zcash = {
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postFixup = ''
+      for bin in $(find $out/bin -not -name '*.sh' -type f -executable); do
+        wrapProgram "$bin" --prefix XDG_DATA_DIRS : ${pkgs.zcash-params}
+      done
+    '';
+  };
 in
   with ocamlPackages;
     {
@@ -124,8 +132,13 @@ in
       octez-node = ocamlPackages.buildDunePackage rec {
         pname = "octez-node";
         inherit (ocamlPackages.tezos-stdlib) version src;
+        inherit (inject-zcash) nativeBuildInputs postFixup;
 
         duneVersion = "3";
+
+        propagatedBuildInputs = [
+          pkgs.zcash-params
+        ];
 
         buildInputs = with ocamlPackages; [
           tls-lwt

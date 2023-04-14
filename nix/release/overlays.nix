@@ -2,6 +2,7 @@
   octez_version,
   src,
 }: final: prev: {
+  zcash-params = prev.callPackage ./zcash.nix {};
   tezos-rust-libs = prev.tezos-rust-libs.overrideAttrs (drv: rec {
     version = "1.4";
     name = "${drv.pname}-${version}";
