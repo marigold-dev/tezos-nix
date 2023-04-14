@@ -60,6 +60,9 @@
             doCheck = false;
           });
       in {
+        ledgerwallet = oself.callPackage ./ledgerwallet.nix {};
+        ledgerwallet-tezos = oself.callPackage ./ledgerwallet-tezos.nix {};
+
         tls = osuper.tls.overrideAttrs (_: rec {
           version = "0.16.0";
           src = final.fetchurl {
