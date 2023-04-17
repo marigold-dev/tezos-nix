@@ -50,7 +50,7 @@ in {
   };
 
   config =
-    mkIf cfg.enable
+    lib.mkIf cfg.enable
     (mkMerge [
       {
         systemd = {
@@ -97,7 +97,7 @@ in {
         };
       }
       (
-        mkIf cfg.runNode.enable {
+        lib.mkIf cfg.runNode.enable {
           services.tezos-node = {
             enable = true;
           };
