@@ -1,4 +1,8 @@
-{octez-node}: {
+{
+  octez-node,
+  tezos-node-configurator,
+  tezos-snapshot-downloader,
+}: {
   config,
   pkgs,
   lib,
