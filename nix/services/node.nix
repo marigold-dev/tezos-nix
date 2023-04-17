@@ -77,9 +77,6 @@ in {
           after = ["network.target"];
           wantedBy = ["multi-user.target"];
           requiredBy = ["tezos-baker.service" "tezos-accuser.service"];
-          environment.TEZOS_NETWORK = cfg.tezosNetwork;
-          environment.SNAPSHOT_URL = cfg.snapshotUrl;
-          environment.HISTORY_MODE = cfg.historyMode;
           environment = {
             TEZOS_NETWORK = cfg.tezosNetwork;
             SNAPSHOT_URL = cfg.snapshotUrl;
