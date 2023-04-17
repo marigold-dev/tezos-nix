@@ -6,10 +6,10 @@
   flake = {
     nixosModules = {
       x86_64-linux_tezos-node = import ./node.nix {
-        nodePackage = self.packages.x86_64-linux.octez-node;
+        inherit (self.packages.x86_64-linux) octez-node tezos-node-configurator tezos-snapshot-downloader;
       };
       aarch64-linux_tezos-node = import ./node.nix {
-        nodePackage = self.packages.aarch64-linux.octez-node;
+        inherit (self.packages.aarch64-linux) octez-node tezos-node-configurator tezos-snapshot-downloader;
       };
       x86_64-linux_tezos-baking = import ./baking.nix {
         bakerPackage = self.packages.x86_64-linux.octez-baker-PtMumbai;

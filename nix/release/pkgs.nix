@@ -19,7 +19,7 @@
   };
 in
   with ocamlPackages;
-    {
+    rec {
       octez-client = buildDunePackage rec {
         pname = "octez-client";
         inherit (ocamlPackages.tezos-stdlib) version src;
@@ -378,3 +378,6 @@ in
       protocol-name = "PtMumbai";
       protocol-libs = tezos-016-PtMumbai;
     })
+    // pkgs.callPackage ./scripts.nix {
+      octez-node = octez-node;
+    }

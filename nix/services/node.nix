@@ -1,4 +1,4 @@
-{nodePackage}: {
+{octez-node}: {
   config,
   pkgs,
   lib,
@@ -33,7 +33,7 @@ in {
 
     nodePackage = mkOption {
       type = types.package;
-      default = nodePackage;
+      default = octez-node;
       defaultText = literalExpression "pkgs.octez-node";
       description = lib.mdDoc "The Tezos Node package to use.";
     };

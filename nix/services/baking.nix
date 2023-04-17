@@ -51,7 +51,7 @@ in {
 
   config =
     mkIf cfg.enable
-    mkMerge [
+    (mkMerge [
       {
         systemd = {
           services = {
@@ -103,5 +103,5 @@ in {
           };
         }
       )
-    ];
+    ]);
 }
