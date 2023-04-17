@@ -73,14 +73,26 @@ in {
           after = ["network.target"];
           wantedBy = ["multi-user.target"];
           requiredBy = ["tezos-baker.service" "tezos-accuser.service"];
-          environment = {
-            TEZOS_NETWORK = cfg.tezosNetwork;
-            SNAPSHOT_URL = cfg.snapshotUrl;
-            HISTORY_MODE = cfg.historyMode;
-          };
           serviceConfig = {
             Type = "simple";
-            ExecStart = "${node_pkg}/bin/octez-node run --rpc-addr ${endpoint} --data-dir /run/tezos/.octez-node";
+            ExecStartPre = ''
+              ${pkgs.curl}/bin/curl -L -o /run/tezos/.octez-node/${cfg.tezosNetwork}-snapshot ${cfg.snapshotUrl} \
+              && \
+              ${node_pkg}/bin/octez-node snapshot import \
+                /run/tezos/.octez-node/${cfg.tezosNetwork}-snapshot \
+                --data-dir /run/tezos/.octez-node \
+                --history-mode ${cfg.historyMode} \
+                --network ${cfg.tezosNetwork} \
+              && \
+              rm -rvf /run/tezos/.octez-node/${cfg.tezosNetwork}-snapshot
+            '';
+            ExecStart = ''
+              ${node_pkg}/bin/octez-node run \
+                --rpc-addr ${endpoint} \
+                --data-dir /run/tezos/.octez-node \
+                --history-mode ${cfg.historyMode} \
+                --network ${cfg.tezosNetwork}
+            '';
             Restart = "on-failure";
             StateDirectory = "tezos";
             RuntimeDirectory = "tezos";
