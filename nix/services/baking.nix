@@ -15,7 +15,7 @@ with lib; let
   accuser_pkg = cfg.accuserPackage;
   port = builtins.toString cfg.port;
   listToString = lib.strings.concatStringsSep ",";
-  environment = builtins.mapAttrs (_: value: builtins.toString value) cfg.environment;
+  environment = builtins.mapAttrs (_: builtins.toString) cfg.environment;
 in {
   options.services.tezos-baking = {
     enable = mkEnableOption "Tezos Baking";
