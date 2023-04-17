@@ -30,7 +30,11 @@ in {
       description = lib.mdDoc "The Tezos Accuser package to use.";
     };
 
-    runNode = mkEnableOption (lib.mdDoc "Runs a Tezos node to use with the baker and accuser.");
+    runNode = mkOption {
+      type = types.bool;
+      default = false;
+      description = lib.mdDoc "Runs a Tezos node to use with the baker and accuser.";
+    };
 
     nodeEndpoint = mkOption {
       type = types.str;
@@ -93,7 +97,7 @@ in {
         };
       }
       (
-        lib.mkIf cfg.runNode.enable {
+        lib.mkIf cfg.runNode {
           services.tezos-node = {
             enable = true;
           };
