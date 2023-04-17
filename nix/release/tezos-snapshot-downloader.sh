@@ -1,9 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -e
 set -x
 
-node="$1"
-data_dir="$2"
+data_dir="$1"
 node_dir="$data_dir/node"
 node_data_dir="$node_dir/data"
 
@@ -20,7 +19,7 @@ else
     snapshot_file="${node_dir}/chain.snapshot"
     [ -f "${node_data_dir}/lock" ] && rm "${node_data_dir}/lock"
     curl -L -o "$snapshot_file" "$SNAPSHOT_URL"
-    exec "${node}" snapshot import "${snapshot_file}" --data-dir "${node_data_dir}" --network "$TEZOS_NETWORK" --config-file "${node_data_dir}/config.json"
+    octez-node snapshot import "${snapshot_file}" --data-dir "${node_data_dir}" --network "$TEZOS_NETWORK" --config-file "${node_data_dir}/config.json"
     find "${node_dir}"
     rm -rvf "${snapshot_file}"
     exit 0

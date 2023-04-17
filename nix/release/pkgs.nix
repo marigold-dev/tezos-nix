@@ -367,6 +367,14 @@ in
           mainProgram = pname;
         };
       };
+
+      inherit
+        (pkgs.callPackage ./scripts.nix {
+          octez-node = octez-node;
+        })
+        tezos-node-configurator
+        tezos-snapshot-downloader
+        ;
     }
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
       inherit doCheck inject-zcash;
@@ -378,6 +386,3 @@ in
       protocol-name = "PtMumbai";
       protocol-libs = tezos-016-PtMumbai;
     })
-    // pkgs.callPackage ./scripts.nix {
-      octez-node = octez-node;
-    }

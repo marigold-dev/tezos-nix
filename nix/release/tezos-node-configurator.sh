@@ -1,8 +1,7 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -ex
 
-node="$1"
-data_dir="$2"
+data_dir="$1"
 node_dir="$data_dir/node"
 node_data_dir="$node_dir/data"
 
@@ -13,7 +12,7 @@ if [[ "$TEZOS_NETWORK" =~ ^http.* ]]; then
 fi
 echo "$network"
 
-echo "Writing custom configuration for public node\n"
+printf "Writing custom configuration for public node\n"
 # why hard-code this file ?
 # Reason 1: we could regenerate it from scratch with cli but it requires doing tezos-node config init or tezos-node config reset, depending on whether this file is already here
 # Reason 2: the --connections parameter automatically puts the number of minimal connections to half that of expected connections, resulting in logs spewing "Not enough connections (2)" all the time. Hard-coding the config file solves this.
@@ -51,6 +50,6 @@ cat "${node_dir}/data/config.json"
 # Generate a new identity if not present
 if [ ! -f "$node_data_dir/identity.json" ]; then
     echo "Generating a new node identity..."
-    exec "${node}" identity generate "${IDENTITY_POW:-26}". \
+    octez-node identity generate "${IDENTITY_POW:-26}". \
             --data-dir "$node_data_dir"
 fi
