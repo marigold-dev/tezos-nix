@@ -5,12 +5,12 @@
   ...
 }:
 with lib; let
-  cfg = config.services.tezos-baking;
+  cfg = config.services.tezos-node;
   node_pkg = cfg.nodePackage;
   port = builtins.toString cfg.port;
   endpoint =
-    if config.bind != null
-    then "${cfg.config}:${port}"
+    if cfg.bind != null
+    then "${cfg.bind}:${port}"
     else "0.0.0.0:${port}";
 in {
   options.services.tezos-node = {
