@@ -1,8 +1,4 @@
-{
-  nodePackage,
-  bakerPackage,
-  accuserPackage,
-}: {
+{nodePackage}: {
   config,
   pkgs,
   lib,

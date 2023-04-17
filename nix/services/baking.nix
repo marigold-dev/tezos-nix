@@ -1,5 +1,4 @@
 {
-  nodePackage,
   bakerPackage,
   accuserPackage,
 }: {
