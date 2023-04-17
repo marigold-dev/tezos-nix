@@ -30,11 +30,7 @@ in {
       description = lib.mdDoc "The Tezos Accuser package to use.";
     };
 
-    runNode = mkOption {
-      type = types.bool;
-      default = false;
-      description = lib.mdDoc "Runs a Tezos node to use with the baker and accuser.";
-    };
+    runNode = mkEnableOption (lib.mdDoc "Runs a Tezos node to use with the baker and accuser.");
 
     nodeEndpoint = mkOption {
       type = types.str;
