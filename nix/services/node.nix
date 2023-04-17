@@ -75,19 +75,6 @@ in {
           requiredBy = ["tezos-baker.service" "tezos-accuser.service"];
           serviceConfig = {
             Type = "simple";
-            ExecStartPre = ''
-              ${pkgs.curl}/bin/curl -L -o /run/tezos/.octez-node/${cfg.tezosNetwork}-snapshot ${cfg.snapshotUrl}
-            '';
-            ExecStartPre = ''            
-              ${node_pkg}/bin/octez-node snapshot import \
-                /run/tezos/.octez-node/${cfg.tezosNetwork}-snapshot \
-                --data-dir /run/tezos/.octez-node \
-                --history-mode ${cfg.historyMode} \
-                --network ${cfg.tezosNetwork}
-            '';
-            ExecStartPre = ''
-              ${pkgs.coreutils}/bin/rm -rvf /run/tezos/.octez-node/${cfg.tezosNetwork}-snapshot
-            '';
             ExecStart = ''
               ${node_pkg}/bin/octez-node run \
                 --rpc-addr ${endpoint} \
