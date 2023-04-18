@@ -1,7 +1,6 @@
 {
   octez-node,
-  tezos-node-configurator,
-  tezos-snapshot-downloader,
+  tezos-node-bootstrapper,
 }: {
   config,
   pkgs,
@@ -10,8 +9,10 @@
 }:
 with lib; let
   cfg = config.services.tezos-node;
-  node_pkg = cfg.nodePackage;
+  node_pkg = cfg.package;
+  bootstrap_pkg = cfg.bootstrapPackage;
   port = builtins.toString cfg.port;
+  data_dir = "/run/tezos/.octez-node";
   endpoint =
     if cfg.bind != null
     then "${cfg.bind}:${port}"
@@ -35,11 +36,18 @@ in {
       '';
     };
 
-    nodePackage = mkOption {
+    package = mkOption {
       type = types.package;
       default = octez-node;
       defaultText = literalExpression "pkgs.octez-node";
       description = lib.mdDoc "The Tezos Node package to use.";
+    };
+
+    bootstrapPackage = mkOption {
+      type = types.package;
+      default = tezos-node-bootstrapper;
+      defaultText = literalExpression "pkgs.tezos-node-bootstrap";
+      description = lib.mdDoc "The bootstrap script to run.";
     };
 
     openFirewall = mkOption {
@@ -77,20 +85,30 @@ in {
           after = ["network.target"];
           wantedBy = ["multi-user.target"];
           requiredBy = ["tezos-baker.service" "tezos-accuser.service"];
-          serviceConfig = {
-            Type = "simple";
-            ExecStart = ''
-              ${node_pkg}/bin/octez-node run \
-                --rpc-addr ${endpoint} \
-                --data-dir /run/tezos/.octez-node \
-                --history-mode ${cfg.historyMode} \
-                --network ${cfg.tezosNetwork}
-            '';
-            Restart = "on-failure";
-            StateDirectory = "tezos";
-            RuntimeDirectory = "tezos";
-            RuntimeDirectoryPreserve = "yes";
+          environment = {
+            TEZOS_NETWORK = cfg.tezosNetwork;
+            SNAPSHOT_URL = cfg.snapshotUrl;
+            HISTORY_MODE = cfg.historyMode;
           };
+          serviceConfig = mkMerge [
+            {
+              Type = "simple";
+              ExecStart = ''
+                ${node_pkg}/bin/octez-node run \
+                  --rpc-addr ${endpoint} \
+                  --data-dir ${data_dir} \
+                  --history-mode ${cfg.historyMode} \
+                  --network ${cfg.tezosNetwork}
+              '';
+              Restart = "on-failure";
+              StateDirectory = "tezos";
+              RuntimeDirectory = "tezos";
+              RuntimeDirectoryPreserve = "yes";
+            }
+            (mkIf (cfg.snapshotUrl != null) {
+              ExecStartPre = "${bootstrap_pkg}/bin/tezos-node-bootstrapper.sh ${data_dir}";
+            })
+          ];
         };
       };
     };

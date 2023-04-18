@@ -368,12 +368,31 @@ in
         };
       };
 
+      tezos-parameters = ocamlPackages.buildDunePackage {
+        pname = "tezos-parameters";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        duneVersion = "3";
+
+        buildInputs = with ocamlPackages; [
+          tezos-alpha.protocol
+        ];
+
+        buildPhase = "dune build --profile=release @src/copy-parameters";
+
+        installPhase = ''
+          ls
+          exit 1
+        '';
+      };
+
       inherit
         (pkgs.callPackage ./scripts.nix {
-          octez-node = octez-node;
+          inherit octez-node;
         })
         tezos-node-configurator
         tezos-snapshot-downloader
+        tezos-node-bootstrapper
         ;
     }
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
