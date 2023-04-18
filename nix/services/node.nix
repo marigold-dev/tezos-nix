@@ -98,7 +98,8 @@ in {
                   --rpc-addr ${endpoint} \
                   --data-dir ${data_dir}/node/data \
                   --history-mode ${cfg.historyMode} \
-                  --network ${cfg.tezosNetwork}
+                  --network ${cfg.tezosNetwork} \
+                  --config-file ${data_dir}/node/data/config.json
               '';
               Restart = "on-failure";
               StateDirectory = "tezos";
