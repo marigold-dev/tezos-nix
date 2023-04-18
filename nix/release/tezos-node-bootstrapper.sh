@@ -81,3 +81,7 @@ else
     echo "Downloading and extracting tarball from $TARBALL_URL"
     curl -LfsS "$TARBALL_URL" | lz4 -d | tar -x -C "$data_dir"
 fi
+
+echo "Updating node..."
+exec octez-node upgrade storage --data-dir "${node_data_dir}" --network "$TEZOS_NETWORK" --config-file "${node_data_dir}/config.json"
+echo "Node updated!"
