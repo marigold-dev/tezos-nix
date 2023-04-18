@@ -96,7 +96,7 @@ in {
               ExecStart = ''
                 ${node_pkg}/bin/octez-node run \
                   --rpc-addr ${endpoint} \
-                  --data-dir ${data_dir} \
+                  --data-dir ${data_dir}/node/data \
                   --history-mode ${cfg.historyMode} \
                   --network ${cfg.tezosNetwork}
               '';
