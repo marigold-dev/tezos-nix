@@ -1,6 +1,7 @@
 {
   pkgs,
   octez-node,
+  alphanet_version,
 }: {
   tezos-node-configurator = pkgs.writeShellApplication {
     name = "tezos-node-configurator.sh";
@@ -14,6 +15,7 @@
     name = "tezos-snapshot-downloader.sh";
     runtimeInputs = with pkgs; [curl octez-node];
     text = ''
+      alphanet_version_path="${alphanet_version}"
       ${builtins.readFile ./tezos-snapshot-downloader.sh}
     '';
   };
@@ -22,6 +24,7 @@
     name = "tezos-node-bootstrapper.sh";
     runtimeInputs = with pkgs; [curl octez-node wget];
     text = ''
+      alphanet_version_path="${alphanet_version}"
       ${builtins.readFile ./tezos-node-bootstrapper.sh}
     '';
   };

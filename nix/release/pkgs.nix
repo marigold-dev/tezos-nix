@@ -386,9 +386,20 @@ in
         '';
       };
 
+      alphanet_version = pkgs.stdenv.mkDerivation {
+        pname = "alphanet_version";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        buildPhase = "echo 'nothing to build'";
+
+        installPhase = ''
+          cp ./scripts/alphanet_version $out
+        '';
+      };
+
       inherit
         (pkgs.callPackage ./scripts.nix {
-          inherit octez-node;
+          inherit octez-node alphanet_version;
         })
         tezos-node-configurator
         tezos-snapshot-downloader
