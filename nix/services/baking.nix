@@ -47,6 +47,11 @@ in {
       default = "mainnet";
       description = lib.mdDoc "What network to target";
     };
+
+    keyAlias = mkOption {
+      type = types.str;
+      description = lib.mdDoc "The baker ";
+    };
   };
 
   config =
@@ -64,7 +69,7 @@ in {
               requires = ["tezos-node.service"];
               serviceConfig = {
                 Type = "simple";
-                ExecStart = "${baker_pkg}/bin/${baker_pkg.pname} --endpoint ${cfg.nodeEndpoint} run with local node /run/tezos/.octez-node --liquidity-baking-toggle-vote on";
+                ExecStart = "${baker_pkg}/bin/${baker_pkg.pname} --endpoint ${cfg.nodeEndpoint} run with local node /run/tezos/.octez-node ${cfg.keyAlias}";
                 Restart = "on-failure";
                 StateDirectory = "tezos";
                 RuntimeDirectory = "tezos";
