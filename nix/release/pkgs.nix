@@ -151,6 +151,7 @@ in
           tezos-protocol-updater
           octez-node-config
           tezos-alpha.embedded-protocol
+          tezos-genesis.embedded-protocol
           tezos-000-Ps9mPmXa.embedded-protocol
           tezos-001-PtCJ7pwo.embedded-protocol
           tezos-002-PsYLVpVv.embedded-protocol
