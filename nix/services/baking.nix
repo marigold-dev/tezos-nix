@@ -69,7 +69,7 @@ in {
               requires = ["tezos-node.service"];
               serviceConfig = {
                 Type = "simple";
-                ExecStart = "${baker_pkg}/bin/${baker_pkg.pname} --endpoint ${cfg.nodeEndpoint} run with local node /run/tezos/.octez-node ${cfg.keyAlias}";
+                ExecStart = "${baker_pkg}/bin/${baker_pkg.pname} --endpoint ${cfg.nodeEndpoint} run with local node /run/tezos/.octez-node ${cfg.keyAlias} --liquidity-baking-toggle-vote pass";
                 Restart = "on-failure";
                 StateDirectory = "tezos";
                 RuntimeDirectory = "tezos";
