@@ -194,11 +194,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1681413034,
-        "narHash": "sha256-/t7OjNQcNkeWeSq/CFLYVBfm+IEnkjoSm9iKvArnUUI=",
+        "lastModified": 1681831107,
+        "narHash": "sha256-pXl3DPhhul9NztSetUJw2fcN+RI3sGOYgKu29xpgnqw=",
         "owner": "cachix",
         "repo": "pre-commit-hooks.nix",
-        "rev": "d3de8f69ca88fb6f8b09e5b598be5ac98d28ede5",
+        "rev": "b7ca8f6fff42f6af75c17f9438fed1686b7d855d",
         "type": "github"
       },
       "original": {
@@ -238,11 +238,11 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1681795539,
-        "narHash": "sha256-1utrKwQ6BsUIrf3PZG4CVdRflCzVeMuoMD0vryk+bQc=",
+        "lastModified": 1681851094,
+        "narHash": "sha256-M12wL6lfAq1yLD3A0pkMaU0YWV8nmX1ovWM+hKK7ZzE=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "a1b1f68b20e9fae14df3d1f5ea64f6cfe3d535df",
+        "rev": "ff1bdfcdf596382193d268fdaf62e088102a19ba",
         "type": "gitlab"
       },
       "original": {
