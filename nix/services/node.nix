@@ -107,7 +107,7 @@ in {
               RuntimeDirectoryPreserve = "yes";
             }
             (mkIf (cfg.snapshotUrl != null) {
-              TimeoutStartSec = 180; # Bootstrap might take some time
+              TimeoutStartSec = 360; # Bootstrap might take some time
               ExecStartPre = "${bootstrap_pkg}/bin/tezos-node-bootstrapper.sh ${data_dir}";
             })
           ];
