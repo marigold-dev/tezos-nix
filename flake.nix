@@ -17,6 +17,8 @@
 
     nix2container.url = "github:nlewo/nix2container";
 
+    rust-overlay.url = "github:oxalica/rust-overlay"; 
+
     tezos_release.url = "gitlab:tezos/tezos/v16.1";
     tezos_release.flake = false;
 

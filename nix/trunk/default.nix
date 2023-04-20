@@ -27,6 +27,7 @@ in {
       overlays = [
         (self.overlays.release version)
         self.overlays.trunk
+        inputs.rust-overlay.overlays.default
       ];
     };
     tezos_pkgs = pkgs.callPackage ./pkgs.nix {doCheck = true;};
@@ -77,8 +78,17 @@ in {
         nativeBuildInputs = with pkgs;
           [nodejs python311 dune_3]
           ++ (with pkgs.ocamlPackages; [ocaml findlib js_of_ocaml]);
-        buildInputs =
-          [pkgs.tezos-rust-libs]
+        buildInputs = with pkgs;
+          [
+            tezos-rust-libs
+            rustfmt
+            rust-analyzer
+            wabt
+            clang
+            (rust-bin.stable."1.66.0".default.override {
+              targets = ["wasm32-unknown-unknown"];
+            })
+          ]
           ++ (with pkgs.ocamlPackages; [hashcons tezt pyml ppx_import ocaml-lsp]);
 
         shellHook = ''
