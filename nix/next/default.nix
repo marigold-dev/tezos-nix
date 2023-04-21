@@ -33,10 +33,9 @@ in {
 
     tezos_pkgs = pkgs.callPackage ./pkgs.nix {doCheck = true;};
   in {
-    packages =
-      (builtins.removeAttrs tezos_pkgs [
-        "override"
-        "overrideDerivation"
-      ]);
+    packages = builtins.removeAttrs tezos_pkgs [
+      "override"
+      "overrideDerivation"
+    ];
   };
 }

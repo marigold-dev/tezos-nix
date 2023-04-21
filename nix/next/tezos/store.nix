@@ -28,7 +28,7 @@
   tezos-demo-noops,
   alcotest-lwt,
   tezos-test-helpers,
-  digestif
+  digestif,
 }:
 buildDunePackage {
   pname = "tezos-store";
