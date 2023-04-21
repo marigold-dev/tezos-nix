@@ -613,7 +613,6 @@
           version = octez_version;
         };
         tezos-test-helpers = callPackage ./tezos/test-helpers.nix {};
-        tezos-test-helpers-extra = callPackage ./tezos/test-helpers-extra.nix {};
         tezos-store = callPackage ./tezos/store.nix {};
         tezos-validation = callPackage ./tezos/validation.nix {};
         tezos-version = callPackage ./tezos/version.nix {};

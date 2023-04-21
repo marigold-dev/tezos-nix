@@ -11,7 +11,6 @@
   fmt,
   alcotest-lwt,
   tezos-test-helpers,
-  tezos-test-helpers-extra,
 }:
 buildDunePackage {
   pname = "tezos-context";
@@ -29,7 +28,7 @@ buildDunePackage {
     fmt
   ];
 
-  checkInputs = [alcotest-lwt tezos-test-helpers tezos-test-helpers-extra];
+  checkInputs = [alcotest-lwt tezos-test-helpers];
 
   doCheck = true;
 
