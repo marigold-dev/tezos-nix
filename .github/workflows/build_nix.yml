@@ -87,6 +87,65 @@ jobs:
           awsSecretAccessKey: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
 
       - name: "Build client"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-client
+      - name: "Build codec"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-codec
+      - name: "Build octez-dac-node"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-dac-node
+      - name: "Build octez-dal-node"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-dal-node
+      - name: "Build evm-proxy"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-evm-proxy
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-node
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-proxy-server
+      - name: "Build node"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-signer
+      - name: "Build octez-snoop"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-snoop
+      - name: "Build octez-testnet-scenarios"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-testnet-scenarios
+      - name: "Build tezos-tps-evaluation"
+        run: nix --log-format raw -L build --accept-flake-config .#next-tezos-tps-evaluation
+      - name: "Build octez-smart-rollup-wasm-debugger"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-smart-rollup-wasm-debugger
+      - name: "Build accuser-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-accuser-alpha
+      - name: "Build baker-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-baker-alpha
+      - name: "Build smart-rollup-client-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-smart-rollup-client-alpha
+      - name: "Build smart-rollup-node-alpha"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-smart-rollup-node-alpha
+      - name: "Build accuser-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-accuser-PtNairob
+      - name: "Build baker-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-baker-PtNairob
+      - name: "Build smart-rollup-client-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-smart-rollup-client-PtNairob
+      - name: "Build smart-rollup-node-PtNairob"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-smart-rollup-node-PtNairob
+  next:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v17
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            system-features = nixos-test benchmark big-parallel kvm
+            extra-substituters = https://tezos.nix-cache.workers.dev
+            extra-trusted-public-keys = tezos-nix-cache.marigold.dev-1:4nS7FPPQPKJIaNQcbwzN6m7kylv16UCWWgjeZZr2wXA=
+
+      - uses: ulrikstrid/nix-s3-action@fork
+        with:
+          endpoint: "s3://tezos-nix?endpoint=https://7a53c28e9b7a91239f9ed42da04276bc.r2.cloudflarestorage.com/tezos-nix"
+          signingKey: ${{ secrets.CACHE_PRIV_KEY }}
+          awsAccessKeyId: ${{ secrets.CI_USER_AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.CI_USER_AWS_SECRET_ACCESS_KEY }}
+
+      - name: "Build client"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-client
       - name: "Build codec"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-codec

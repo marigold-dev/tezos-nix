@@ -5,15 +5,14 @@
 }: let
   overlay = import ./overlays.nix;
   version = {
-    octez_version = "16.1";
-    src = inputs.tezos_release;
+    octez_version = "17.0-beta1";
+    src = inputs.tezos_next;
   };
 in {
   flake = {
     overlays = {
-      default = overlay version;
-      release = overlay;
-      release' = overlay;
+      next = overlay version;
+      next' = overlay;
     };
   };
 
@@ -22,12 +21,13 @@ in {
     self',
     inputs',
     system,
+    pkgs,
     ...
   }: let
     pkgs = import inputs.nixpkgs {
       inherit system;
       overlays = [
-        self.overlays.default
+        self.overlays.next
       ];
     };
 

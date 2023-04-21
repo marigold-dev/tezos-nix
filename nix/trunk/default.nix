@@ -11,7 +11,10 @@
 in {
   flake = {
     overlays = {
-      trunk = inputs.nixpkgs.lib.composeExtensions (self.overlays.release version) overlay;
+      # Trunk is for obvious reasons closer to next than release.
+      # Should be changed back to release when next is released
+      trunk = inputs.nixpkgs.lib.composeExtensions (self.overlays.next' version) overlay;
+      trunk' = version': inputs.nixpkgs.lib.composeExtensions (self.overlays.next' version') overlay;
     };
   };
 
@@ -25,7 +28,6 @@ in {
     pkgs = import inputs.nixpkgs {
       inherit system;
       overlays = [
-        (self.overlays.release version)
         self.overlays.trunk
       ];
     };

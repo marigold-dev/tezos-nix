@@ -13,7 +13,7 @@
 in
   with ocamlPackages;
     {
-      trunk-octez-client = buildDunePackage rec {
+      next-octez-client = buildDunePackage rec {
         pname = "octez-client";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -42,7 +42,7 @@ in
         };
       };
 
-      trunk-octez-codec =
+      next-octez-codec =
         ocamlPackages.buildDunePackage
         rec {
           pname = "octez-client";
@@ -78,7 +78,7 @@ in
           };
         };
 
-      trunk-octez-dac-node = ocamlPackages.buildDunePackage rec {
+      next-octez-dac-node = ocamlPackages.buildDunePackage rec {
         pname = "octez-dac-node";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -115,7 +115,7 @@ in
         };
       };
 
-      trunk-octez-dal-node = ocamlPackages.buildDunePackage rec {
+      next-octez-dal-node = ocamlPackages.buildDunePackage rec {
         pname = "octez-dal-node";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -156,7 +156,7 @@ in
         };
       };
 
-      trunk-octez-evm-proxy = ocamlPackages.buildDunePackage rec {
+      next-octez-evm-proxy = ocamlPackages.buildDunePackage rec {
         pname = "octez-evm-proxy";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -188,7 +188,7 @@ in
         };
       };
 
-      trunk-octez-node = ocamlPackages.buildDunePackage rec {
+      next-octez-node = ocamlPackages.buildDunePackage rec {
         pname = "octez-node";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -253,7 +253,7 @@ in
         };
       };
 
-      trunk-octez-proxy-server = ocamlPackages.buildDunePackage rec {
+      next-octez-proxy-server = ocamlPackages.buildDunePackage rec {
         pname = "octez-proxy-server";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -288,7 +288,7 @@ in
         };
       };
 
-      trunk-octez-signer = ocamlPackages.buildDunePackage rec {
+      next-octez-signer = ocamlPackages.buildDunePackage rec {
         pname = "octez-signer";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -321,7 +321,7 @@ in
         };
       };
 
-      trunk-octez-snoop = ocamlPackages.buildDunePackage rec {
+      next-octez-snoop = ocamlPackages.buildDunePackage rec {
         pname = "octez-snoop";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -355,7 +355,7 @@ in
         };
       };
 
-      trunk-octez-testnet-scenarios = ocamlPackages.buildDunePackage rec {
+      next-octez-testnet-scenarios = ocamlPackages.buildDunePackage rec {
         pname = "octez-testnet-scenarios";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -376,7 +376,7 @@ in
         };
       };
 
-      trunk-tezos-tps-evaluation = ocamlPackages.buildDunePackage rec {
+      next-tezos-tps-evaluation = ocamlPackages.buildDunePackage rec {
         pname = "tezos-tps-evaluation";
         inherit (ocamlPackages.tezos-stdlib) version src;
 
@@ -415,7 +415,7 @@ in
         };
       };
 
-      trunk-octez-smart-rollup-wasm-debugger = ocamlPackages.buildDunePackage rec {
+      next-octez-smart-rollup-wasm-debugger = ocamlPackages.buildDunePackage rec {
         pname = "octez-smart-rollup-wasm-debugger";
         inherit (ocamlPackages.tezos-stdlib) version src;
 

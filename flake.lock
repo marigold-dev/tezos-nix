@@ -213,9 +213,27 @@
         "nix2container": "nix2container",
         "nixpkgs": "nixpkgs_2",
         "pre-commit-hooks": "pre-commit-hooks",
+        "tezos_next": "tezos_next",
         "tezos_release": "tezos_release",
         "tezos_trunk": "tezos_trunk",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "tezos_next": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1681913089,
+        "narHash": "sha256-8wMOhdB8Vz24KLtAMheZkf9R4PXzdAd/PcFZjkJKeFM=",
+        "owner": "tezos",
+        "repo": "tezos",
+        "rev": "96c910ddf8351bb630bd633a13e8966df180145e",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "tezos",
+        "ref": "v17.0-beta1",
+        "repo": "tezos",
+        "type": "gitlab"
       }
     },
     "tezos_release": {

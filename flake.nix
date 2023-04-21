@@ -20,6 +20,9 @@
     tezos_release.url = "gitlab:tezos/tezos/v16.1";
     tezos_release.flake = false;
 
+    tezos_next.url = "gitlab:tezos/tezos/v17.0-beta1";
+    tezos_next.flake = false;
+
     tezos_trunk.url = "gitlab:tezos/tezos";
     tezos_trunk.flake = false;
   };
@@ -35,6 +38,7 @@
         inputs.treefmt-nix.flakeModule
         inputs.pre-commit-hooks.flakeModule
         ./nix/release
+        ./nix/next
         ./nix/trunk
       ];
       flake.hydraJobs = self.packages;
