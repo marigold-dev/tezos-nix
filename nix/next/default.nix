@@ -37,12 +37,6 @@ in {
       (builtins.removeAttrs tezos_pkgs [
         "override"
         "overrideDerivation"
-      ])
-      // {
-        container = pkgs.callPackage ../docker {
-          inherit (inputs'.nix2container.packages) nix2container;
-          inherit (tezos_pkgs) octez-node;
-        };
-      };
+      ]);
   };
 }
