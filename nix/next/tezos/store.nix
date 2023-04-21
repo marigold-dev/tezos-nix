@@ -28,7 +28,6 @@
   tezos-demo-noops,
   alcotest-lwt,
   tezos-test-helpers,
-  tezos-test-helpers-extra,
   digestif
 }:
 buildDunePackage {
@@ -74,7 +73,6 @@ buildDunePackage {
     tezos-alpha.protocol-plugin
     alcotest-lwt
     tezos-test-helpers
-    tezos-test-helpers-extra
   ];
 
   # We're getting infinite recursion from the function that creates the protocol packages
