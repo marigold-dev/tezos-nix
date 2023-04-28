@@ -67,7 +67,7 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-client-PtMumbai
       - name: "Build smart-rollup-node-PtMumbai"
         run: nix --log-format raw -L build --accept-flake-config .#octez-smart-rollup-node-PtMumbai
-  trunk:
+  next:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -126,7 +126,7 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-smart-rollup-client-PtNairob
       - name: "Build smart-rollup-node-PtNairob"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-smart-rollup-node-PtNairob
-  next:
+  trunk:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
