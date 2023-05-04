@@ -55,6 +55,10 @@ final: prev: {
             checkInputs = o.checkInputs ++ [ oself.tezt oself.octez-alcotezt ];
           });
 
+          tezos-layer2-store = osuper.tezos-layer2-store.overrideAttrs (o: rec {
+            checkInputs = o.checkInputs ++ [ oself.tezt oself.octez-alcotezt ];
+          });
+
           tezos-stdlib-unix = osuper.tezos-stdlib-unix.overrideAttrs (o: rec {
             checkInputs = o.checkInputs ++ [ oself.tezt oself.octez-alcotezt oself.tezos-test-helpers ];
           });
