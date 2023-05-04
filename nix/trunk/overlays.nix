@@ -59,6 +59,14 @@ final: prev: {
             checkInputs = o.checkInputs ++ [ oself.tezt oself.octez-alcotezt ];
           });
 
+          tezos-micheline-rewriting = osuper.tezos-micheline-rewriting.overrideAttrs (o: rec {
+            checkInputs = o.checkInputs ++ [ oself.tezt oself.octez-alcotezt ];
+          });
+
+          tezos-proxy-server-config = osuper.tezos-proxy-server-config.overrideAttrs (o: rec {
+            checkInputs = o.checkInputs ++ [ oself.tezt oself.octez-alcotezt ];
+          });
+
           tezos-stdlib-unix = osuper.tezos-stdlib-unix.overrideAttrs (o: rec {
             checkInputs = o.checkInputs ++ [ oself.tezt oself.octez-alcotezt oself.tezos-test-helpers ];
           });
