@@ -112,43 +112,48 @@ in rec {
     inherit (tezos-stdlib) version src postPatch;
     duneVersion = "3";
 
-    buildInputs = with ocamlPackages; [
-      protocol-libs.protocol
-      protocol-libs.protocol-plugin
-      protocol-libs.client
-      protocol-libs.smart-rollup
-      protocol-libs.smart-rollup-layer2
-      protocol-libs.layer2-utils
-      protocol-libs.dac
+    buildInputs = with ocamlPackages;
+      (
+        if (builtins.trace protocol-name protocol-name) == "PtMumbai"
+        then []
+        else [protocol-libs.dac]
+      )
+      ++ [
+        protocol-libs.protocol
+        protocol-libs.protocol-plugin
+        protocol-libs.client
+        protocol-libs.smart-rollup
+        protocol-libs.smart-rollup-layer2
+        protocol-libs.layer2-utils
 
-      tezos-base
-      tezos-clic
-      tezos-client-commands
-      tezos-stdlib-unix
-      tezos-client-base
-      tezos-client-base-unix
-      tezos-context
-      tezos-rpc
-      tezos-rpc-http
-      tezos-rpc-http-server
-      tezos-workers
-      tezos-dal-node-services
-      tezos-dal-node-lib
-      tezos-shell-services
-      tezos-layer2-store
-      tezos-tree-encoding
-      data-encoding
-      irmin-pack
-      irmin
-      aches
-      aches-lwt
-      tezos-scoru-wasm
-      tezos-scoru-wasm-fast
-      tezos-crypto-dal
-      prometheus-app
-      octez-node-config
-      octez-smart-rollup-node
-    ];
+        tezos-base
+        tezos-clic
+        tezos-client-commands
+        tezos-stdlib-unix
+        tezos-client-base
+        tezos-client-base-unix
+        tezos-context
+        tezos-rpc
+        tezos-rpc-http
+        tezos-rpc-http-server
+        tezos-workers
+        tezos-dal-node-services
+        tezos-dal-node-lib
+        tezos-shell-services
+        tezos-layer2-store
+        tezos-tree-encoding
+        data-encoding
+        irmin-pack
+        irmin
+        aches
+        aches-lwt
+        tezos-scoru-wasm
+        tezos-scoru-wasm-fast
+        tezos-crypto-dal
+        prometheus-app
+        octez-node-config
+        octez-smart-rollup-node
+      ];
 
     inherit doCheck;
 
