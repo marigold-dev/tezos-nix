@@ -245,6 +245,7 @@
           protocol-name = "genesis-carthagenet";
           ocamlPackages = oself;
         };
+        tezos-gossipsub = callPackage ./tezos/gossipsub.nix {};
         tezos-dac-lib = oself.callPackage ./tezos/dac-lib.nix {};
         tezos-dac-client-lib = oself.callPackage ./tezos/dac-client-lib.nix {};
         tezos-dac-node-lib = oself.callPackage ./tezos/dac-node-lib.nix {};
