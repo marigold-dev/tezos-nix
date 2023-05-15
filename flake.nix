@@ -40,6 +40,7 @@
         ./nix/release
         ./nix/next
         ./nix/trunk
+        ./nix/services
       ];
       flake.hydraJobs = self.packages;
       systems = ["aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux"];

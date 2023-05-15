@@ -7,6 +7,7 @@
   protocol-name,
   protocol-libs,
   doCheck,
+  inject-zcash,
 }: let
   underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
   protocol_number = proto:
@@ -44,6 +45,7 @@ in rec {
   "octez-baker-${protocol-name}" = ocamlPackages.buildDunePackage rec {
     pname = "octez-baker-${protocol-name}";
     inherit (tezos-stdlib) version src postPatch;
+    inherit (inject-zcash) nativeBuildInputs postFixup;
     duneVersion = "3";
 
     buildInputs = with ocamlPackages; [

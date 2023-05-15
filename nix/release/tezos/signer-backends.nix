@@ -9,6 +9,7 @@
   tezos-rpc-http-client,
   tezos-rpc-http-client-unix,
   tezos-shell-services,
+  ledgerwallet-tezos,
   uri,
   alcotest,
   alcotest-lwt,
@@ -19,6 +20,7 @@ buildDunePackage rec {
   duneVersion = "3";
 
   propagatedBuildInputs = [
+    ledgerwallet-tezos
     tezos-base
     tezos-client-base
     tezos-rpc-http

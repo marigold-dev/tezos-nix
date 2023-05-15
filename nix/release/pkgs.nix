@@ -9,9 +9,17 @@
   doCheck,
 }: let
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
+  inject-zcash = {
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postFixup = ''
+      for bin in $(find $out/bin -not -name '*.sh' -type f -executable); do
+        wrapProgram "$bin" --prefix XDG_DATA_DIRS : ${pkgs.zcash-params}
+      done
+    '';
+  };
 in
   with ocamlPackages;
-    {
+    rec {
       octez-client = buildDunePackage rec {
         pname = "octez-client";
         inherit (ocamlPackages.tezos-stdlib) version src;
@@ -124,8 +132,13 @@ in
       octez-node = ocamlPackages.buildDunePackage rec {
         pname = "octez-node";
         inherit (ocamlPackages.tezos-stdlib) version src;
+        inherit (inject-zcash) nativeBuildInputs postFixup;
 
         duneVersion = "3";
+
+        propagatedBuildInputs = [
+          pkgs.zcash-params
+        ];
 
         buildInputs = with ocamlPackages; [
           tls-lwt
@@ -138,6 +151,7 @@ in
           tezos-protocol-updater
           octez-node-config
           tezos-alpha.embedded-protocol
+          tezos-genesis.embedded-protocol
           tezos-000-Ps9mPmXa.embedded-protocol
           tezos-001-PtCJ7pwo.embedded-protocol
           tezos-002-PsYLVpVv.embedded-protocol
@@ -354,14 +368,52 @@ in
           mainProgram = pname;
         };
       };
+
+      tezos-parameters = ocamlPackages.buildDunePackage {
+        pname = "tezos-parameters";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        duneVersion = "3";
+
+        buildInputs = with ocamlPackages; [
+          tezos-alpha.protocol
+        ];
+
+        buildPhase = "dune build --profile=release @src/copy-parameters";
+
+        installPhase = ''
+          ls
+          exit 1
+        '';
+      };
+
+      alphanet_version = pkgs.stdenv.mkDerivation {
+        pname = "alphanet_version";
+        inherit (ocamlPackages.tezos-stdlib) version src;
+
+        buildPhase = "echo 'nothing to build'";
+
+        installPhase = ''
+          cp ./scripts/alphanet_version $out
+        '';
+      };
+
+      inherit
+        (pkgs.callPackage ./scripts.nix {
+          inherit octez-node alphanet_version;
+        })
+        tezos-node-configurator
+        tezos-snapshot-downloader
+        tezos-node-bootstrapper
+        ;
     }
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
-      inherit doCheck;
+      inherit doCheck inject-zcash;
       protocol-name = "alpha";
       protocol-libs = tezos-alpha;
     })
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
-      inherit doCheck;
+      inherit doCheck inject-zcash;
       protocol-name = "PtMumbai";
       protocol-libs = tezos-016-PtMumbai;
     })

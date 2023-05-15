@@ -2,6 +2,7 @@
   octez_version,
   src,
 }: final: prev: {
+  zcash-params = prev.callPackage ./zcash.nix {};
   tezos-rust-libs = prev.tezos-rust-libs.overrideAttrs (drv: rec {
     version = "1.4";
     name = "${drv.pname}-${version}";
@@ -59,6 +60,9 @@
             doCheck = false;
           });
       in {
+        ledgerwallet = oself.callPackage ./ledgerwallet.nix {};
+        ledgerwallet-tezos = oself.callPackage ./ledgerwallet-tezos.nix {};
+
         tls = osuper.tls.overrideAttrs (_: rec {
           version = "0.16.0";
           src = final.fetchurl {
