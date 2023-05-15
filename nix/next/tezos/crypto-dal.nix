@@ -7,9 +7,10 @@
   data-encoding,
   tezos-crypto,
   octez-bls12-381-polynomial,
-  tezos-test-helpers,
   lwt,
-  alcotest,
+  tezos-test-helpers,
+  tezt,
+  octez-alcotezt,
   qcheck-alcotest,
 }:
 buildDunePackage {
@@ -27,7 +28,8 @@ buildDunePackage {
   ];
 
   checkInputs = [
-    alcotest
+    tezt
+    octez-alcotezt
     qcheck-alcotest
     tezos-test-helpers
   ];

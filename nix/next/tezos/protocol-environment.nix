@@ -20,7 +20,9 @@
   tezos-micheline,
   tezos-context,
   tezos-event-logging,
-  alcotest-lwt,
+  tezt,
+  octez-alcotezt,
+  qcheck-alcotest,
   tezos-test-helpers,
 }:
 buildDunePackage {
@@ -51,7 +53,7 @@ buildDunePackage {
     tezos-event-logging
   ];
 
-  checkInputs = [alcotest-lwt tezos-test-helpers];
+  checkInputs = [tezt octez-alcotezt qcheck-alcotest tezos-test-helpers];
 
   forceShare = "man info";
 

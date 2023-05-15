@@ -366,6 +366,7 @@ in
         buildInputs = with ocamlPackages; [
           tezt
           tezt-tezos
+          tezt-ethereum
         ];
 
         doCheck = true;

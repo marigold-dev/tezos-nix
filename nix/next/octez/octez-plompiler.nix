@@ -10,6 +10,7 @@
   octez-bls12-381-hash,
   octez-polynomial,
   octez-mec,
+  alcotest,
 }:
 buildDunePackage {
   pname = "octez-plompiler";
@@ -27,6 +28,8 @@ buildDunePackage {
   ];
 
   doCheck = true;
+
+  checkInputs = [alcotest];
 
   meta =
     tezos-stdlib.meta

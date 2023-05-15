@@ -11,7 +11,8 @@
   ppx_deriving,
   qcheck-core,
   qcheck-alcotest,
-  alcotest,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-webassembly-interpreter";
@@ -30,7 +31,8 @@ buildDunePackage {
   checkInputs = [
     qcheck-core
     qcheck-alcotest
-    alcotest
+    tezt
+    octez-alcotezt
   ];
 
   doCheck = true;

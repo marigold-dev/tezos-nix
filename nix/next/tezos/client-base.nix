@@ -4,7 +4,8 @@
   tezos-stdlib,
   tezos-shell-services,
   tezos-sapling,
-  alcotest,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-client-base";
@@ -13,7 +14,7 @@ buildDunePackage {
 
   propagatedBuildInputs = [tezos-shell-services tezos-sapling];
 
-  checkInputs = [alcotest];
+  checkInputs = [tezt octez-alcotezt];
 
   doCheck = true;
 

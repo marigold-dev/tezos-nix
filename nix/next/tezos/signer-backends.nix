@@ -10,8 +10,8 @@
   tezos-rpc-http-client-unix,
   tezos-shell-services,
   uri,
-  alcotest,
-  alcotest-lwt,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage rec {
   pname = "tezos-signer-backends";
@@ -29,7 +29,7 @@ buildDunePackage rec {
     uri
   ];
 
-  checkInputs = [alcotest alcotest-lwt];
+  checkInputs = [tezt octez-alcotezt];
 
   doCheck = true;
 

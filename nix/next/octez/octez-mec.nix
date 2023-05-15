@@ -6,6 +6,8 @@
   bls12-381,
   eqaf,
   bigarray-compat,
+  tezt,
+  octez-alcotezt,
   alcotest,
 }:
 buildDunePackage {
@@ -21,7 +23,8 @@ buildDunePackage {
   ];
 
   checkInputs = [
-    alcotest
+    tezt
+    octez-alcotezt
   ];
 
   doCheck = true;

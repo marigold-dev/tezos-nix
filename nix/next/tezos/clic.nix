@@ -7,8 +7,8 @@
   tezos-error-monad,
   re,
   lwt,
-  alcotest,
-  alcotest-lwt,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-clic";
@@ -17,7 +17,7 @@ buildDunePackage {
 
   propagatedBuildInputs = [tezos-lwt-result-stdlib tezos-stdlib-unix tezos-error-monad re lwt tezos-stdlib];
 
-  checkInputs = [alcotest alcotest-lwt];
+  checkInputs = [tezt octez-alcotezt];
 
   doCheck = true;
 

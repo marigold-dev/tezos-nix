@@ -9,7 +9,9 @@
   bigstringaf,
   digestif,
   fmt,
-  alcotest-lwt,
+  tezt,
+  octez-alcotezt,
+  qcheck-alcotest,
   tezos-test-helpers,
 }:
 buildDunePackage {
@@ -28,7 +30,7 @@ buildDunePackage {
     fmt
   ];
 
-  checkInputs = [alcotest-lwt tezos-test-helpers];
+  checkInputs = [tezt octez-alcotezt qcheck-alcotest tezos-test-helpers];
 
   doCheck = true;
 

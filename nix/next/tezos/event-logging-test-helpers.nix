@@ -1,7 +1,8 @@
 {
   lib,
   buildDunePackage,
-  alcotest,
+  tezt,
+  octez-alcotezt,
   tezos-event-logging,
   tezos-stdlib,
   tezos-test-helpers,
@@ -11,7 +12,7 @@ buildDunePackage {
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
-  propagatedBuildInputs = [alcotest tezos-event-logging tezos-test-helpers];
+  propagatedBuildInputs = [tezt octez-alcotezt tezos-event-logging tezos-test-helpers];
 
   doCheck = true;
 

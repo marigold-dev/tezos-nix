@@ -5,7 +5,8 @@
   tezos-base,
   ppx_deriving,
   dune-configurator,
-  alcotest,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-version";
@@ -14,7 +15,7 @@ buildDunePackage {
 
   propagatedBuildInputs = [tezos-base ppx_deriving dune-configurator];
 
-  checkInputs = [alcotest];
+  checkInputs = [tezt octez-alcotezt];
 
   doCheck = true;
 

@@ -60,58 +60,6 @@
           });
       in {
         bls12-381 = oself.callPackage ./bls12-381.nix {};
-        tls = osuper.tls.overrideAttrs (_: rec {
-          version = "0.16.0";
-          src = final.fetchurl {
-            url = "https://github.com/mirleft/ocaml-tls/releases/download/v${version}/tls-${version}.tbz";
-            sha256 = "sha256-uvIDZLNy6E/ce7YmzUUVaOeGRaHqPSUzuEPQDMu09tM=";
-          };
-        });
-
-        tls-lwt = oself.buildDunePackage rec {
-          inherit (oself.tls) version src;
-          pname = "tls-lwt";
-
-          duneVersion = "3";
-
-          propagatedBuildInputs = with oself; [
-            tls
-            lwt
-            mirage-crypto-rng-lwt
-            x509
-            cmdliner
-          ];
-        };
-
-        /*
-        ctypes-foreign = oself.buildDunePackage rec {
-        version = "0.18.0";
-        src = final.fetchFromGitHub {
-        owner = "yallop";
-        repo = "ocaml-ctypes";
-        rev = "${version}";
-        sha256 = "sha256-eu5RAuPYC97IM4XUsUw3HQ1BJlEHQ+eBpsdUE6hd+Q8=";
-        };
-        pname = "ctypes-foreign";
-
-        duneVersion = "3";
-
-        propagatedBuildInputs = with oself; [
-        ctypes
-        final.libffi
-        ];
-
-        nativeBuildInputs = [ final.pkg-config ];
-        };
-        */
-
-        ezjsonm = osuper.ezjsonm.overrideAttrs (_: rec {
-          version = "1.3.0";
-          src = final.fetchurl {
-            url = "https://github.com/mirage/ezjsonm/releases/download/v${version}/ezjsonm-${version}.tbz";
-            sha256 = "sha256-CGM+Dw52eoroGTXKfnTxaTuFp5xFAtVo7t/1Fw8M13s=";
-          };
-        });
 
         seqes = osuper.buildDunePackage rec {
           pname = "seqes";
@@ -261,163 +209,9 @@
           ];
         };
 
-        data-encoding = osuper.data-encoding.overrideAttrs (_: rec {
-          version = "0.7.1";
-          src = prev.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = "data-encoding";
-            rev = "v${version}";
-            sha256 = "sha256-V3XiCCtoU+srOI+KVSJshtaSJLBJ4m4o10GpBfdYKCU=";
-          };
-        });
-
-        bls12-381-hash = oself.buildDunePackage rec {
-          pname = "bls12-381-hash";
-          version = "1.0.0";
-          src = prev.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = "cryptography/ocaml-bls12-381-hash";
-            rev = "${version}";
-            sha256 = "sha256-cfsSVmN4rbKcLcPcy6NduZktJhPXiVdK75LypmaSe9I=";
-          };
-
-          duneVersion = "3";
-
-          propagatedBuildInputs = [oself.bls12-381];
-        };
-
-        tezos-bls12-381-polynomial = osuper.tezos-bls12-381-polynomial.overrideAttrs (o: rec {
-          version = "1.0.1";
-          src = prev.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = "cryptography/privacy-team";
-            rev = "v${version}";
-            sha256 = "sha256-5qDa/fQoTypjaceQ0MBzt0rM+0hSJcpGlXMGAZKRboo=";
-          };
-
-          propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.ppx_repr];
-        });
-
-        ff-sig = osuper.ff-sig.overrideAttrs (_: {
-          duneVersion = "3";
-        });
-
-        polynomial = oself.buildDunePackage rec {
-          pname = "polynomial";
-          version = "0.4.0";
-          src = prev.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = "cryptography/ocaml-polynomial";
-            rev = version;
-            sha256 = "sha256-is/PrYLCwStHiQsNq5OVRCwHdXjO2K2Z7FrXgytRfAU=";
-          };
-
-          duneVersion = "3";
-
-          propagatedBuildInputs = with oself; [zarith ff-sig];
-        };
-
         tezos-plompiler = osuper.tezos-plompiler.overrideAttrs (o: rec {
           propagatedBuildInputs = o.propagatedBuildInputs ++ (with oself; [polynomial bls12-381-hash]);
         });
-
-        hacl-star-raw = callPackage ./hacl-star-raw.nix {};
-
-        hacl-star = with oself;
-          buildDunePackage {
-            pname = "hacl-star";
-
-            inherit (hacl-star-raw) version src meta doCheck minimalOCamlVersion;
-
-            duneVersion = "3";
-
-            propagatedBuildInputs = [
-              hacl-star-raw
-              zarith
-            ];
-
-            nativeBuildInputs = [
-              cppo
-            ];
-
-            checkInputs = [
-              alcotest
-              secp256k1-internal
-              qcheck-core
-              cstruct
-            ];
-          };
-
-        ringo = osuper.ringo.overrideAttrs (_: rec {
-          version = "1.0.0";
-          src = final.fetchFromGitLab {
-            owner = "nomadic-labs";
-            repo = "ringo";
-            rev = "v${version}";
-            sha256 = "sha256-9HW3M27BxrEPbF8cMHwzP8FmJduUInpQQAE2672LOuU=";
-          };
-
-          checkPhase = "dune build @test/ringo/runtest";
-        });
-
-        aches = oself.buildDunePackage {
-          pname = "aches";
-          inherit (oself.ringo) src version;
-
-          propagatedBuildInputs = [
-            oself.ringo
-          ];
-        };
-
-        aches-lwt = oself.buildDunePackage {
-          pname = "aches-lwt";
-          inherit (oself.ringo) src version;
-
-          propagatedBuildInputs = [
-            oself.aches
-            oself.lwt
-          ];
-        };
-
-        asetmap = final.stdenv.mkDerivation rec {
-          version = "0.8.1";
-          pname = "asetmap";
-          src = final.fetchurl {
-            url = "https://github.com/dbuenzli/asetmap/archive/refs/tags/v0.8.1.tar.gz";
-            sha256 = "051ky0k62xp4inwi6isif56hx5ggazv4jrl7s5lpvn9cj8329frj";
-          };
-
-          strictDeps = true;
-
-          nativeBuildInputs = with oself; [topkg findlib ocamlbuild ocaml];
-          buildInputs = with oself; [topkg];
-
-          inherit (oself.topkg) buildPhase installPhase;
-
-          meta = {inherit (oself.ocaml.meta) platforms;};
-        };
-
-        prometheus = oself.buildDunePackage rec {
-          version = "1.2";
-          pname = "prometheus";
-          src = final.fetchurl {
-            url = "https://github.com/mirage/prometheus/releases/download/v${version}/prometheus-${version}.tbz";
-            sha256 = "sha256-g2Q6ApprbecdFANO7i6U/v8dCHVcSkHVg9wVMKtVW8s=";
-          };
-
-          duneVersion = "3";
-
-          propagatedBuildInputs = with oself; [
-            astring
-            asetmap
-            fmt
-            re
-            lwt
-            alcotest
-          ];
-
-          meta = {inherit (oself.ocaml.meta) platforms;};
-        };
 
         prometheus-app = oself.buildDunePackage rec {
           pname = "prometheus-app";
@@ -451,6 +245,7 @@
           protocol-name = "genesis-carthagenet";
           ocamlPackages = oself;
         };
+        tezos-gossipsub = callPackage ./tezos/gossipsub.nix {};
         tezos-dac-lib = oself.callPackage ./tezos/dac-lib.nix {};
         tezos-dac-client-lib = oself.callPackage ./tezos/dac-client-lib.nix {};
         tezos-dac-node-lib = oself.callPackage ./tezos/dac-node-lib.nix {};
@@ -634,6 +429,7 @@
         octez-plompiler = oself.callPackage ./octez/octez-plompiler.nix {};
         octez-plonk = oself.callPackage ./octez/octez-plonk.nix {};
         octez-polynomial = oself.callPackage ./octez/octez-polynomial.nix {};
+        octez-smart-rollup-node = oself.callPackage ./octez/octez-smart-rollup-node.nix {};
         octez-smart-rollup-wasm-benchmark-lib = oself.callPackage ./octez/octez-smart-rollup-wasm-benchmark-lib.nix {};
       }))
     prev.ocaml-ng;

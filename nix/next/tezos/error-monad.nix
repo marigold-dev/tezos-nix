@@ -6,8 +6,8 @@
   lwt,
   lwt-canceler,
   tezos-lwt-result-stdlib,
-  alcotest,
-  alcotest-lwt,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-error-monad";
@@ -16,7 +16,10 @@ buildDunePackage {
 
   propagatedBuildInputs = [tezos-stdlib data-encoding lwt lwt-canceler tezos-lwt-result-stdlib];
 
-  checkInputs = [alcotest alcotest-lwt];
+  checkInputs = [
+    tezt
+    octez-alcotezt
+  ];
 
   doCheck = true;
 
