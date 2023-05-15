@@ -7,7 +7,8 @@
   uri,
   tezos-test-helpers,
   qcheck-alcotest,
-  alcotest-lwt,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-proxy-server-config";
@@ -23,7 +24,8 @@ buildDunePackage {
   checkInputs = [
     tezos-test-helpers
     qcheck-alcotest
-    alcotest-lwt
+    tezt
+    octez-alcotezt
   ];
 
   doCheck = true;

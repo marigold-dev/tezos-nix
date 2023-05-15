@@ -8,6 +8,7 @@
   tezt,
   octez-mec,
   octez-alcotezt,
+  alcotest,
   bisect_ppx,
 }:
 buildDunePackage {
@@ -21,6 +22,7 @@ buildDunePackage {
   ];
 
   checkInputs = [
+    alcotest
     tezt
     octez-alcotezt
     octez-mec

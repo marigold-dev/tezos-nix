@@ -8,7 +8,7 @@
   tezos-alpha,
   zarith,
   zarith_stubs_js,
-  alcotest-lwt,
+  tezt,
 }:
 buildDunePackage {
   pname = "tezos-micheline-rewriting";
@@ -17,7 +17,7 @@ buildDunePackage {
 
   propagatedBuildInputs = [zarith zarith_stubs_js tezos-stdlib tezos-crypto tezos-error-monad tezos-micheline];
 
-  checkInputs = [tezos-alpha.protocol tezos-alpha.client alcotest-lwt];
+  checkInputs = [tezos-alpha.protocol tezos-alpha.client tezt];
 
   doCheck = true;
 

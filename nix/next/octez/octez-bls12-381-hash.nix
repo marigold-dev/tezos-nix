@@ -7,6 +7,8 @@
   eqaf,
   bisect_ppx,
   alcotest,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "octez-bls12-381-hash";
@@ -19,8 +21,10 @@ buildDunePackage {
   ];
 
   checkInputs = [
-    alcotest
+    tezt
+    octez-alcotezt
     bisect_ppx
+    alcotest
   ];
 
   doCheck = true;

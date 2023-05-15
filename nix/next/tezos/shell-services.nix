@@ -6,7 +6,8 @@
   tezos-p2p-services,
   tezos-version,
   tezos-context,
-  alcotest-lwt,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-shell-services";
@@ -22,7 +23,7 @@ buildDunePackage {
 
   doCheck = true;
 
-  checkInputs = [alcotest-lwt];
+  checkInputs = [tezt octez-alcotezt];
 
   meta =
     tezos-stdlib.meta

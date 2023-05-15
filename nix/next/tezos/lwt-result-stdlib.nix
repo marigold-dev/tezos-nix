@@ -6,7 +6,8 @@
   lwt,
   seqes,
   qcheck-alcotest,
-  alcotest-lwt,
+  octez-alcotezt,
+  tezt,
   tezos-test-helpers,
   ppx_inline_test,
 }:
@@ -21,7 +22,7 @@ buildDunePackage {
 
   buildInputs = [ppx_inline_test];
 
-  checkInputs = [alcotest-lwt qcheck-alcotest tezos-test-helpers];
+  checkInputs = [tezt octez-alcotezt qcheck-alcotest tezos-test-helpers];
 
   doCheck = true;
 

@@ -10,7 +10,7 @@
   tezos-context,
   tezos-error-monad,
   qcheck-alcotest,
-  alcotest-lwt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-layer2-store";
@@ -29,7 +29,7 @@ buildDunePackage {
   checkInputs = [
     tezos-error-monad
     qcheck-alcotest
-    alcotest-lwt
+    octez-alcotezt
   ];
 
   doCheck = true;

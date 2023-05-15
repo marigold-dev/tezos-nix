@@ -8,6 +8,8 @@
   integers_stubs_js,
   tezos-test-helpers,
   tezos-error-monad,
+  octez-alcotezt,
+  qcheck-alcotest,
 }:
 buildDunePackage {
   pname = "tezos-hacl";
@@ -19,7 +21,7 @@ buildDunePackage {
 
   propagatedBuildInputs = [ctypes_stubs_js hacl-star hacl-star-raw];
 
-  checkInputs = [tezos-test-helpers tezos-error-monad];
+  checkInputs = [octez-alcotezt qcheck-alcotest tezos-test-helpers tezos-error-monad];
 
   meta =
     tezos-stdlib.meta
