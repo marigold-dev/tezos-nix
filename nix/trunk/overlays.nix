@@ -3,6 +3,12 @@ final: prev: {
     builtins.mapAttrs
     (ocamlVersion: curr_ocaml:
       curr_ocaml.overrideScope' (oself: osuper: {
+        # New pacakges
+
+        octez-smart-rollup-node = oself.callPackage ./octez/octez-smart-rollup-node.nix {};
+
+        # Overrides
+
         tezos-event-logging-test-helpers = osuper.tezos-event-logging-test-helpers.overrideAttrs (o: {
           propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.octez-alcotezt];
         });

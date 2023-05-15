@@ -147,6 +147,7 @@ in rec {
       tezos-crypto-dal
       prometheus-app
       octez-node-config
+      octez-smart-rollup-node
     ];
 
     inherit doCheck;
