@@ -428,6 +428,7 @@
         octez-plompiler = oself.callPackage ./octez/octez-plompiler.nix {};
         octez-plonk = oself.callPackage ./octez/octez-plonk.nix {};
         octez-polynomial = oself.callPackage ./octez/octez-polynomial.nix {};
+        octez-smart-rollup-node = oself.callPackage ./octez/octez-smart-rollup-node.nix {};
         octez-smart-rollup-wasm-benchmark-lib = oself.callPackage ./octez/octez-smart-rollup-wasm-benchmark-lib.nix {};
       }))
     prev.ocaml-ng;
