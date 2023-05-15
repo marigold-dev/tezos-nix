@@ -7,6 +7,12 @@
   protocol-name,
 }: let
   underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
+  protocol_number = proto:
+    if builtins.substring 0 4 proto == "demo"
+    then -1
+    else if proto == "alpha"
+    then 1000
+    else lib.toIntBase10 (builtins.substring 0 3 proto);
 in rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
@@ -232,6 +238,8 @@ in rec {
     buildInputs = with ocamlPackages; [tezos-protocol-environment];
 
     doCheck = true;
+
+    passthru.number = protocol_number protocol-name;
 
     meta =
       tezos-stdlib.meta
