@@ -30,7 +30,7 @@ in rec {
         tezos-client-commands
         tezos-client-base-unix
       ]
-      ++ lib.optional (protocol_number protocol-name >= 16) smart-rollup;
+      ++ lib.optional (protocol.number >= 16) smart-rollup;
 
     checkInputs = with ocamlPackages; [
       alcotest-lwt
@@ -169,6 +169,8 @@ in rec {
 
     doCheck = true;
 
+    passthru.number = protocol_number protocol-name;
+
     meta =
       tezos-stdlib.meta
       // {
@@ -214,7 +216,7 @@ in rec {
         qcheck-alcotest
         tezos-test-helpers
       ]
-      ++ lib.optional (protocol_number protocol-name >= 16) smart-rollup;
+      ++ lib.optional (protocol.number >= 16) smart-rollup;
 
     checkInputs = with ocamlPackages; [qcheck-alcotest tezos-test-helpers];
 
@@ -236,7 +238,7 @@ in rec {
 
     buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
 
-    propagatedBuildInputs = with ocamlPackages; [protocol-plugin] ++ lib.optional (protocol_number protocol-name >= 16) smart-rollup;
+    propagatedBuildInputs = with ocamlPackages; [protocol-plugin] ++ lib.optional (protocol.number >= 16) smart-rollup;
 
     doCheck = true;
 

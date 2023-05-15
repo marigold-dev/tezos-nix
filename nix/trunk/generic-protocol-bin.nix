@@ -113,12 +113,7 @@ in rec {
     duneVersion = "3";
 
     buildInputs = with ocamlPackages;
-      (
-        if (builtins.trace protocol-name protocol-name) == "PtMumbai"
-        then []
-        else [protocol-libs.dac]
-      )
-      ++ [
+      [
         protocol-libs.protocol
         protocol-libs.protocol-plugin
         protocol-libs.client
@@ -153,7 +148,8 @@ in rec {
         prometheus-app
         octez-node-config
         octez-smart-rollup-node
-      ];
+      ]
+      ++ lib.optionals (protocol-libs.protocol.number >= 17) [protocol-libs.dac];
 
     inherit doCheck;
 
