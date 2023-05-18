@@ -155,11 +155,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1684215771,
-        "narHash": "sha256-fsum28z+g18yreNa1Y7MPo9dtps5h1VkHfZbYQ+YPbk=",
+        "lastModified": 1684305980,
+        "narHash": "sha256-vd4SKXX1KZfSX6n3eoguJw/vQ+sBL8XGdgfxjEgLpKc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "963006aab35e3e8ebbf6052b6bf4ea712fdd3c28",
+        "rev": "e6e389917a8c778be636e67a67ec958f511cc55d",
         "type": "github"
       },
       "original": {
@@ -256,11 +256,11 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1684298215,
-        "narHash": "sha256-SpN4NP9rPT1rpbzo2AjAU7mHJnakCX2g/4D4Ugmnnvc=",
+        "lastModified": 1684389502,
+        "narHash": "sha256-TQkv8aGNVqgNDhWsaP+OKUfy7Ax4bkS84aNTIrqBL9s=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "6064e8b7052294305324ca1925c128414f3cd345",
+        "rev": "fd754eceb3a2d4d91c1908f27541e279bcf3fa06",
         "type": "gitlab"
       },
       "original": {
