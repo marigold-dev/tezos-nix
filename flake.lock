@@ -256,11 +256,11 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1684971915,
-        "narHash": "sha256-w+6iJM/XIodKJ7KlvwHIczs8aa5h2gX4RjtYeFkPjSg=",
+        "lastModified": 1685074283,
+        "narHash": "sha256-IbuY//LYw37Mq1cK3KgI1wBrmzBCNCqhZ9w2J5awwjc=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "5c775cce769da7fc098ff43bc0f7edf433c9d6ee",
+        "rev": "c1b7270d31dd37b9ae2ba99f899f42a51e7e82f1",
         "type": "gitlab"
       },
       "original": {
