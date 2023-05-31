@@ -167,15 +167,9 @@ in
         buildInputs = with ocamlPackages; [
           tezos-base
           tezos-clic
-          tezos-rpc
           tezos-rpc-http
           tezos-rpc-http-server
-          tezos-rpc-http-client-unix
-          tezos-stdlib-unix
-          tezos-crypto
-          tezos-stdlib
-          tezos-version
-          lwt-exit
+          octez-evm-proxy-lib
         ];
 
         checkInputs = with ocamlPackages; [tezos-base-test-helpers];
@@ -183,7 +177,7 @@ in
         doCheck = true;
 
         meta = {
-          description = "`octez-dal-node` binary";
+          description = "An implementation of a subset of Ethereum JSON-RPC API for the EVM rollup";
           mainProgram = "${pname}-server";
         };
       };

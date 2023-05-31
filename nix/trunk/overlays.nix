@@ -7,6 +7,8 @@ final: prev: {
 
         tezt-ethereum = oself.callPackage ./tezt/tezt-ethereum.nix {};
 
+        octez-evm-proxy-lib = oself.callPackage ./octez/octez-evm-proxy-lib.nix {};
+
         # Overrides
         tezos-dal-node-lib = osuper.tezos-dal-node-lib.overrideAttrs (o: {
           propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.tezos-gossipsub];

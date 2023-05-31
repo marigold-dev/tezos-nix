@@ -41,9 +41,9 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#octez-dal-node
       - name: "Build node"
         run: nix --log-format raw -L build --accept-flake-config .#octez-node
-      - name: "Build node"
+      - name: "Build octez-proxy-server"
         run: nix --log-format raw -L build --accept-flake-config .#octez-proxy-server
-      - name: "Build node"
+      - name: "Build octez-signer"
         run: nix --log-format raw -L build --accept-flake-config .#octez-signer
       - name: "Build octez-snoop"
         run: nix --log-format raw -L build --accept-flake-config .#octez-snoop
@@ -96,11 +96,11 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-dal-node
       - name: "Build evm-proxy"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-evm-proxy
-      - name: "Build node"
+      - name: "Build octez-evm-proxy"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-node
       - name: "Build node"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-proxy-server
-      - name: "Build node"
+      - name: "Build octez-proxy-server"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-signer
       - name: "Build octez-snoop"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-snoop
@@ -155,11 +155,11 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dal-node
       - name: "Build evm-proxy"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-evm-proxy
-      - name: "Build node"
+      - name: "Build octez-evm-proxy"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-node
       - name: "Build node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-proxy-server
-      - name: "Build node"
+      - name: "Build octez-proxy-server"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-signer
       - name: "Build octez-snoop"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-snoop
