@@ -20,13 +20,6 @@ buildDunePackage {
   # requires the "zcash-params" files
   doCheck = false;
 
-  preBuild = ''
-    echo ${tezos-rust-libs}/lib/tezos-rust-libs
-    ls ${tezos-rust-libs}
-    ls ${tezos-rust-libs}/lib
-    ls ${tezos-rust-libs}/lib/tezos-rust-libs
-  '';
-
   # This is a hack to work around the hack used in the dune files
   OPAM_SWITCH_PREFIX = "${tezos-rust-libs}";
 

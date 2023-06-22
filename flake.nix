@@ -20,7 +20,7 @@
     tezos_release.url = "gitlab:tezos/tezos/v16.1";
     tezos_release.flake = false;
 
-    tezos_next.url = "gitlab:tezos/tezos/v17.0-rc1";
+    tezos_next.url = "gitlab:tezos/tezos/v17.1";
     tezos_next.flake = false;
 
     tezos_trunk.url = "gitlab:tezos/tezos";
