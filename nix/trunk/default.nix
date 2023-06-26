@@ -32,11 +32,27 @@ in {
       ];
     };
     tezos_pkgs = pkgs.callPackage ./pkgs.nix {doCheck = true;};
+    docker = import ../docker {
+      inherit pkgs;
+      inherit (inputs'.nix2container.packages) nix2container;
+    };
     l = pkgs.lib // builtins;
-    packages = builtins.removeAttrs tezos_pkgs [
-      "override"
-      "overrideDerivation"
-    ];
+    packages =
+      builtins.removeAttrs tezos_pkgs [
+        "override"
+        "overrideDerivation"
+      ]
+      // {
+        trunk-docker-dac-node = docker.dac-node (with tezos_pkgs; {
+          name = "trunk-docker-dac-node";
+          octez-client = trunk-octez-client;
+          octez-dac-node = trunk-octez-dac-node;
+          octez-dac-client = trunk-octez-dac-client;
+          octez-dal-node = trunk-octez-dal-node;
+          octez-smart-rollup-node-alpha = trunk-octez-smart-rollup-node-alpha;
+          octez-smart-rollup-node-PtNairob = trunk-octez-smart-rollup-node-PtNairob;
+        });
+      };
   in {
     inherit packages;
     devShells.dev = let

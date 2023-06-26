@@ -185,3 +185,5 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-client-PtNairob
       - name: "Build smart-rollup-node-PtNairob"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-node-PtNairob
+      - name: "Build docker-dac-node"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-docker-dac-node
