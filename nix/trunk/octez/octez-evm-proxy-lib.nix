@@ -8,6 +8,7 @@
   tezos-version,
   lwt-exit,
   rope,
+  rlp,
 }:
 buildDunePackage rec {
   pname = "octez-evm-proxy-lib";
@@ -21,6 +22,7 @@ buildDunePackage rec {
     tezos-version
     lwt-exit
     rope
+    rlp
   ];
 
   doCheck = true;

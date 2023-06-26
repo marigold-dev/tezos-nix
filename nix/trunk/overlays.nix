@@ -12,6 +12,27 @@ final: prev: {
           };
         });
 
+        rlp = oself.buildOasisPackage rec {
+          pname = "rlp";
+          version = "0.1";
+          src = prev.fetchFromGitHub {
+            owner = "pirapira";
+            repo = "rlp-ocaml";
+            rev = version;
+            sha256 = "sha256-eCeEZCwzc5sosQImcJjKt1li+KmWzU+0neXCcZF4xqk=";
+          };
+
+          propagatedBuildInputs = with oself; [
+            rope
+            hex
+            num
+          ];
+
+          doCheck = true;
+
+          checkInputs = [oself.ounit];
+        };
+
         # New pacakges
 
         tezt-ethereum = oself.callPackage ./tezt/tezt-ethereum.nix {};
