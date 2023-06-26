@@ -58,9 +58,17 @@ build_stuff () {
 
   echo "Building smart-rollup-node-$protocol"
   nix build ".#${prefix}octez-smart-rollup-node-$protocol" "$flags"
+
+  if [ "$prefix" = "trunk-" ]; then
+    echo "Building octez-dac-node"
+    nix build ".#${prefix}octez-dac-node" "$flags"
+
+    echo "Building octez-evm-proxy"
+    nix build ".#${prefix}octez-evm-proxy" "$flags"
+  fi
 } 
 
-if [ $wanted_version = "not_set" ]; then
+if [ "$wanted_version" = "not_set" ]; then
 
   versions=("RELEASE" "NEXT" "TRUNK")
 

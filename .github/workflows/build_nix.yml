@@ -94,9 +94,9 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-dac-node
       - name: "Build octez-dal-node"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-dal-node
-      - name: "Build evm-proxy"
-        run: nix --log-format raw -L build --accept-flake-config .#next-octez-evm-proxy
       - name: "Build octez-evm-proxy"
+        run: nix --log-format raw -L build --accept-flake-config .#next-octez-evm-proxy
+      - name: "Build octez-node"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-node
       - name: "Build node"
         run: nix --log-format raw -L build --accept-flake-config .#next-octez-proxy-server
@@ -153,9 +153,9 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dac-node
       - name: "Build octez-dal-node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-dal-node
-      - name: "Build evm-proxy"
-        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-evm-proxy
       - name: "Build octez-evm-proxy"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-evm-proxy
+      - name: "Build octez-octez-node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-node
       - name: "Build node"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-proxy-server
@@ -185,3 +185,5 @@ jobs:
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-client-PtNairob
       - name: "Build smart-rollup-node-PtNairob"
         run: nix --log-format raw -L build --accept-flake-config .#trunk-octez-smart-rollup-node-PtNairob
+      - name: "Build docker-dac-node"
+        run: nix --log-format raw -L build --accept-flake-config .#trunk-docker-dac-node

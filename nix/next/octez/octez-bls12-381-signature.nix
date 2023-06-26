@@ -7,6 +7,8 @@
   integers_stubs_js,
   re,
   alcotest,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "octez-bls12-381-signature";
@@ -21,6 +23,8 @@ buildDunePackage {
 
   checkInputs = [
     alcotest
+    tezt
+    octez-alcotezt
   ];
 
   doCheck = true;

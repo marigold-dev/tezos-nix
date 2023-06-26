@@ -5,7 +5,7 @@
   tezos-event-logging,
   re,
   ptime,
-  mtime,
+  mtime_1,
   ipaddr,
   ezjsonm,
   fmt,
@@ -17,7 +17,7 @@ buildDunePackage {
   inherit (tezos-stdlib) version src postPatch;
   duneVersion = "3";
 
-  propagatedBuildInputs = [tezos-event-logging re ptime mtime ipaddr ezjsonm fmt];
+  propagatedBuildInputs = [tezos-event-logging re ptime mtime_1 ipaddr ezjsonm fmt];
   checkInputs = [alcotest-lwt qcheck-alcotest];
 
   doCheck = true;
