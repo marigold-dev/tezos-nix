@@ -30,8 +30,10 @@ in
           tezos-016-PtMumbai.baking-commands
           tezos-016-PtMumbai.protocol-plugin
           tezos-017-PtNairob.baking-commands
-          tezos-017-PtNairob.protocol
           tezos-017-PtNairob.protocol-plugin
+          tezos-018-Proxford.baking-commands
+          tezos-018-Proxford.protocol
+          tezos-018-Proxford.protocol-plugin
         ];
 
         inherit doCheck;
@@ -66,6 +68,8 @@ in
             tezos-016-PtMumbai.baking-commands
             tezos-017-PtNairob.protocol-plugin
             tezos-017-PtNairob.baking-commands
+            tezos-018-Proxford.protocol-plugin
+            tezos-018-Proxford.baking-commands
           ];
 
           inherit doCheck;
@@ -103,6 +107,7 @@ in
           irmin-pack
           irmin
           tezos-017-PtNairob.dac
+          tezos-018-Proxford.dac
         ];
 
         checkInputs = with ocamlPackages; [tezos-base-test-helpers];
@@ -134,6 +139,7 @@ in
           tezos-dac-lib
           tezos-dac-client-lib
           tezos-017-PtNairob.dac
+          tezos-018-Proxford.dac
         ];
 
         checkInputs = with ocamlPackages; [tezos-base-test-helpers];
@@ -175,6 +181,7 @@ in
           irmin
           tezos-016-PtMumbai.dal
           tezos-017-PtNairob.dal
+          tezos-018-Proxford.dal
         ];
 
         checkInputs = with ocamlPackages; [tezos-base-test-helpers];
@@ -232,7 +239,6 @@ in
           tezos-protocol-updater
           tezos-validation
           octez-node-config
-          tezos-alpha.embedded-protocol
           tezos-000-Ps9mPmXa.embedded-protocol
           tezos-001-PtCJ7pwo.embedded-protocol
           tezos-002-PsYLVpVv.embedded-protocol
@@ -251,12 +257,17 @@ in
           tezos-014-PtKathma.embedded-protocol
           tezos-015-PtLimaPt.embedded-protocol
           tezos-016-PtMumbai.embedded-protocol
+          tezos-016-PtMumbai.protocol-plugin
           tezos-016-PtMumbai.protocol-plugin-registerer
           tezos-017-PtNairob.embedded-protocol
-          tezos-017-PtNairob.protocol-plugin-registerer
-          tezos-alpha.protocol-plugin-registerer
-          tezos-016-PtMumbai.protocol-plugin
           tezos-017-PtNairob.protocol-plugin
+          tezos-017-PtNairob.protocol-plugin-registerer
+          tezos-018-Proxford.embedded-protocol
+          tezos-018-Proxford.protocol-plugin
+          tezos-018-Proxford.protocol-plugin-registerer
+          tezos-alpha.embedded-protocol
+          tezos-alpha.protocol-plugin
+          tezos-alpha.protocol-plugin-registerer
           prometheus-app
           lwt-exit
           tls
@@ -486,6 +497,6 @@ in
     })
     // (ocamlPackages.callPackage ./generic-protocol-bin.nix {
       inherit doCheck;
-      protocol-name = "PtMumbai";
-      protocol-libs = tezos-016-PtMumbai;
+      protocol-name = "Proxford";
+      protocol-libs = tezos-018-Proxford;
     })

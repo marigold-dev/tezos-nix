@@ -64,21 +64,20 @@ final: prev: {
           propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.tezos-crypto-dal];
         });
 
-        tezos-alpha =
-          osuper.tezos-alpha
-          // {
-            smart-rollup-layer2 = osuper.tezos-alpha.smart-rollup-layer2.overrideAttrs (o: {
-              propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.octez-smart-rollup];
-            });
-          };
+        tezos-alpha = oself.callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "alpha";
+          ocamlPackages = oself;
+        };
 
-        tezos-017-PtNairob =
-          osuper.tezos-017-PtNairob
-          // {
-            smart-rollup-layer2 = osuper.tezos-017-PtNairob.smart-rollup-layer2.overrideAttrs (o: {
-              propagatedBuildInputs = o.propagatedBuildInputs ++ [oself.octez-smart-rollup];
-            });
-          };
+        tezos-017-PtNairob = oself.callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "017-PtNairob";
+          ocamlPackages = oself;
+        };
+
+        tezos-018-Proxford = oself.callPackage ./tezos/generic-protocol.nix {
+          protocol-name = "018-Proxford";
+          ocamlPackages = oself;
+        };
       }))
     prev.ocaml-ng;
 }

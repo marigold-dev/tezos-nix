@@ -23,7 +23,7 @@
     tezos_next.url = "gitlab:tezos/tezos/v17.1";
     tezos_next.flake = false;
 
-    tezos_trunk.url = "gitlab:tezos/tezos";
+    tezos_trunk.url = "gitlab:tezos/tezos/b3f720c7";
     tezos_trunk.flake = false;
   };
 
