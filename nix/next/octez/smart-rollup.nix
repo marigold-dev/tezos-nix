@@ -1,10 +1,10 @@
 { lib
+, fetchpatch
 , buildDunePackage
 , octez-libs
-,
 }:
 buildDunePackage {
-  pname = "tezos-context-ops";
+  pname = "octez-smart-rollup";
   inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
@@ -16,6 +16,6 @@ buildDunePackage {
   meta =
     octez-libs.meta
     // {
-      description = "Tezos: backend-agnostic operations on contexts";
+      description = "Octez: library for Smart Rollups";
     };
 }

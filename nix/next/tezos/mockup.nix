@@ -1,35 +1,29 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-mockup-registration,
-  tezos-rpc-http-client,
-  tezos-p2p,
-  resto-cohttp-self-serving-client,
-  tezos-mockup-proxy,
-  alcotest-lwt,
-  qcheck-alcotest,
-  tezos-base-test-helpers,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-mockup-registration
+, resto-cohttp-self-serving-client
+, tezos-mockup-proxy
+, alcotest-lwt
+, qcheck-alcotest
+,
 }:
 buildDunePackage {
   pname = "tezos-mockup";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     tezos-mockup-registration
-    tezos-rpc-http-client
-    tezos-p2p
     resto-cohttp-self-serving-client
     tezos-mockup-proxy
   ];
 
-  checkInputs = [alcotest-lwt qcheck-alcotest tezos-base-test-helpers];
+  checkInputs = [ alcotest-lwt qcheck-alcotest ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: protocol registration for the mockup mode";
     };

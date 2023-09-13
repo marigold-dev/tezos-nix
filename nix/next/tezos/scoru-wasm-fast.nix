@@ -1,25 +1,15 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-tree-encoding,
-  tezos-webassembly-interpreter,
-  tezos-lazy-containers,
-  tezos-scoru-wasm,
-  tezos-wasmer,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-wasmer
+,
 }:
 buildDunePackage {
   pname = "tezos-scoru-wasm-fast";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
-    tezos-tree-encoding
-    tezos-webassembly-interpreter
-    tezos-lazy-containers
-    tezos-scoru-wasm
+    octez-libs
     tezos-wasmer
   ];
 
@@ -29,7 +19,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: WASM functionality for SCORU Fast Execution";
     };

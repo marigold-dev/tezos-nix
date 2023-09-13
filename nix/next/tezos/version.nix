@@ -1,26 +1,19 @@
 {
   lib,
   buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  ppx_deriving,
+  octez-libs,
   dune-configurator,
-  tezt,
-  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-version";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
-  propagatedBuildInputs = [tezos-base ppx_deriving dune-configurator];
-
-  checkInputs = [tezt octez-alcotezt];
+  propagatedBuildInputs = [octez-libs dune-configurator];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: version information generated from Git";
     };

@@ -1,13 +1,13 @@
-{
-  lib,
-  buildDunePackage,
-  fetchFromGitLab,
-  zarith,
-  zarith_stubs_js ? null,
-  integers_stubs_js,
-  integers,
-  hex,
-  alcotest,
+{ lib
+, buildDunePackage
+, fetchFromGitLab
+, zarith
+, zarith_stubs_js ? null
+, integers_stubs_js
+, integers
+, hex
+, alcotest
+,
 }:
 buildDunePackage rec {
   pname = "bls12-381";
@@ -20,7 +20,6 @@ buildDunePackage rec {
   };
 
   minimalOCamlVersion = "4.08";
-  duneVersion = "3";
 
   postPatch = ''
     patchShebangs ./src/*.sh
@@ -44,6 +43,6 @@ buildDunePackage rec {
     homepage = "https://gitlab.com/dannywillems/ocaml-bls12-381";
     description = "OCaml binding for bls12-381 from librustzcash";
     license = lib.licenses.mit;
-    maintainers = [lib.maintainers.ulrikstrid];
+    maintainers = [ lib.maintainers.ulrikstrid ];
   };
 }

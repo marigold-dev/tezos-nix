@@ -1,26 +1,20 @@
-{
-  lib,
-  buildDunePackage,
-  cacert,
-  tezos-stdlib,
-  ppx_expect,
-  tezos-base,
-  octez-protocol-compiler,
-  tezos-stdlib-unix,
-  tezos-dal-node-lib,
-  tezos-base-test-helpers,
-  tezos-016-PtMumbai,
-  alcotest-lwt,
+{ lib
+, buildDunePackage
+, cacert
+, octez-libs
+, ppx_expect
+, octez-protocol-compiler
+, tezos-dal-node-lib
+, tezos-016-PtMumbai
+, alcotest-lwt
+,
 }:
 buildDunePackage {
   pname = "tezos-dal-016-PtMumbai";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
     octez-protocol-compiler
-    tezos-stdlib-unix
     tezos-dal-node-lib
     tezos-016-PtMumbai.layer2-utils
     tezos-016-PtMumbai.protocol
@@ -29,10 +23,9 @@ buildDunePackage {
     tezos-016-PtMumbai.client
   ];
 
-  buildInputs = [ppx_expect];
+  buildInputs = [ ppx_expect ];
 
   checkInputs = [
-    tezos-base-test-helpers
     tezos-016-PtMumbai.test-helpers
     alcotest-lwt
     cacert
@@ -41,7 +34,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: layer2 storage utils";
     };

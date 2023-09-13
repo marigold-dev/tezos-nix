@@ -1,28 +1,24 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-error-monad,
-  tezos-crypto,
-  tezos-micheline,
-  tezos-alpha,
-  zarith,
-  zarith_stubs_js,
-  tezt,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-alpha
+, zarith
+, zarith_stubs_js
+, tezt
+,
 }:
 buildDunePackage {
   pname = "tezos-micheline-rewriting";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
-  propagatedBuildInputs = [zarith zarith_stubs_js tezos-stdlib tezos-crypto tezos-error-monad tezos-micheline];
+  propagatedBuildInputs = [ zarith zarith_stubs_js octez-libs ];
 
-  checkInputs = [tezos-alpha.protocol tezos-alpha.client tezt];
+  checkInputs = [ tezos-alpha.protocol tezos-alpha.client tezt ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: library for rewriting Micheline expressions";
     };

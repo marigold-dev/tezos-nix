@@ -1,58 +1,33 @@
 {
   lib,
   buildDunePackage,
-  tezos-stdlib,
+  octez-libs,
   ppx_expect,
   lwt-watcher,
   lwt-canceler,
   prometheus,
-  tezos-base,
-  tezos-rpc,
-  tezos-context,
   tezos-store,
-  tezos-protocol-environment,
   tezos-context-ops,
-  tezos-shell-context,
-  tezos-p2p,
-  tezos-stdlib-unix,
-  tezos-shell-services,
-  tezos-p2p-services,
   tezos-protocol-updater,
-  tezos-requester,
-  tezos-workers,
   tezos-validation,
   tezos-version,
   lwt-exit,
   alcotest-lwt,
-  tezos-base-test-helpers,
-  tezos-test-helpers,
   tezos-demo-noops,
   tezos-alpha,
 }:
 buildDunePackage {
   pname = "tezos-shell";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     ppx_expect
     lwt-watcher
     lwt-canceler
     prometheus
-    tezos-base
-    tezos-rpc
-    tezos-context
     tezos-store
-    tezos-protocol-environment
     tezos-context-ops
-    tezos-shell-context
-    tezos-p2p
-    tezos-stdlib-unix
-    tezos-shell-services
-    tezos-p2p-services
     tezos-protocol-updater
-    tezos-requester
-    tezos-workers
     tezos-validation
     tezos-version
     lwt-exit
@@ -60,8 +35,6 @@ buildDunePackage {
 
   checkInputs = [
     alcotest-lwt
-    tezos-base-test-helpers
-    tezos-test-helpers
     tezos-demo-noops.embedded-protocol
     tezos-alpha.protocol-plugin
   ];
@@ -71,7 +44,7 @@ buildDunePackage {
   doCheck = false;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: descriptions of RPCs exported by `tezos-shell`";
     };

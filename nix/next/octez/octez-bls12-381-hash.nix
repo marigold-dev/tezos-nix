@@ -1,19 +1,18 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  bls12-381,
-  eqaf,
-  bisect_ppx,
-  alcotest,
-  tezt,
-  octez-alcotezt,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+, bls12-381
+, eqaf
+, bisect_ppx
+, alcotest
+, tezt
+, octez-alcotezt
+,
 }:
 buildDunePackage {
   pname = "octez-bls12-381-hash";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     bls12-381
@@ -30,7 +29,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Implementation of some cryptographic hash primitives using the scalar field of BLS12-381";
     };

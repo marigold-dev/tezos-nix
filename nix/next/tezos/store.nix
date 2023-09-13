@@ -1,64 +1,44 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-stdlib-unix,
-  tezos-base,
-  tezos-crypto,
-  tezos-shell-services,
-  aches,
-  aches-lwt,
-  tezos-validation,
-  tezos-version,
-  index,
-  irmin-pack,
-  tezos-protocol-environment,
-  tezos-context,
-  tezos-context-ops,
-  tezos-shell-context,
-  tezos-protocol-updater,
-  lwt-watcher,
-  camlzip,
-  tar,
-  tar-unix,
-  prometheus,
-  tezos-rpc,
-  tezos-alpha,
-  tezos-genesis,
-  tezos-demo-noops,
-  alcotest-lwt,
-  tezos-test-helpers,
-  digestif,
+{ lib
+, buildDunePackage
+, octez-libs
+, aches
+, aches-lwt
+, tezos-validation
+, tezos-version
+, index
+, irmin-pack
+, tezos-context-ops
+, tezos-protocol-updater
+, lwt-watcher
+, camlzip
+, tar
+, tar-unix
+, prometheus
+, tezos-alpha
+, tezos-genesis
+, tezos-demo-noops
+, alcotest-lwt
+, tezt
+,
 }:
 buildDunePackage {
   pname = "tezos-store";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-stdlib-unix
-    tezos-base
-    tezos-crypto
-    tezos-shell-services
+    octez-libs
     aches
     aches-lwt
     tezos-validation
-    tezos-version
     index
     irmin-pack
-    tezos-protocol-environment
-    tezos-context
     tezos-context-ops
-    tezos-shell-context
     tezos-protocol-updater
-    tezos-stdlib
     lwt-watcher
     camlzip
     tar
     tar-unix
     prometheus
-    tezos-rpc
-    digestif
   ];
 
   # nativeBuildInputs = [octez-protocol-compiler];
@@ -66,13 +46,13 @@ buildDunePackage {
   strictDeps = true;
 
   checkInputs = [
+    tezt
     tezos-demo-noops.embedded-protocol
     tezos-genesis.embedded-protocol
     tezos-alpha.embedded-protocol
     tezos-alpha.protocol
     tezos-alpha.protocol-plugin
     alcotest-lwt
-    tezos-test-helpers
   ];
 
   # We're getting infinite recursion from the function that creates the protocol packages
@@ -80,7 +60,7 @@ buildDunePackage {
   doCheck = false;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: custom economic-protocols environment implementation for `octez-client` and testing";
     };

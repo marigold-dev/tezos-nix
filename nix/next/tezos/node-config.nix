@@ -1,28 +1,15 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-stdlib-unix,
-  tezos-shell-services,
-  tezos-rpc-http,
-  tezos-rpc-http-server,
-  tezos-context,
-  tezos-validation,
-  tezos-store,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-validation
+, tezos-store
+,
 }:
 buildDunePackage {
   pname = "octez-node-config";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
-    tezos-stdlib-unix
-    tezos-shell-services
-    tezos-rpc-http
-    tezos-rpc-http-server
-    tezos-context
     tezos-validation
     tezos-store
   ];
@@ -30,7 +17,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Octez: `octez-node-config` library";
     };

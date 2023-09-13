@@ -1,0 +1,39 @@
+services:
+  coordinator:
+    image: "trunk-docker-dac-node:latest"
+    environment:
+      COORDINATOR_DIR: "true"
+      COORDINATOR_REVEAL_DATA_DIR: "/.tezos-mondaynet/dac-coordinator/reveals"
+      DAC_MEMBER_0_DIR: "/.tezos-mondaynet/dac-member-0"
+      DAC_MEMBER_0_REVEAL_DATA_DIR: "/.tezos-mondaynet/dac-member-0/reveals"
+      DAC_MEMBER_1_DIR: "/.tezos-mondaynet/dac-member-1"
+      DAC_MEMBER_1_REVEAL_DATA_DIR: "/.tezos-mondaynet/dac-member-1/reveals"
+      OBSERVER_DIR: "/.tezos-mondaynet/dac-observer"
+      OCTEZ_CLIENT_DIR: "/.tezos-mondaynet/client"
+      ROLLUP_NODE_DIR: "/.tezos-mondaynet/soru"
+      REVEAL_DATA_DIR: "/.tezos-mondaynet/soru/wasm_2_0_0"
+      MONDAYNET_RPC: "https://rpc.mondaynet-2023-06-26.teztnets.xyz"
+    volumes:
+      - .:/code
+
+  member1:
+    image: "trunk-docker-dac-node:latest"
+    volumes:
+      - .:/code
+
+  member2:
+    image: "trunk-docker-dac-node:latest"
+    volumes:
+      - .:/code
+
+  observer1:
+    image: "trunk-docker-dac-node:latest"
+    volumes:
+      - .:/code
+
+  observer2:
+    image: "trunk-docker-dac-node:latest"
+    volumes:
+      - .:/code
+
+

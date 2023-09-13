@@ -1,35 +1,22 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-error-monad,
-  tezos-benchmark,
-  tezos-crypto,
-  tezos-context,
-  tezos-shell-context,
-  tezos-micheline,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-benchmark
+,
 }:
 buildDunePackage {
   pname = "tezos-shell-benchmarks";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-stdlib
-    tezos-base
-    tezos-error-monad
+    octez-libs
     tezos-benchmark
-    tezos-crypto
-    tezos-context
-    tezos-shell-context
-    tezos-micheline
   ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: shell benchmarks";
     };

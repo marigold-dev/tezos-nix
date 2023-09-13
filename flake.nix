@@ -17,13 +17,13 @@
 
     nix2container.url = "github:nlewo/nix2container";
 
-    tezos_release.url = "gitlab:tezos/tezos/v16.1";
+    tezos_release.url = "gitlab:tezos/tezos/v17.3";
     tezos_release.flake = false;
 
-    tezos_next.url = "gitlab:tezos/tezos/v17.1";
+    tezos_next.url = "gitlab:tezos/tezos/v18.0-rc1";
     tezos_next.flake = false;
 
-    tezos_trunk.url = "gitlab:tezos/tezos/b3f720c7";
+    tezos_trunk.url = "gitlab:tezos/tezos/5522cb91be7f10a6d04102e75f368be252c62899";
     tezos_trunk.flake = false;
   };
 

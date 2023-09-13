@@ -1,21 +1,19 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-client-base,
-  tezos-protocol-environment,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-client-base
+,
 }:
 buildDunePackage {
   pname = "tezos-mockup-registration";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
-  propagatedBuildInputs = [tezos-client-base tezos-protocol-environment];
+  propagatedBuildInputs = [ tezos-client-base ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: protocol registration for the mockup mode";
     };

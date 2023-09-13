@@ -2,19 +2,21 @@
 , fetchpatch
 , buildDunePackage
 , octez-libs
-, lwt
-,
+, tezos-version
+, lwt-exit
+, rlp
+, rope
 }:
 buildDunePackage {
-  pname = "tezos-webassembly-interpreter-extra";
+  pname = "octez-evm-proxy-lib";
   inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     octez-libs
-    lwt
-  ];
-
-  checkInputs = [
+    tezos-version
+    lwt-exit
+    rlp
+    rope
   ];
 
   doCheck = true;
@@ -22,6 +24,6 @@ buildDunePackage {
   meta =
     octez-libs.meta
     // {
-      description = "Tezos: WebAssembly reference interpreter with tweaks for Tezos";
+      description = "An implementation of a subset of Ethereum JSON-RPC API for the EVM rollup";
     };
 }

@@ -1,21 +1,20 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  ppx_repr,
-  bls12-381,
-  bigstringaf,
-  tezt,
-  octez-alcotezt,
-  qcheck-alcotest,
-  octez-polynomial,
-  bisect_ppx,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+, ppx_repr
+, bls12-381
+, bigstringaf
+, tezt
+, octez-alcotezt
+, qcheck-alcotest
+, octez-polynomial
+, bisect_ppx
+,
 }:
 buildDunePackage {
   pname = "octez-bls12-381-polynomial";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     ppx_repr
@@ -34,7 +33,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Implementation of BLS signatures for the pairing-friendly curve BLS12-381";
     };

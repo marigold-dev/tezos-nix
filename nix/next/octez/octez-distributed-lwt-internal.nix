@@ -1,16 +1,15 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  octez-distributed-internal,
-  lwt,
-  logs,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+, octez-distributed-internal
+, lwt
+, logs
+,
 }:
 buildDunePackage {
   pname = "octez-distributed-lwt-internal";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     octez-distributed-internal
@@ -21,7 +20,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Fork of distributed-lwt. Use for Octez only";
     };

@@ -1,24 +1,23 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-signer-backends,
-  data-encoding,
-  alcotest-lwt,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-signer-backends
+, data-encoding
+, alcotest-lwt
+,
 }:
 buildDunePackage {
   pname = "tezos-client-commands";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
-  propagatedBuildInputs = [tezos-signer-backends data-encoding];
+  propagatedBuildInputs = [ tezos-signer-backends data-encoding ];
 
-  checkInputs = [alcotest-lwt];
+  checkInputs = [ alcotest-lwt ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: protocol registration for the mockup mode";
     };

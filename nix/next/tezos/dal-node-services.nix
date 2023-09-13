@@ -1,26 +1,20 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-rpc,
-  tezos-crypto-dal,
+{ lib
+, buildDunePackage
+, octez-libs
+,
 }:
 buildDunePackage {
   pname = "tezos-dal-node-services";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
-    tezos-rpc
-    tezos-crypto-dal
+    octez-libs
   ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: `tezos-dal-node` RPC services";
     };

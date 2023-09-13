@@ -1,37 +1,31 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-stdlib-unix,
-  uri,
-  tezos-test-helpers,
-  qcheck-alcotest,
-  tezt,
-  octez-alcotezt,
+{ lib
+, buildDunePackage
+, octez-libs
+, uri
+, qcheck-alcotest
+, tezt
+, octez-alcotezt
+,
 }:
 buildDunePackage {
   pname = "tezos-proxy-server-config";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
-    tezos-stdlib-unix
+    octez-libs
     uri
   ];
 
   checkInputs = [
-    tezos-test-helpers
-    qcheck-alcotest
     tezt
+    qcheck-alcotest
     octez-alcotezt
   ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: proxy server configuration";
     };

@@ -1,23 +1,24 @@
-{
-  lib,
-  buildDunePackage,
-  ocamlPackages,
-  tezos-stdlib,
-  cacert,
-  protocol-name,
-}: let
-  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
+{ lib
+, buildDunePackage
+, ocamlPackages
+, octez-libs
+, cacert
+, protocol-name
+,
+}:
+let
+  underscore_name = builtins.replaceStrings [ "-" ] [ "_" ] protocol-name;
   protocol_number = proto:
     if builtins.substring 0 4 proto == "demo"
     then -1
     else if proto == "alpha"
     then 1000
     else lib.toIntBase10 (builtins.substring 0 3 proto);
-in rec {
+in
+rec {
   client = buildDunePackage {
     pname = "tezos-client-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       protocol-plugin
@@ -33,7 +34,6 @@ in rec {
 
     checkInputs = with ocamlPackages; [
       alcotest-lwt
-      tezos-base-test-helpers
       ppx_inline_test
     ];
 
@@ -42,8 +42,7 @@ in rec {
 
   sapling-client = buildDunePackage {
     pname = "tezos-client-sapling-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       tezos-client-base-unix
@@ -57,28 +56,18 @@ in rec {
 
   baking = buildDunePackage {
     pname = "tezos-baking-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     buildInputs = with ocamlPackages; [
       protocol
       protocol-plugin
       client
 
-      tezos-base
       tezos-version
-      tezos-protocol-environment
-      tezos-shell-services
       tezos-client-base
       tezos-client-commands
-      tezos-stdlib
-      tezos-stdlib-unix
-      tezos-shell-context
-      tezos-context
+      octez-libs
       tezos-context-ops
-      tezos-rpc-http-client-unix
-      tezos-rpc
-      tezos-rpc-http
       lwt-canceler
       lwt-exit
       data-encoding
@@ -91,7 +80,6 @@ in rec {
 
     checkInputs = with ocamlPackages; [
       alcotest-lwt
-      tezos-base-test-helpers
       cacert
     ];
 
@@ -100,8 +88,7 @@ in rec {
 
   dac = buildDunePackage {
     pname = "tezos-dac-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     nativeBuildInputs = with ocamlPackages; [
       octez-protocol-compiler
@@ -117,13 +104,10 @@ in rec {
 
     buildInputs = with ocamlPackages; [
       ppx_expect
-      tezos-base
-      tezos-stdlib-unix
     ];
 
     checkInputs = with ocamlPackages; [
       tezt
-      tezos-base-test-helpers
       test-helpers
       tezos-dac-node-lib
       octez-alcotezt
@@ -132,7 +116,7 @@ in rec {
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol specific library for the Data availability Committee";
       };
@@ -140,8 +124,7 @@ in rec {
 
   dal = buildDunePackage {
     pname = "tezos-dal-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       protocol
@@ -150,16 +133,13 @@ in rec {
       client
       layer2-utils
 
-      tezos-base
       octez-protocol-compiler
-      tezos-stdlib-unix
       tezos-dal-node-lib
     ];
 
-    buildInputs = with ocamlPackages; [ppx_expect];
+    buildInputs = with ocamlPackages; [ ppx_expect ];
 
     checkInputs = with ocamlPackages; [
-      tezos-base-test-helpers
       test-helpers
       alcotest-lwt
       cacert
@@ -168,7 +148,7 @@ in rec {
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol specific library for the Data availability Layer";
       };
@@ -176,39 +156,27 @@ in rec {
 
   injector = buildDunePackage {
     pname = "tezos-injector-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       client
       protocol
-      tezos-base
       tezos-client-base
-      tezos-crypto
-      tezos-micheline
       tezos-shell
-      tezos-workers
       layer2-utils
     ];
   };
 
   baking-commands = buildDunePackage {
     pname = "tezos-baking-${protocol-name}-commands";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       baking
       protocol
       client
 
-      tezos-rpc
-      tezos-base
       tezos-context-ops
-      tezos-stdlib-unix
-      tezos-protocol-environment
-      tezos-shell-services
-      tezos-shell-context
       tezos-client-base
       tezos-client-commands
       lwt-exit
@@ -218,9 +186,7 @@ in rec {
     checkInputs = [
       # alcotest-lwt
       # qcheck-alcotest
-      # tezos-test-helpers
-      # tezos-base-test-helpers
-      # cacert
+      #       #       # cacert
     ];
 
     doCheck = true;
@@ -228,21 +194,17 @@ in rec {
 
   protocol = buildDunePackage {
     pname = "tezos-protocol-${protocol-name}";
-    inherit (tezos-stdlib) version src;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
-    strictDeps = true;
-
-    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
-
-    buildInputs = with ocamlPackages; [tezos-protocol-environment];
+    nativeBuildInputs = [ ocamlPackages.octez-protocol-compiler ];
+    propagatedBuildInputs = [ ocamlPackages.octez-libs ];
 
     doCheck = true;
 
     passthru.number = protocol_number protocol-name;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: economic-protocol definition";
       };
@@ -250,21 +212,20 @@ in rec {
 
   embedded-protocol = buildDunePackage {
     pname = "tezos-embedded-protocol-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     strictDeps = true;
 
-    nativeBuildInputs = with ocamlPackages; [octez-protocol-compiler];
+    nativeBuildInputs = with ocamlPackages; [ octez-protocol-compiler ];
 
-    buildInputs = with ocamlPackages; [tezos-protocol-updater octez-protocol-compiler];
+    buildInputs = with ocamlPackages; [ tezos-protocol-updater octez-protocol-compiler ];
 
-    propagatedBuildInputs = [protocol];
+    propagatedBuildInputs = [ protocol ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: economic-protocol definition, embedded in `tezos-node`";
       };
@@ -272,8 +233,7 @@ in rec {
 
   protocol-plugin = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     strictDeps = true;
 
@@ -284,15 +244,14 @@ in rec {
 
       tezos-shell
       qcheck-alcotest
-      tezos-test-helpers
     ];
 
-    checkInputs = with ocamlPackages; [qcheck-alcotest tezos-test-helpers];
+    checkInputs = with ocamlPackages; [ qcheck-alcotest ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol plugin registerer";
       };
@@ -300,19 +259,18 @@ in rec {
 
   protocol-plugin-registerer = buildDunePackage {
     pname = "tezos-protocol-plugin-${protocol-name}-registerer";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     strictDeps = true;
 
-    buildInputs = with ocamlPackages; [protocol embedded-protocol tezos-shell];
+    buildInputs = with ocamlPackages; [ protocol embedded-protocol tezos-shell ];
 
-    propagatedBuildInputs = with ocamlPackages; [protocol-plugin smart-rollup];
+    propagatedBuildInputs = with ocamlPackages; [ protocol-plugin smart-rollup ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol plugin registerer";
       };
@@ -320,24 +278,17 @@ in rec {
 
   test-helpers = buildDunePackage {
     pname = "tezos-${protocol-name}-test-helpers";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       client
       protocol
-
-      tezos-base
-      tezos-protocol-environment
-      tezos-shell-services
-      tezos-stdlib-unix
-      tezos-test-helpers
     ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol testing framework";
       };
@@ -345,22 +296,19 @@ in rec {
 
   layer2-utils = buildDunePackage {
     pname = "tezos-layer2-utils-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       client
       protocol
 
       ppx_expect
-      tezos-base
-      tezos-rpc
     ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol specific library for Layer 2 utils";
       };
@@ -368,21 +316,64 @@ in rec {
 
   smart-rollup = buildDunePackage {
     pname = "tezos-smart-rollup-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       protocol
 
       ppx_expect
-      tezos-protocol-environment
-      tezos-base
     ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
+      // {
+        description = "Tezos/Protocol: protocol specific library of helpers for `tezos-smart-rollup`";
+      };
+  };
+
+  smart-rollup-node = buildDunePackage {
+    pname = "octez-smart-rollup-node-${protocol-name}";
+    inherit (octez-libs) version src;
+
+    propagatedBuildInputs = with ocamlPackages; [
+      octez-libs
+      tezos-client-base
+      tezos-client-base-unix
+
+      client
+      protocol
+      protocol-plugin
+      dac
+      smart-rollup
+      smart-rollup-layer2
+      layer2-utils
+
+      tezos-dal-node-services
+      tezos-dal-node-lib
+      tezos-dac-lib
+      tezos-dac-client-lib
+      octez-smart-rollup
+      tezos-layer2-store
+      octez-crawler
+      data-encoding
+
+      irmin-pack
+      irmin
+      aches
+      aches-lwt
+      octez-injector
+      octez-smart-rollup-node-lib
+      tezos-scoru-wasm-fast
+      tezos-version
+      tezos-client-commands
+    ];
+
+    doCheck = true;
+
+    meta =
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol specific library of helpers for `tezos-smart-rollup`";
       };
@@ -390,11 +381,10 @@ in rec {
 
   smart-rollup-layer2 = buildDunePackage {
     pname = "tezos-smart-rollup-layer2-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
-      tezos-base
+      octez-smart-rollup
       octez-injector
       protocol
     ];
@@ -402,7 +392,7 @@ in rec {
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol specific library defining L2 operations";
       };
@@ -410,13 +400,11 @@ in rec {
 
   smart-rollup-client = buildDunePackage {
     pname = "octez-smart-rollup-client-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       smart-rollup
       smart-rollup-layer2
-      tezos-base
       protocol
       tezos-client-base
       tezos-client-base-unix
@@ -425,7 +413,7 @@ in rec {
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol specific library of building clients for `tezos-smart-rollup`";
       };
@@ -433,26 +421,21 @@ in rec {
 
   benchmark-type-inference = buildDunePackage {
     pname = "tezos-benchmark-type-inference-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       protocol
       client
 
-      tezos-stdlib
-      tezos-error-monad
-      tezos-crypto
-      tezos-micheline
+      octez-libs
       tezos-micheline-rewriting
-      tezos-protocol-environment
       hashcons
     ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: library for writing benchmarks (protocol-specific part)";
       };
@@ -460,21 +443,16 @@ in rec {
 
   benchmark = buildDunePackage {
     pname = "tezos-benchmark-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       benchmark-type-inference
       protocol
       test-helpers
 
-      tezos-stdlib
-      tezos-base
-      tezos-error-monad
-      tezos-micheline
+      octez-libs
       tezos-micheline-rewriting
       tezos-benchmark
-      tezos-crypto
 
       hashcons
       prbnmcn-stats
@@ -483,7 +461,7 @@ in rec {
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: library for writing benchmarks (protocol-specific part)";
       };
@@ -491,8 +469,7 @@ in rec {
 
   benchmarks = buildDunePackage {
     pname = "tezos-benchmarks-proto-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     propagatedBuildInputs = with ocamlPackages; [
       client
@@ -502,22 +479,15 @@ in rec {
       benchmark-type-inference
       test-helpers
 
-      tezos-stdlib
-      tezos-base
-      tezos-error-monad
-      tezos-lazy-containers
+      octez-libs
       tezos-benchmark
-      tezos-crypto
       tezos-shell-benchmarks
-      tezos-micheline
-      tezos-sapling
-      tezos-protocol-environment
     ];
 
     doCheck = true;
 
     meta =
-      tezos-stdlib.meta
+      octez-libs.meta
       // {
         description = "Tezos/Protocol: protocol benchmarks";
       };

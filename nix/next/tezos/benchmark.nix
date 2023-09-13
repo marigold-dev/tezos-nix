@@ -2,42 +2,35 @@
   lib,
   buildDunePackage,
   python311,
-  tezos-stdlib,
-  tezos-base,
-  tezos-stdlib-unix,
-  tezos-crypto,
-  tezos-micheline,
-  tezos-clic,
+  octez-libs,
+  ppx_expect,
   data-encoding,
-  prbnmcn-cgrph,
-  prbnmcn-dagger,
-  prbnmcn-dagger-stats,
+  prbnmcn-linalg,
   prbnmcn-stats,
   pringo,
   pyml,
-  ocaml-migrate-parsetree,
   ocamlgraph,
+  # , ocaml-migrate-parsetree
+  hashcons,
+  ocamlformat,
 }:
 buildDunePackage {
   pname = "tezos-benchmark";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
+
+  nativeBuildInputs = [ocamlformat];
 
   propagatedBuildInputs = [
-    tezos-base
-    tezos-stdlib-unix
-    tezos-crypto
-    tezos-micheline
-    tezos-clic
+    octez-libs
+    ppx_expect
     data-encoding
-    prbnmcn-cgrph
-    prbnmcn-dagger
-    prbnmcn-dagger-stats
+    prbnmcn-linalg
     prbnmcn-stats
     pringo
     pyml
     ocamlgraph
     # ocaml-migrate-parsetree
+    hashcons
   ];
 
   nativeCheckInputs = [python311];
@@ -45,7 +38,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: `tezos-dal-node` RPC services";
     };

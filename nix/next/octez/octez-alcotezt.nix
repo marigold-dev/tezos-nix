@@ -1,14 +1,13 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  tezt,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+, tezt
+,
 }:
 buildDunePackage {
   pname = "octez-alcotezt";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     tezt
@@ -17,7 +16,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Provide the interface of Alcotest for Octez, but with Tezt as backend";
     };

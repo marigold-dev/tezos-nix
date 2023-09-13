@@ -240,16 +240,16 @@
     "tezos_next": {
       "flake": false,
       "locked": {
-        "lastModified": 1686745974,
-        "narHash": "sha256-HQq9LsLCKuWYjT5LXrH9OxeG1rJ55xJiaIeXTaqsySA=",
+        "lastModified": 1692197267,
+        "narHash": "sha256-DFan2Z2OVwxxK7s2TT+2GI6zy9/NWhVa13D89JjscZg=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "344d8da56f25f9b44696e6d1d3c04bc419cc59ee",
+        "rev": "f59e1b0eaa26e97a23824dc4fbd4af2bd8fcf8af",
         "type": "gitlab"
       },
       "original": {
         "owner": "tezos",
-        "ref": "v17.1",
+        "ref": "v18.0-rc1",
         "repo": "tezos",
         "type": "gitlab"
       }
@@ -257,16 +257,16 @@
     "tezos_release": {
       "flake": false,
       "locked": {
-        "lastModified": 1679589658,
-        "narHash": "sha256-pcE8Tce0r4bnu4WTXTiEodUhIsHu3wb4L16LSxGkhHQ=",
+        "lastModified": 1692263564,
+        "narHash": "sha256-CYL3SlwsXhUbNfu5hQdWNGgNCgxnAnsAV4oQQ3iSZ94=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "5977cc15a33c0fc98becd562185e3dc5e9003df7",
+        "rev": "b2bc6d7f56171a259bd08732f008e7ffa1c9a120",
         "type": "gitlab"
       },
       "original": {
         "owner": "tezos",
-        "ref": "v16.1",
+        "ref": "v17.3",
         "repo": "tezos",
         "type": "gitlab"
       }
@@ -274,17 +274,17 @@
     "tezos_trunk": {
       "flake": false,
       "locked": {
-        "lastModified": 1687704750,
-        "narHash": "sha256-iCntc21pGiWGDku+JqudcquNLGQy+awoD8KSDLP8X9Q=",
+        "lastModified": 1694248419,
+        "narHash": "sha256-ar49SpZ01GhFeEtdfhsc1lYWJZ36ZhUXp99NfCOdiNA=",
         "owner": "tezos",
         "repo": "tezos",
-        "rev": "b3f720c719ffcf2b50aa6710857cd233e635d221",
+        "rev": "5522cb91be7f10a6d04102e75f368be252c62899",
         "type": "gitlab"
       },
       "original": {
         "owner": "tezos",
-        "ref": "b3f720c7",
         "repo": "tezos",
+        "rev": "5522cb91be7f10a6d04102e75f368be252c62899",
         "type": "gitlab"
       }
     },

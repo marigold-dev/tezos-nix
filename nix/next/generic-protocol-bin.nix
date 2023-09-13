@@ -1,35 +1,24 @@
-{
-  lib,
-  buildDunePackage,
-  cacert,
-  ocamlPackages,
-  tezos-stdlib,
-  protocol-name,
-  protocol-libs,
-  doCheck,
-}: let
-  underscore_name = builtins.replaceStrings ["-"] ["_"] protocol-name;
-  protocol_number = proto:
-    if builtins.substring 0 4 proto == "demo"
-    then -1
-    else if proto == "alpha"
-    then 1000
-    else lib.toIntBase10 (builtins.substring 0 3 proto);
-in rec {
+{ lib
+, buildDunePackage
+, cacert
+, ocamlPackages
+, octez-libs
+, protocol-name
+, protocol-libs
+, doCheck
+,
+}:
+rec {
   "next-octez-accuser-${protocol-name}" = ocamlPackages.buildDunePackage rec {
     pname = "octez-accuser-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     buildInputs = with ocamlPackages; [
       protocol-libs.protocol
       protocol-libs.baking-commands
       protocol-libs.client
 
-      tezos-base
-      tezos-clic
       tezos-client-commands
-      tezos-stdlib-unix
       tezos-client-base-unix
     ];
 
@@ -43,8 +32,7 @@ in rec {
 
   "next-octez-baker-${protocol-name}" = ocamlPackages.buildDunePackage rec {
     pname = "octez-baker-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     buildInputs = with ocamlPackages; [
       protocol-libs.protocol
@@ -52,20 +40,13 @@ in rec {
       protocol-libs.baking
       protocol-libs.client
 
-      tezos-base
-      tezos-stdlib-unix
-      tezos-protocol-environment
-      tezos-shell-services
-      tezos-shell-context
       tezos-client-base
       tezos-client-base-unix
       tezos-mockup-commands
-      tezos-rpc
     ];
 
     checkInputs = with ocamlPackages; [
       alcotest-lwt
-      tezos-base-test-helpers
       cacert
     ];
 
@@ -79,8 +60,7 @@ in rec {
 
   "next-octez-smart-rollup-client-${protocol-name}" = ocamlPackages.buildDunePackage rec {
     pname = "octez-smart-rollup-client-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     buildInputs = with ocamlPackages; [
       protocol-libs.client
@@ -88,14 +68,9 @@ in rec {
       protocol-libs.smart-rollup
       protocol-libs.smart-rollup-layer2
 
-      tezos-base
-      tezos-clic
       tezos-client-base
       tezos-client-commands
-      tezos-stdlib-unix
       tezos-client-base-unix
-      tezos-rpc-http
-      tezos-rpc-http-client-unix
       uri
     ];
 
@@ -109,45 +84,40 @@ in rec {
 
   "next-octez-smart-rollup-node-${protocol-name}" = ocamlPackages.buildDunePackage rec {
     pname = "octez-smart-rollup-node-${protocol-name}";
-    inherit (tezos-stdlib) version src postPatch;
-    duneVersion = "3";
+    inherit (octez-libs) version src;
 
     buildInputs = with ocamlPackages; [
+      octez-libs
+      tezos-client-base
+      tezos-client-base-unix
+
+      protocol-libs.client
       protocol-libs.protocol
       protocol-libs.protocol-plugin
-      protocol-libs.client
+
+      tezos-dal-node-services
+      tezos-dal-node-lib
+
+      protocol-libs.dac
+      tezos-dac-lib
+      tezos-dac-client-lib
+      octez-smart-rollup
+
       protocol-libs.smart-rollup
       protocol-libs.smart-rollup-layer2
       protocol-libs.layer2-utils
-      protocol-libs.dac
-
-      tezos-base
-      tezos-clic
-      tezos-client-commands
-      tezos-stdlib-unix
-      tezos-client-base
-      tezos-client-base-unix
-      tezos-context
-      tezos-rpc
-      tezos-rpc-http
-      tezos-rpc-http-server
-      tezos-workers
-      tezos-dal-node-services
-      tezos-dal-node-lib
-      tezos-shell-services
       tezos-layer2-store
-      tezos-tree-encoding
+      octez-crawler
       data-encoding
       irmin-pack
       irmin
       aches
       aches-lwt
-      tezos-scoru-wasm
+      octez-injector
+      octez-smart-rollup-node-lib
       tezos-scoru-wasm-fast
-      tezos-crypto-dal
-      prometheus-app
-      octez-node-config
-      octez-smart-rollup-node
+      tezos-version
+      tezos-client-commands
     ];
 
     inherit doCheck;

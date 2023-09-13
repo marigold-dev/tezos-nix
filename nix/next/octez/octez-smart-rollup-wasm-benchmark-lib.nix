@@ -1,29 +1,20 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  ppx_deriving,
-  tezos-base,
-  tezt,
-  tezos-webassembly-interpreter,
-  tezos-context,
-  tezos-scoru-wasm,
-  tezos-scoru-wasm-helpers,
-  lwt,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+, ppx_deriving
+, tezt
+, tezos-scoru-wasm-helpers
+, lwt
+,
 }:
 buildDunePackage {
   pname = "octez-smart-rollup-wasm-benchmark-lib";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     ppx_deriving
-    tezos-base
     tezt
-    tezos-webassembly-interpreter
-    tezos-context
-    tezos-scoru-wasm
     tezos-scoru-wasm-helpers
     lwt
   ];
@@ -34,7 +25,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: library with all the cryptographic primitives used by Tezos";
     };

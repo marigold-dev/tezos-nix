@@ -1,13 +1,12 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+,
 }:
 buildDunePackage {
   pname = "octez-distributed-internal";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
   ];
@@ -15,7 +14,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Fork of distributed. Use for Octez only";
     };

@@ -1,38 +1,27 @@
-{
-  lib,
-  buildDunePackage,
-  cacert,
-  tezos-stdlib,
-  tezos-base,
-  tezos-dal-node-services,
-  tezos-client-base,
-  tezos-protocol-updater,
-  tezos-client-base-unix,
-  tezos-stdlib-unix,
-  tezos-crypto-dal,
-  tezos-test-helpers,
-  tezos-base-test-helpers,
-  alcotest-lwt,
+{ lib
+, buildDunePackage
+, cacert
+, octez-libs
+, tezos-dal-node-services
+, tezos-client-base
+, tezos-protocol-updater
+, tezos-client-base-unix
+, alcotest-lwt
+,
 }:
 buildDunePackage {
   pname = "tezos-dal-node-lib";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
     tezos-dal-node-services
     tezos-client-base
     tezos-protocol-updater
     tezos-client-base-unix
-    tezos-stdlib-unix
-    tezos-crypto-dal
   ];
 
   checkInputs = [
-    tezos-stdlib
-    tezos-test-helpers
-    tezos-base-test-helpers
+    octez-libs
     alcotest-lwt
     cacert
   ];
@@ -40,7 +29,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: `tezos-dal-node` RPC services";
     };

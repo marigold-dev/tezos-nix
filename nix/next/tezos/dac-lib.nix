@@ -1,25 +1,22 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-protocol-updater,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+, tezos-protocol-updater
+,
 }:
 buildDunePackage {
   pname = "tezos-dac-lib";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
     tezos-protocol-updater
   ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: `tezos-dac` library";
     };

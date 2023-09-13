@@ -1,17 +1,16 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  ppxlib,
-  ppx_deriving,
-  ctypes,
-  lwt,
-  tezos-rust-libs,
+{ lib
+, buildDunePackage
+, octez-libs
+, ppxlib
+, ppx_deriving
+, ctypes
+, lwt
+, tezos-rust-libs
+,
 }:
 buildDunePackage {
   pname = "tezos-wasmer";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
     ppx_deriving
@@ -30,7 +29,7 @@ buildDunePackage {
   OPAM_SWITCH_PREFIX = "${tezos-rust-libs}";
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: Wasmer bindings for SCORU WASM";
     };

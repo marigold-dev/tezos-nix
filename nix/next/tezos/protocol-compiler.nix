@@ -1,18 +1,16 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-stdlib-unix,
-  tezos-version,
-  tezos-protocol-environment,
-  ocp-ocamlres,
-  pprint,
+{ lib
+, buildDunePackage
+, octez-libs
+, # , octez-proto-libs
+  lwt
+, ocp-ocamlres
+, pprint
+, tezos-version
+,
 }:
 buildDunePackage {
   pname = "octez-protocol-compiler";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   minimalOCamlVersion = "4.12";
 
@@ -21,22 +19,20 @@ buildDunePackage {
   ];
 
   propagatedBuildInputs = [
-    tezos-base
-    tezos-stdlib-unix
+    octez-libs
+    # octez-proto-libs
+    lwt
     tezos-version
-    tezos-protocol-environment
     ocp-ocamlres
+
+    # needed by ocp-ocamlres
     pprint
   ];
-
-  preBuild = ''
-    echo ${tezos-protocol-environment}/
-  '';
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: economic-protocol compiler";
     };

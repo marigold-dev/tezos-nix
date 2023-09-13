@@ -1,20 +1,19 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-client-base,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-client-base
+,
 }:
 buildDunePackage {
   pname = "tezos-signer-services";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
-  propagatedBuildInputs = [tezos-client-base];
+  propagatedBuildInputs = [ tezos-client-base ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: descriptions of RPCs exported by `tezos-signer`";
     };

@@ -1,28 +1,22 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezt,
-  tezt-performance-regression,
-  uri,
-  hex,
-  tezos-crypto-dal,
-  tezos-base,
-  cohttp-lwt-unix,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezt
+, uri
+, cohttp-lwt-unix
+, hex
+,
 }:
 buildDunePackage {
   pname = "tezt-tezos";
-  inherit (tezos-stdlib) version src postPatch;
+  inherit (octez-libs) version src;
 
-  duneVersion = "3";
 
   propagatedBuildInputs = [
+    octez-libs
     tezt
-    tezt-performance-regression
     uri
     hex
-    tezos-crypto-dal
-    tezos-base
     cohttp-lwt-unix
   ];
 }

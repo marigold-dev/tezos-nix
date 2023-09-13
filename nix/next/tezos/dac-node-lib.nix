@@ -1,29 +1,22 @@
-{
-  lib,
-  fetchpatch,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-client-base,
-  tezos-client-base-unix,
-  tezos-stdlib-unix,
-  tezos-layer2-store,
-  tezos-rpc-http-server,
-  tezos-dac-lib,
-  tezos-dac-client-lib,
+{ lib
+, fetchpatch
+, buildDunePackage
+, octez-libs
+, tezos-client-base
+, tezos-client-base-unix
+, tezos-layer2-store
+, tezos-dac-lib
+, tezos-dac-client-lib
+,
 }:
 buildDunePackage {
   pname = "tezos-dac-node-lib";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
     tezos-client-base
     tezos-client-base-unix
-    tezos-stdlib-unix
     tezos-layer2-store
-    tezos-rpc-http-server
     tezos-dac-lib
     tezos-dac-client-lib
   ];
@@ -31,7 +24,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: `tezos-dac-node` library";
     };

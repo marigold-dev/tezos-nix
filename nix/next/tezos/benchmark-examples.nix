@@ -1,31 +1,24 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  tezos-stdlib-unix,
-  tezos-crypto,
-  tezos-benchmark,
-  bisect_ppx,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-benchmark
+, bisect_ppx
+,
 }:
 buildDunePackage {
   pname = "tezos-benchmark-examples";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
-    tezos-stdlib-unix
-    tezos-crypto
     tezos-benchmark
   ];
 
-  checkInputs = [bisect_ppx];
+  checkInputs = [ bisect_ppx ];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: `tezos-dal-node` RPC services";
     };

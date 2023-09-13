@@ -1,33 +1,25 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-base,
-  irmin-pack,
-  irmin,
-  aches-lwt,
-  tezos-stdlib-unix,
-  tezos-context,
-  tezos-error-monad,
-  qcheck-alcotest,
-  octez-alcotezt,
+{ lib
+, buildDunePackage
+, octez-libs
+, irmin-pack
+, irmin
+, aches-lwt
+, qcheck-alcotest
+, octez-alcotezt
+,
 }:
 buildDunePackage {
   pname = "tezos-layer2-store";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
-    tezos-base
+    octez-libs
     irmin-pack
     irmin
     aches-lwt
-    tezos-stdlib-unix
-    tezos-context
   ];
 
   checkInputs = [
-    tezos-error-monad
     qcheck-alcotest
     octez-alcotezt
   ];
@@ -35,7 +27,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: layer2 storage utils";
     };

@@ -1,22 +1,22 @@
 {
   lib,
   buildDunePackage,
-  tezos-stdlib,
+  octez-libs,
   tezos-client-base,
   lwt-exit,
   tezos-signer-backends,
   tezos-proxy,
+  tezos-version,
   tezos-mockup-commands,
   alcotest-lwt,
-  tezos-base-test-helpers,
   cacert,
 }:
 buildDunePackage {
   pname = "tezos-client-base-unix";
-  inherit (tezos-stdlib) version src postPatch;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   propagatedBuildInputs = [
+    tezos-version
     tezos-client-base
     lwt-exit
     tezos-signer-backends
@@ -24,12 +24,12 @@ buildDunePackage {
     tezos-mockup-commands
   ];
 
-  checkInputs = [alcotest-lwt tezos-base-test-helpers cacert];
+  checkInputs = [alcotest-lwt cacert];
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: protocol registration for the mockup mode";
     };

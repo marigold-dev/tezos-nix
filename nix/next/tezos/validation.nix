@@ -1,26 +1,25 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  tezos-protocol-updater,
-  octez-protocol-compiler,
-  tezos-context-ops,
+{ lib
+, buildDunePackage
+, octez-libs
+, tezos-protocol-updater
+, octez-protocol-compiler
+, tezos-context-ops
+,
 }:
 buildDunePackage {
   pname = "tezos-validation";
-  inherit (tezos-stdlib) version src;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
-  propagatedBuildInputs = [tezos-protocol-updater tezos-context-ops];
+  propagatedBuildInputs = [ tezos-protocol-updater tezos-context-ops ];
 
-  nativeBuildInputs = [octez-protocol-compiler];
+  nativeBuildInputs = [ octez-protocol-compiler ];
 
   strictDeps = true;
 
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Tezos: library for blocks validation";
     };
