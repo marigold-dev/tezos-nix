@@ -5,7 +5,7 @@
 }: let
   overlay = import ./overlays.nix;
   version = {
-    octez_version = "20230626";
+    octez_version = "20230912";
     src = inputs.tezos_trunk;
   };
 in {
@@ -50,7 +50,8 @@ in {
           octez-dac-client = trunk-octez-dac-client;
           octez-dal-node = trunk-octez-dal-node;
           octez-smart-rollup-node-alpha = trunk-octez-smart-rollup-node-alpha;
-          octez-smart-rollup-node-PtNairob = trunk-octez-smart-rollup-node-PtNairob;
+          octez-smart-rollup-node-last = trunk-octez-smart-rollup-node-PtNairob;
+          octez-smart-rollup-node-current = trunk-octez-smart-rollup-node-Proxford;
         });
       };
   in {

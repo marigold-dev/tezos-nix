@@ -1,18 +1,17 @@
-{
-  lib,
-  buildDunePackage,
-  tezos-stdlib,
-  zarith,
-  tezt,
-  tezt-performance-regression,
+{ lib
+, buildDunePackage
+, octez-libs
+, zarith
+, tezt
+, tezt-performance-regression
+,
 }:
 buildDunePackage {
   pname = "tezt-ethereum";
-  inherit (tezos-stdlib) version src;
-  duneVersion = "3";
+  inherit (octez-libs) version src;
 
   postPatch = ''
-    ${tezos-stdlib.postPatch}
+    ${octez-libs.postPatch}
     substituteInPlace tezt/lib_ethereum/dune \
       --replace "(libraries" "(libraries zarith"
   '';
@@ -26,7 +25,7 @@ buildDunePackage {
   doCheck = true;
 
   meta =
-    tezos-stdlib.meta
+    octez-libs.meta
     // {
       description = "Ethereum test framework based on Tezt";
     };

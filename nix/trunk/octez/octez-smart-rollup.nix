@@ -1,24 +1,24 @@
 {
   lib,
   buildDunePackage,
-  tezos-stdlib,
+  octez-libs,
   tezos-base,
-  tezos-stdlib-unix,
+  octez-libs-unix,
   tezos-crypto,
   tezos-crypto-dal,
 }:
 buildDunePackage rec {
   pname = "octez-smart-rollup";
-  inherit (tezos-stdlib) version src postPatch;
+  inherit (octez-libs) version src postPatch;
 
   propagatedBuildInputs = [
     tezos-base
-    tezos-stdlib-unix
+    octez-libs-unix
     tezos-crypto
     tezos-crypto-dal
   ];
 
   doCheck = true;
 
-  meta = tezos-stdlib.meta // {description = "Octez: library for Smart Rollups";};
+  meta = octez-libs.meta // {description = "Octez: library for Smart Rollups";};
 }

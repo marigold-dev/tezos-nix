@@ -1,17 +1,17 @@
-{ lib
-, buildDunePackage
-, octez-libs
-, tezt
-, octez-alcotezt
-,
+{
+  lib,
+  buildDunePackage,
+  octez-libs,
+  tezt,
+  octez-alcotezt,
 }:
 buildDunePackage {
   pname = "tezos-client-base";
   inherit (octez-libs) version src;
+  
+  propagatedBuildInputs = [octez-libs];
 
-  propagatedBuildInputs = [ octez-libs ];
-
-  checkInputs = [ tezt octez-alcotezt ];
+  checkInputs = [tezt octez-alcotezt];
 
   doCheck = true;
 
