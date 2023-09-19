@@ -1,24 +1,23 @@
-{
-  lib,
-  buildDunePackage,
-  python311,
-  octez-libs,
-  ppx_expect,
-  data-encoding,
-  prbnmcn-linalg,
-  prbnmcn-stats,
-  pringo,
-  pyml,
-  ocamlgraph,
-  # , ocaml-migrate-parsetree
-  hashcons,
-  ocamlformat,
+{ lib
+, buildDunePackage
+, python311
+, octez-libs
+, ppx_expect
+, data-encoding
+, prbnmcn-linalg
+, prbnmcn-stats
+, pringo
+, pyml
+, ocamlgraph
+, ocaml-migrate-parsetree-2
+, hashcons
+, ocamlformat_0_24_1
 }:
 buildDunePackage {
   pname = "tezos-benchmark";
   inherit (octez-libs) version src;
 
-  nativeBuildInputs = [ocamlformat];
+  nativeBuildInputs = [ ocamlformat_0_24_1 ];
 
   propagatedBuildInputs = [
     octez-libs
@@ -29,11 +28,11 @@ buildDunePackage {
     pringo
     pyml
     ocamlgraph
-    # ocaml-migrate-parsetree
+    ocaml-migrate-parsetree-2
     hashcons
   ];
 
-  nativeCheckInputs = [python311];
+  nativeCheckInputs = [ python311 ];
 
   doCheck = true;
 
