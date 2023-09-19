@@ -179,27 +179,27 @@ with ocamlPackages;
       protocol-N-1.libs
       protocol-N.libs
 
-      tezos-alpha.embedded-protocol
-      tezos-000-Ps9mPmXa.embedded-protocol
-      tezos-001-PtCJ7pwo.embedded-protocol
-      tezos-002-PsYLVpVv.embedded-protocol
-      tezos-003-PsddFKi3.embedded-protocol
-      tezos-004-Pt24m4xi.embedded-protocol
-      tezos-005-PsBABY5H.embedded-protocol
-      tezos-005-PsBabyM1.embedded-protocol
-      tezos-006-PsCARTHA.embedded-protocol
-      tezos-007-PsDELPH1.embedded-protocol
-      tezos-008-PtEdo2Zk.embedded-protocol
-      tezos-009-PsFLoren.embedded-protocol
-      tezos-010-PtGRANAD.embedded-protocol
-      tezos-011-PtHangz2.embedded-protocol
-      tezos-012-Psithaca.embedded-protocol
-      tezos-013-PtJakart.embedded-protocol
-      tezos-014-PtKathma.embedded-protocol
-      tezos-015-PtLimaPt.embedded-protocol
-      tezos-016-PtMumbai.embedded-protocol
-      tezos-017-PtNairob.embedded-protocol
-      tezos-018-Proxford.embedded-protocol
+      tezos-alpha.protocol
+      tezos-000-Ps9mPmXa.protocol
+      tezos-001-PtCJ7pwo.protocol
+      tezos-002-PsYLVpVv.protocol
+      tezos-003-PsddFKi3.protocol
+      tezos-004-Pt24m4xi.protocol
+      tezos-005-PsBABY5H.protocol
+      tezos-005-PsBabyM1.protocol
+      tezos-006-PsCARTHA.protocol
+      tezos-007-PsDELPH1.protocol
+      tezos-008-PtEdo2Zk.protocol
+      tezos-009-PsFLoren.protocol
+      tezos-010-PtGRANAD.protocol
+      tezos-011-PtHangz2.protocol
+      tezos-012-Psithaca.protocol
+      tezos-013-PtJakart.protocol
+      tezos-014-PtKathma.protocol
+      tezos-015-PtLimaPt.protocol
+      tezos-016-PtMumbai.protocol
+      tezos-017-PtNairob.protocol
+      tezos-018-Proxford.protocol
     ];
 
     checkInputs = with ocamlPackages; [ ];

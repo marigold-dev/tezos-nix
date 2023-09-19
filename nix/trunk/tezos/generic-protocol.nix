@@ -26,7 +26,6 @@ rec {
 
     propagatedBuildInputs = with ocamlPackages; [
       protocol
-      embedded-protocol
 
       ppx_expect
       octez-libs
@@ -63,6 +62,7 @@ rec {
     nativeBuildInputs = [ ocamlPackages.octez-protocol-compiler ];
     propagatedBuildInputs = with ocamlPackages; [
       octez-libs
+      octez-shell-libs
       octez-proto-libs
     ];
 
@@ -74,27 +74,6 @@ rec {
       octez-libs.meta
       // {
         description = "Tezos/Protocol: economic-protocol definition";
-      };
-  };
-
-  embedded-protocol = buildDunePackage {
-    pname = "tezos-embedded-protocol-${protocol-name}";
-    inherit (octez-libs) version src;
-
-    nativeBuildInputs = [ ocamlPackages.octez-protocol-compiler ];
-
-    propagatedBuildInputs = with ocamlPackages; [
-      protocol
-      octez-shell-libs
-      octez-proto-libs
-    ];
-
-    doCheck = true;
-
-    meta =
-      octez-libs.meta
-      // {
-        description = "Tezos/Protocol: economic-protocol definition, embedded in `tezos-node`";
       };
   };
 

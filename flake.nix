@@ -2,8 +2,8 @@
   description = "Nix packaging for Tezos that comes with a devShell";
 
   nixConfig = {
-    extra-substituters = ["https://tezos.nix-cache.workers.dev"];
-    extra-trusted-public-keys = ["tezos-nix-cache.marigold.dev-1:4nS7FPPQPKJIaNQcbwzN6m7kylv16UCWWgjeZZr2wXA="];
+    extra-substituters = [ "https://tezos.nix-cache.workers.dev" ];
+    extra-trusted-public-keys = [ "tezos-nix-cache.marigold.dev-1:4nS7FPPQPKJIaNQcbwzN6m7kylv16UCWWgjeZZr2wXA=" ];
   };
 
   inputs = {
@@ -23,44 +23,44 @@
     tezos_next.url = "gitlab:tezos/tezos/v18.0-rc1";
     tezos_next.flake = false;
 
-    tezos_trunk.url = "gitlab:tezos/tezos/5522cb91be7f10a6d04102e75f368be252c62899";
+    tezos_trunk.url = "gitlab:tezos/tezos/87c16195";
     tezos_trunk.flake = false;
   };
 
-  outputs = inputs @ {
-    self,
-    flake-parts,
-    ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;}
-    {
-      imports = [
-        inputs.treefmt-nix.flakeModule
-        inputs.pre-commit-hooks.flakeModule
-        ./nix/release
-        ./nix/next
-        ./nix/trunk
-        ./nix/services
-      ];
-      flake.hydraJobs = self.packages;
-      systems = ["aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
-      perSystem = {
-        config,
-        pkgs,
-        system,
-        ...
-      }: {
-        packages.default = config.packages.octez-client;
-        devShells.default = config.devShells.dev;
+  outputs =
+    inputs @ { self
+    , flake-parts
+    , ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; }
+      {
+        imports = [
+          inputs.treefmt-nix.flakeModule
+          inputs.pre-commit-hooks.flakeModule
+          ./nix/release
+          ./nix/next
+          ./nix/trunk
+          ./nix/services
+        ];
+        flake.hydraJobs = self.packages;
+        systems = [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
+        perSystem =
+          { config
+          , pkgs
+          , system
+          , ...
+          }: {
+            packages.default = config.packages.octez-client;
+            devShells.default = config.devShells.dev;
 
-        treefmt.projectRootFile = "flake.nix";
-        treefmt.programs.alejandra.enable = true;
+            treefmt.projectRootFile = "flake.nix";
+            treefmt.programs.alejandra.enable = true;
 
-        pre-commit.check.enable = true;
-        pre-commit.settings.hooks = {
-          alejandra.enable = true;
-          statix.enable = true;
-        };
+            pre-commit.check.enable = true;
+            pre-commit.settings.hooks = {
+              alejandra.enable = true;
+              statix.enable = true;
+            };
+          };
       };
-    };
 }
